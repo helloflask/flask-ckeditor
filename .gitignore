@@ -31,3 +31,5 @@ nosetests.xml
 # Translations
 *.mo
 
+# Develop
+.idea
