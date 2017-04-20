@@ -1,14 +1,12 @@
 from jinja2 import Markup
 from flask import current_app
+from flask_ckeditor.flelds import *
 
 
 class _ckeditor(object):
     def include_ckeditor(self):
         return Markup('''
 <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>''')
-
-    def html_head(self):
-        return self.include_ckeditor()
 
 
 class CKEditor(object):
