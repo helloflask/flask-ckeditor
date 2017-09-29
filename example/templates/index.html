@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flask-CKEditor Demo</title>
+    {{ ckeditor.load() }}
+</head>
+<body>
+	<div class="warpper" style="width: 700px; margin: auto">
+		<h1>Flask-CKEditor Demo</h1>
+		<form method="post">
+			{{ form.csrf_token }}
+			{{ form.title.label }}<br>
+			{{ form.title }}<br><br>
+			{{ form.body.label }}<br>
+			{{ form.body }}
+			<br><br>
+			{{ form.submit }}
+		</form>
+	</div>
+</body>
+</html>
+

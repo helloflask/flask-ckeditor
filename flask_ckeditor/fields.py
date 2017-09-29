@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from wtforms import TextAreaField
 from wtforms.widgets import TextArea
 

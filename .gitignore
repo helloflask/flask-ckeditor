@@ -33,3 +33,4 @@ nosetests.xml
 
 # Develop
 .idea
+venv

@@ -2,20 +2,20 @@
 Flask-CKEditor
 --------------
 
-Implementation of CKEditor for Flask-WTF.
+Implementation of CKEditor for WTForms/Flask-WTF.
 """
 from setuptools import setup
 
 
 setup(
     name='Flask-CKEditor',
-    version='0.1.0',
+    version='0.2',
     url='http://github.com/greyli/flask-ckeditor',
-    download_url = 'https://github.com/greyli/flask-ckeditor/archive/0.1.tar.gz',
+    download_url = 'https://github.com/greyli/flask-ckeditor/archive/0.2.tar.gz',
     license='MIT',
     author='Grey Li',
     author_email='withlihui@gmail.com',
-    description=('Implementation of CKEditor for Flask-WTF.'),
+    description=('Implementation of CKEditor for WTForms/Flask-WTF.'),
     long_description=__doc__,
     packages=['flask_ckeditor'],
     zip_safe=False,

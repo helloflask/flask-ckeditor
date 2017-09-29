@@ -1,12 +1,18 @@
-from jinja2 import Markup
-from flask import current_app
-from flask_ckeditor.flelds import *
+# -*- coding: utf-8 -*-
+from flask import current_app, Markup
+from flask_ckeditor.fields import CKEditorField
 
 
 class _ckeditor(object):
-    def include_ckeditor(self):
+    def load(self, pkg_type='standard', version='4.7.3'):
+        """Load CKEditor resource from CDN.
+
+        :param pkg_type: The type of CKEditor package, one of `basic`, `standard` and `full`. 
+        :param version: The version of CKEditor.
+        """
         return Markup('''
-<script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>''')
+<script src="//cdn.ckeditor.com/%s/%s/ckeditor.js"></script>'''
+ % (version, pkg_type))
 
 
 class CKEditor(object):
