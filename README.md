@@ -23,7 +23,8 @@ In the template which you want to put a CKEditor textarea, add this line in `<he
 
 ## How it work?
 
-Here is a simple example. You can defined a form class with Flask-WTF just like normal. Then import the CKEditorField provided by Flask-CKEditor and use it like `StringField`:
+Here is a simple example. You can defined a form class with Flask-WTF just like normal. Then import
+the CKEditorField provided by Flask-CKEditor and use it like `StringField`:
 
     from flask_wtf import FlaskForm
     from flask_ckeditor import CKEditorField
@@ -34,30 +35,100 @@ Here is a simple example. You can defined a form class with Flask-WTF just like 
 		body = CKEditorField('Body')
 		submit = SubmitField('Submit')
 
+Instead, you can create the textarea manually through `create()` method:
+    
+    <form method="post">
+    {{ ckeditor.create() }}
+    <input type="submit">
+    </form>
+
+## Configuration
+
+You can load settings for CKEditor with `config()` method in Jinja2 template:
+    
+    <body>
+        ...
+        {{ ckeditor.config() }}
+    </body>
+
+The configuration options available were listed below:
+
+- CKEDITOR_SERVE_LOCAL
+- CKEDITOR_PKG_TYPE
+- CKEDITOR_LANGUAGE
+- CKEDITOR_HEIGHT
+- CKEDITOR_WIDTH
+- CKEDITOR_CODE_THEME
+- CKEDITOR_FILE_UPLOAD_URL
+- CKEDITOR_FILE_BROWSER_URL
+
+In addition, you can pass custom settings with `custom_config` argument:
+
+    {{ ckeditor.config(custom_config="uiColor: '#9AB8F3'") }}
+
+Keep it mind the The proper syntax for each option is ``configuration name : configuration value``.
+You can use comma to separate multiple key-value pairs. See the list of available configuration 
+settings on [CKEditor documentation](https://docs.ckeditor.com/ckeditor4/docs/#!/api/CKEDITOR.config>).
+
+## Image upload
+
+The image can be uploaded with image widget. When you set `CKEDITOR_FILE_UPLOAD_URL`
+with proper value, you will see the upload tab appear in image widget. You need to use `ckeditor.uploader`
+to decorate the view function that handle the file upload. And, The upload view must return the uploaded 
+image's url. For example::
+    
+    app.config['CKEDITOR_FILE_UPLOAD_URL'] = '/upload'
+
+    @app.route('/files/<filename>')
+    def files(filename):
+        path = '/the/uploaded/directory'
+        return send_from_directory(path, filename)
+
+    @app.route('/upload', methods=['POST'])
+    @ckeditor.uploader
+    def upload():
+        f = request.files.get('upload')
+        f.save(os.path.join('/the/uploaded/directory', f.filename))
+        url = url_for('files', filename=f.filename)
+        return url
+
 ## Try the live example
 
 Open a terminal, type the commands below one by one:
 
 	$ git clone https://github.com/greyli/flask-ckeditor
-	$ cd flask-ckeditor
+	$ cd flask-ckeditor/example
 	$ pip install -r requirements.txt
 	$ python app.py
 
 Then go to http://127.0.0.1:5000 with your favourite browser.
 
+## TODO
+- [ ] Documentation
+- [ ] Test
+- [ ] Markdown mode
+- [ ] Integrate with a file browser
+
 ## Changelog
+
+### 0.3
+
+Release date: Not released yet.
+
+- Set custom resource url with `custom_url` arguemnt in `load()`.
+- Added support for configuration, `config()` method used to load config.
+- Added support to upload image.
+- Added local resources, it can be enabled with `CKEDITOR_SERVE_LOCAL`, default to `False`.
 
 ### 0.2
 
 Release date: 2017/9/29
 
-- Add example and basic documentation.
-- Add support to custom version and pakage type.
+- Added example and basic documentation.
+- Added support to custom version and pakage type.
 - Import CKEditorField directly from `flask_ckeditor`.
 - Change `include_ckeditor()` to `load()`.
 
 ### 0.1
 
 Initialize release.
-
-
