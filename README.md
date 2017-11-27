@@ -1,8 +1,6 @@
 # Flask-CKEditor
 
-Implementation of [CKEditor](https://ckeditor.com/) for WTForms/Flask-WTF.
-
-Flask-CKEditor provides a `CKEditorField` class to render a CKEditor textarea.
+CKEditor integration for Flask, including image upload, code syntax highlight and more.
 
 ## Installation
 
@@ -35,7 +33,7 @@ the CKEditorField provided by Flask-CKEditor and use it like `StringField`:
 		body = CKEditorField('Body')
 		submit = SubmitField('Submit')
 
-Instead, you can create the textarea manually through `create()` method:
+Instead, you can also create the CKEditor textarea manually through `create()` method:
     
     <form method="post">
     {{ ckeditor.create() }}
@@ -66,7 +64,7 @@ In addition, you can pass custom settings with `custom_config` argument:
 
     {{ ckeditor.config(custom_config="uiColor: '#9AB8F3'") }}
 
-Keep it mind the The proper syntax for each option is ``configuration name : configuration value``.
+Keep it mind that the proper syntax for each option is ``configuration name : configuration value``.
 You can use comma to separate multiple key-value pairs. See the list of available configuration 
 settings on [CKEditor documentation](https://docs.ckeditor.com/ckeditor4/docs/#!/api/CKEDITOR.config>).
 
