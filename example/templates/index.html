@@ -12,12 +12,17 @@
 			{{ form.csrf_token }}
 			{{ form.title.label }}<br>
 			{{ form.title }}<br><br>
-			{{ form.body.label }}<br>
-			{{ form.body }}
-			<br><br>
+			{{ form.ckeditor.label }}<br>
+			{{ form.ckeditor }}
+			<br>
 			{{ form.submit }}
 		</form>
 	</div>
+	<script type="text/javascript">
+		CKEDITOR.replace('ckeditor', {
+		    customConfig: "{{ url_for('static', filename='js/ckeditor_config.js') }}"
+		});
+	</script>
 </body>
 </html>
 

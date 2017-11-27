@@ -9,7 +9,7 @@ from setuptools import setup
 
 setup(
     name='Flask-CKEditor',
-    version='0.2',
+    version='0.3',
     url='http://github.com/greyli/flask-ckeditor',
     download_url = 'https://github.com/greyli/flask-ckeditor/archive/0.2.tar.gz',
     license='MIT',
@@ -21,6 +21,7 @@ setup(
     zip_safe=False,
     include_package_data=True,
     platforms='any',
+    test_suite='test_flask_ckeditor',
     install_requires=[
         'Flask',
         'WTForms'
