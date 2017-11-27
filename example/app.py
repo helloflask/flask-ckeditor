@@ -10,6 +10,8 @@ from flask_ckeditor import CKEditor, CKEditorField
 
 app = Flask(__name__)
 app.config['CKEDITOR_SERVE_LOCAL'] = True
+app.config['CKEDITOR_HEIGHT'] = 500
+app.config['CKEDITOR_FILE_UPLOAD_URL'] = '/upload'
 app.config['UPLOADED_PATH'] = os.getcwd() + '/uploads'
 
 app.secret_key = 'secret string'

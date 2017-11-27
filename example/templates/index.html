@@ -18,17 +18,7 @@
 			{{ form.submit }}
 		</form>
 	</div>
-	<script type="text/javascript">
-		CKEDITOR.replace( 'ckeditor', {
-		    language: 'zh',
-		    toolbarCanCollapse: true,
-		    extraPlugins: 'autogrow',
-		    autoGrow_maxHeight: 700,
-		    codeSnippet_theme: 'monokai_sublime',
-		    filebrowserUploadUrl: '/upload',
-		    // filebrowserBrowseUrl: '',
-		});
-	</script>
+	{{ ckeditor.config() }}
 </body>
 </html>
 
