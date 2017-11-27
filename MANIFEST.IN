@@ -1,0 +1,2 @@
+include flask_ckeditor/static
+include README.rst

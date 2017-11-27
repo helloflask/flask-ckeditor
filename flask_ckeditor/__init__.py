@@ -26,6 +26,11 @@ class _CKEditor(object):
 <script src="//cdn.ckeditor.com/%s/%s/ckeditor.js"></script>'''
  % (version, pkg_type))
 
+    def config(self):
+        """Config CKEditor.
+        """
+        pass
+
     @staticmethod
     def create():
         """Create a ckeditor textarea directly.
@@ -52,6 +57,7 @@ class CKEditor(object):
         app.config.setdefault('CKEDITOR_SERVE_LOCAL', False)
         app.config.setdefault('CKEDITOR_PKG_TYPE', 'standard')
         app.config.setdefault('CKEDITOR_AUTO_HEIGHT', False)
+        app.config.setdefault('CKEDITOR_HEIGHT', None)
 
     @staticmethod
     def context_processor():
