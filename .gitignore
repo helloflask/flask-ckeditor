@@ -34,3 +34,4 @@ nosetests.xml
 # Develop
 .idea
 venv
+example/uploads/*

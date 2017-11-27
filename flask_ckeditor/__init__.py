@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from flask import current_app, Markup, Blueprint, url_for
+from flask import current_app, Markup, Blueprint, url_for, request
 from flask_ckeditor.fields import CKEditorField
 
 
@@ -38,6 +38,12 @@ class _CKEditor(object):
         return Markup('<textarea class="ckeditor" name="ckeditor"></textarea>')
 
 
+def random_filename(old_filename):
+    ext = os.path.splitext(old_filename)[1]
+    new_filename = uuid.uuid4().hex + ext
+    return new_filename
+
+
 class CKEditor(object):
     def __init__(self, app=None):
         if app is not None:
@@ -62,3 +68,17 @@ class CKEditor(object):
     @staticmethod
     def context_processor():
         return {'ckeditor': current_app.extensions['ckeditor']}
+
+    @staticmethod
+    def uploader(func):
+        def wrapper(*args, **kwargs):
+            func_num = request.args.get('CKEditorFuncNum') 
+            ckeditor = request.args.get('CKEditor') 
+            lang_code = request.args.get('langCode')
+            message = ''
+            url = func(*args, **kwargs)
+            return Markup('''
+<script type="text/javascript">
+window.parent.CKEDITOR.tools.callFunction(%s, "%s", "%s");</script>'''
+% (func_num, url, message))
+        return wrapper
