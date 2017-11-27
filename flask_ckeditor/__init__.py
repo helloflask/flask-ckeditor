@@ -32,7 +32,7 @@ class _CKEditor(object):
         """Config CKEditor.
 
         :param language: The lang code string to set UI language in ISO 639 format, one of 
-        ``zh``, ``ko``, ``ja``, ``es``, ``fr``, ``de`` and ``en``, 
+        ``zh``, ``zh-cn``,  ``ko``, ``ja``, ``es``, ``fr``, ``de`` and ``en``, 
         default to ``en``(i.e. English).
         :param height: The heighe of CKEditor window, default to 200.
         :param width: The heighe of CKEditor window.
@@ -61,7 +61,7 @@ class _CKEditor(object):
         You can use comma to separate multiple key-value pairs. See the list of available
         configuration settings on
         `CKEditor documentation <https://docs.ckeditor.com/ckeditor4/docs/#!/api/CKEDITOR.config>`_.
-        
+
         .. versionadded:: 0.3
         """
         language = language or current_app.config['CKEDITOR_LANGUAGE']
@@ -118,7 +118,7 @@ class CKEditor(object):
         app.config.setdefault('CKEDITOR_SERVE_LOCAL', False)
         app.config.setdefault('CKEDITOR_PKG_TYPE', 'standard')
 
-        app.config.setdefault('CKEDITOR_LANGUAGE', '')
+        app.config.setdefault('CKEDITOR_LANGUAGE', 'zh-cn')
         app.config.setdefault('CKEDITOR_HEIGHT', '')
         app.config.setdefault('CKEDITOR_WIDTH', '')
         app.config.setdefault('CKEDITOR_CODE_THEME', 'monokai_sublime')
