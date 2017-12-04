@@ -155,7 +155,7 @@ Aside from the basic example, there are two additional examples:
 
 ### 0.3
 
-Release date: Not released yet.
+Release date: 2017/12/4.
 
 - Set custom resource url with `custom_url` arguemnt in `load()`.
 - Added support for configuration, `config()` method used to load config.

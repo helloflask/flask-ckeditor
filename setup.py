@@ -2,7 +2,7 @@
 Flask-CKEditor
 --------------
 
-Implementation of CKEditor for WTForms/Flask-WTF.
+CKEditor integration for Flask, including image upload, code syntax highlight and more.
 """
 from setuptools import setup
 
@@ -11,7 +11,7 @@ setup(
     name='Flask-CKEditor',
     version='0.3',
     url='http://github.com/greyli/flask-ckeditor',
-    download_url = 'https://github.com/greyli/flask-ckeditor/archive/0.2.tar.gz',
+    download_url = 'https://github.com/greyli/flask-ckeditor/archive/0.3.tar.gz',
     license='MIT',
     author='Grey Li',
     author_email='withlihui@gmail.com',
