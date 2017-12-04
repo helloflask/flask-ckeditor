@@ -2,17 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Flask-CKEditor Demo: Without Flask-WTF</title>
+    <title>Flask-CKEditor Demo</title>
     {{ ckeditor.load() }}
 </head>
 <body>
 	<div class="warpper" style="width: 700px; margin: auto">
-		<h1>Flask-CKEditor Demo</h1>
+		<h1>Flask-CKEditor Demo: Without Flask-WTF</h1>
 		<form method="post">
 			<label for="title">Title</label>
-			<br><br>
+			<br>
 			<input type="text" name="title">
-			<br>			
+			<br><br>			
 			<label for="ckeditor">Body</label>
 			{{ ckeditor.create() }}
 			<br>

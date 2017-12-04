@@ -114,9 +114,10 @@ the image icon, then you will find a `Upload` tab.
 
 ## Code Snippet Highlight
 
-The bulit-in CKEditor package include a [code snippet plugin](ckeditor.com/addon/codesnippet). 【】 
+The bulit-in CKEditor package include a [Code Snippet](ckeditor.com/addon/codesnippet)plugin. 
 You can set the code theme through configuration option `CKEDITOR_CODE_THEME`. The default theme was 
-`monikai-sublime`. See all available themes [here](https://highlightjs.org/static/demo/).
+`monokai_sublime`. See all available themes at [Highlight.js's demo page](https://highlightjs.org/static/demo/).
+The list of valid theme string can be find on this [page](https://sdk.ckeditor.com/samples/codesnippet.html).
 
 Another step was load code theme resources in the page you want to display the text:
 
