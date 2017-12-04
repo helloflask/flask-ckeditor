@@ -2,20 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Flask-CKEditor Demo</title>
+    <title>Flask-CKEditor Demo: Without Flask-WTF</title>
     {{ ckeditor.load() }}
 </head>
 <body>
 	<div class="warpper" style="width: 700px; margin: auto">
 		<h1>Flask-CKEditor Demo</h1>
 		<form method="post">
-			{{ form.csrf_token }}
-			{{ form.title.label }}<br>
-			{{ form.title }}<br><br>
-			{{ form.ckeditor.label }}<br>
-			{{ form.ckeditor }}
+			<label for="title">Title</label>
+			<br><br>
+			<input type="text" name="title">
+			<br>			
+			<label for="ckeditor">Body</label>
+			{{ ckeditor.create() }}
 			<br>
-			{{ form.submit }}
+			<input type="submit" value="Submit">
 		</form>
 	</div>
 	{{ ckeditor.config() }}

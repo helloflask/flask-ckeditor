@@ -27,10 +27,11 @@ class _CKEditor(object):
         return Markup('<script src="%s"></script>'% url)
 
     @staticmethod
-    def config(language=None, height=None, width=None, code_theme=None,
+    def config(name='ckeditor', language=None, height=None, width=None, code_theme=None,
                file_upload_url=None, file_browser_url=None, custom_config=''):
         """Config CKEditor.
 
+        :param name: The input field' name when using Flask-WTF. 
         :param language: The lang code string to set UI language in ISO 639 format, one of 
         ``zh``, ``zh-cn``,  ``ko``, ``ja``, ``es``, ``fr``, ``de`` and ``en``, 
         default to ``en``(i.e. English).
@@ -64,6 +65,7 @@ class _CKEditor(object):
 
         .. versionadded:: 0.3
         """
+
         language = language or current_app.config['CKEDITOR_LANGUAGE']
         height = height or current_app.config['CKEDITOR_HEIGHT']
         width = width or current_app.config['CKEDITOR_WIDTH']
@@ -72,17 +74,17 @@ class _CKEditor(object):
         file_browser_url = file_browser_url or current_app.config['CKEDITOR_FILE_BROWSER_URL']
         return Markup('''
 <script type="text/javascript">
-        CKEDITOR.replace( 'ckeditor', {
+        CKEDITOR.replace( %r, {
             language: %r,
             height: %r,
             width: %r,
-            toolbarCanCollapse: true,
+            //toolbarCanCollapse: true,
             codeSnippet_theme: %r,
             filebrowserUploadUrl: %r,
             filebrowserBrowseUrl: %r,
             %s
         });
-    </script>''' % (language, height, width, code_theme, file_upload_url, file_browser_url, custom_config))
+    </script>''' % (name, language, height, width, code_theme, file_upload_url, file_browser_url, custom_config))
 
     @staticmethod
     def create():
@@ -91,6 +93,20 @@ class _CKEditor(object):
         .. versionadded:: 0.3
         """
         return Markup('<textarea class="ckeditor" id="ckeditor" name="ckeditor"></textarea>')
+
+    @staticmethod
+    def load_code_theme():
+        """Highlight the code snippets.
+
+        .. versionadded:: 0.3
+        """
+        theme = current_app.config['CKEDITOR_CODE_THEME']
+        js_url = url_for('ckeditor.static', 
+                    filename='basic/plugins/codesnippet/lib/highlight/highlight.pack.js')
+        css_url = url_for('ckeditor.static', 
+                    filename='basic/plugins/codesnippet/lib/highlight/styles/%s.css' % theme)
+        return Markup('''<link href="%s" rel="stylesheet">\n<script src="%s"></script>\n
+            <script>hljs.initHighlightingOnLoad();</script>''' % (css_url, js_url))
 
 
 def random_filename(old_filename):
@@ -107,7 +123,7 @@ class CKEditor(object):
     def init_app(self, app):
         blueprint = Blueprint('ckeditor', __name__,
             static_folder='static',
-            static_url_path=app.static_url_path + '/ckeditor',)
+            static_url_path= app.static_url_path + '/ckeditor')
         app.register_blueprint(blueprint)
 
         if not hasattr(app, 'extensions'):
@@ -118,7 +134,7 @@ class CKEditor(object):
         app.config.setdefault('CKEDITOR_SERVE_LOCAL', False)
         app.config.setdefault('CKEDITOR_PKG_TYPE', 'standard')
 
-        app.config.setdefault('CKEDITOR_LANGUAGE', 'zh-cn')
+        app.config.setdefault('CKEDITOR_LANGUAGE', '')
         app.config.setdefault('CKEDITOR_HEIGHT', '')
         app.config.setdefault('CKEDITOR_WIDTH', '')
         app.config.setdefault('CKEDITOR_CODE_THEME', 'monokai_sublime')
