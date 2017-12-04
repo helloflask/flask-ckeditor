@@ -31,7 +31,7 @@ class _CKEditor(object):
                file_upload_url=None, file_browser_url=None, custom_config=''):
         """Config CKEditor.
 
-        :param name: The input field' name when using Flask-WTF. 
+        :param name: The input field's name when using Flask-WTF. 
         :param language: The lang code string to set UI language in ISO 639 format, one of 
         ``zh``, ``zh-cn``,  ``ko``, ``ja``, ``es``, ``fr``, ``de`` and ``en``, 
         default to ``en``(i.e. English).
