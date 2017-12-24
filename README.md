@@ -24,6 +24,10 @@ In the template which you want to put a CKEditor textarea, add this line in `<he
 ```python
 {{ ckeditor.load() }}
 ```
+You can use `custom_url` to load your custom CKEditor build:
+```python
+{{ ckeditor.load(custom_url=url_for('static', filename='ckeditor/ckeditor.js')) }}
+```
 
 ## How it work?
 
@@ -114,7 +118,7 @@ the image icon, then you will find a `Upload` tab.
 
 ## Code Snippet Highlight
 
-The bulit-in CKEditor package include a [Code Snippet](ckeditor.com/addon/codesnippet)plugin. 
+The bulit-in CKEditor package include a [Code Snippet](ckeditor.com/addon/codesnippet) plugin. 
 You can set the code theme through configuration option `CKEDITOR_CODE_THEME`. The default theme was 
 `monokai_sublime`. See all available themes at [Highlight.js's demo page](https://highlightjs.org/static/demo/), and
 the list of valid theme string can be find on this [page](https://sdk.ckeditor.com/samples/codesnippet.html).
@@ -158,7 +162,7 @@ Aside from the basic example, there are two additional examples:
 
 Release date: 2017/12/4.
 
-- Set custom resource url with `custom_url` arguemnt in `load()`.
+- Set custom resource url with `custom_url` argument in `load()`.
 - Added support for configuration, `config()` method used to load config.
 - Added support to upload image.
 - Added local resources, it can be enabled with `CKEDITOR_SERVE_LOCAL`, default to `False`.
