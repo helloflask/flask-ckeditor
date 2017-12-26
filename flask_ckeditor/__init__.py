@@ -17,7 +17,7 @@ class _CKEditor(object):
         :param version: The version of CKEditor.
         """
         if pkg_type is not None:
-            if pkg_type not in ['basic', 'standard', 'full']
+            if pkg_type not in ['basic', 'standard', 'full']:
                 pkg_type = 'standard'
         else:
             pkg_type = current_app.config['CKEDITOR_PKG_TYPE']
