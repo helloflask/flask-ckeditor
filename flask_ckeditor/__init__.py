@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import warnings
+
 from flask import current_app, Markup, Blueprint, url_for, request
 from flask_ckeditor.fields import CKEditorField
 
@@ -16,11 +18,12 @@ class _CKEditor(object):
         ``standard`` and ``full``. Default to ``standard``.
         :param version: The version of CKEditor.
         """
-        if pkg_type is not None:
-            if pkg_type not in ['basic', 'standard', 'full']:
-                pkg_type = 'standard'
-        else:
-            pkg_type = current_app.config['CKEDITOR_PKG_TYPE']
+        pkg_type = pkg_type or current_app.config['CKEDITOR_PKG_TYPE']
+
+        if pkg_type not in ['basic', 'standard', 'full']:
+            warnings.warn('The provided pkg_type string was invalid, ' 
+                'it should be one of basic/standard/full.')
+            pkg_type = 'standard'
 
         if current_app.config['CKEDITOR_SERVE_LOCAL']:
             url = url_for('ckeditor.static', filename='%s/ckeditor.js' % pkg_type)
