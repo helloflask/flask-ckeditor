@@ -34,4 +34,4 @@ nosetests.xml
 # Develop
 .idea
 venv
-examples/upload-support/uploads/*
+examples/image-upload/uploads/*

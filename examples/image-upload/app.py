@@ -8,12 +8,13 @@ from wtforms.validators import DataRequired
 
 from flask_ckeditor import CKEditor, CKEditorField
 
+basedir = os.path.abspath(os.path.dirname(__file__))
+
 app = Flask(__name__)
 app.config['CKEDITOR_SERVE_LOCAL'] = True
 app.config['CKEDITOR_HEIGHT'] = 400
-
 app.config['CKEDITOR_FILE_UPLOAD_URL'] = '/upload'
-app.config['UPLOADED_PATH'] = os.getcwd() + '/uploads'
+app.config['UPLOADED_PATH'] = basedir + '/uploads'
 
 app.secret_key = 'secret string'
 
@@ -22,7 +23,7 @@ ckeditor = CKEditor(app)
 class PostForm(FlaskForm):
 	title = StringField('Title')
 	body = CKEditorField('Body', validators=[DataRequired()])
-	submit = SubmitField('Submit')
+	submit = SubmitField()
 
 
 @app.route('/', methods=['GET', 'POST'])
