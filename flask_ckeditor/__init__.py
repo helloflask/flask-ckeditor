@@ -16,12 +16,17 @@ class _CKEditor(object):
         ``standard`` and ``full``. Default to ``standard``.
         :param version: The version of CKEditor.
         """
-        if pkg_type is None:
+        if pkg_type is not None:
+            if pkg_type not in ['basic', 'standard', 'full']
+                pkg_type = 'standard'
+        else:
             pkg_type = current_app.config['CKEDITOR_PKG_TYPE']
+
         if current_app.config['CKEDITOR_SERVE_LOCAL']:
             url = url_for('ckeditor.static', filename='%s/ckeditor.js' % pkg_type)
         else:
             url = '//cdn.ckeditor.com/%s/%s/ckeditor.js' % (version, pkg_type)
+        
         if custom_url:
             url = custom_url
         return Markup('<script src="%s"></script>'% url)
