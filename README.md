@@ -1,5 +1,7 @@
 # Flask-CKEditor
 
+**WARNING: This project is under active development. Nothing is set in stone at this point of time.**
+
 CKEditor integration for Flask, including image upload, code syntax highlight and more.
 
 ## Installation
@@ -76,8 +78,8 @@ The configuration options available were listed below:
 - CKEDITOR_HEIGHT
 - CKEDITOR_WIDTH
 - CKEDITOR_CODE_THEME
-- CKEDITOR_FILE_UPLOAD_URL
-- CKEDITOR_FILE_BROWSER_URL
+- CKEDITOR_FILE_UPLOADER
+- CKEDITOR_FILE_BROWSER
 
 In addition, you can pass custom settings with `custom_config` argument:
 
@@ -92,12 +94,12 @@ settings on [CKEditor documentation](https://docs.ckeditor.com/ckeditor4/docs/#!
 ## Image upload
 
 The image can be uploaded with image widget. When you set `CKEDITOR_FILE_UPLOAD_URL`
-with proper value, you will see the upload tab appear in image widget. You need to use `ckeditor.uploader`
+with proper value (URL or endpoint), you will see the upload tab appear in image widget. You need to use `ckeditor.uploader`
 to decorate the view function that handle the file upload. And, The upload view must return the uploaded 
 image's url. For example:
 
 ```python
-app.config['CKEDITOR_FILE_UPLOAD_URL'] = '/upload'
+app.config['CKEDITOR_FILE_UPLOADER'] = 'upload'
 
 @app.route('/files/<filename>')
 def files(filename):
@@ -157,6 +159,18 @@ Aside from the basic example, there are two additional examples:
 - [ ] Integrate with a file browser
 
 ## Changelog
+
+### 0.3.1
+
+Release date: --
+
+- The value of `CKEDITOR_FILE_UPLOADER`, `CKEDITOR_FILE_BROWSER`, `file_uploader`
+and `file_browser` in `ckeditor.config()` can be URL or endpoint.
+endpoint.
+- Change `CKEDITOR_FILE_UPLOAD_URL` to `CKEDITOR_FILE_UPLOADER`.
+- Change `CKEDITOR_FILE_BROWSER_URL` to `CKEDITOR_FILE_BROWSER`.
+- Change `ckeditor.config(file_upload_url)` to `ckeditor.config(file_uploader)`.
+- Change `ckeditor.config(file_browser_url)` to `ckeditor.config(file_browser)`.
 
 ### 0.3
 

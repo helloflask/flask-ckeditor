@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 import warnings
-
+from functools import wraps
 from flask import current_app, Markup, Blueprint, url_for, request
+
 from flask_ckeditor.fields import CKEditorField
+from flask_ckeditor.utils import get_url
 
 
 class _CKEditor(object):
@@ -36,7 +38,7 @@ class _CKEditor(object):
 
     @staticmethod
     def config(name='ckeditor', language=None, height=None, width=None, code_theme=None,
-               file_upload_url=None, file_browser_url=None, custom_config=''):
+               file_uploader=None, file_browser=None, custom_config=''):
         """Config CKEditor.
 
         :param name: The input field's name when using Flask-WTF. 
@@ -47,7 +49,7 @@ class _CKEditor(object):
         :param width: The heighe of CKEditor window.
         :param code_theme: The theme's name in string used for code snippets, default to 
         ``monokai_sublime``.
-        :param file_upload_url: The url to send the upload data. The releated view function 
+        :param file_uploader: The url or endpoint to send the upload data. The releated view function 
         must be decorated with ``ckeditor.uploader`` and return the uploaded image's url. 
         For example::
             
@@ -64,7 +66,7 @@ class _CKEditor(object):
                 url = url_for('files', filename=f.filename)
                 return url
         
-        :param file_browser_url: The url to link a file browser.
+        :param file_browser: The url or endpoint to link a file browser.
         :param custom_config: The addition config, for example ``uiColor: '#9AB8F3'``.
         The proper syntax for each option is ``configuration name : configuration value``.
         You can use comma to separate multiple key-value pairs. See the list of available
@@ -73,13 +75,19 @@ class _CKEditor(object):
 
         .. versionadded:: 0.3
         """
+        file_uploader = file_uploader or current_app.config['CKEDITOR_FILE_UPLOADER']
+        file_browser = file_browser or current_app.config['CKEDITOR_FILE_BROWSER']
 
+        if file_uploader != '':
+            file_uploader = get_url(file_uploader)
+        if file_browser != '':
+            file_browser = get_url(file_browser)
+        
         language = language or current_app.config['CKEDITOR_LANGUAGE']
         height = height or current_app.config['CKEDITOR_HEIGHT']
         width = width or current_app.config['CKEDITOR_WIDTH']
         code_theme = code_theme or current_app.config['CKEDITOR_CODE_THEME']
-        file_upload_url = file_upload_url or current_app.config['CKEDITOR_FILE_UPLOAD_URL']
-        file_browser_url = file_browser_url or current_app.config['CKEDITOR_FILE_BROWSER_URL']
+        
         return Markup('''
 <script type="text/javascript">
         CKEDITOR.replace( %r, {
@@ -92,7 +100,7 @@ class _CKEditor(object):
             filebrowserBrowseUrl: %r,
             %s
         });
-    </script>''' % (name, language, height, width, code_theme, file_upload_url, file_browser_url, custom_config))
+    </script>''' % (name, language, height, width, code_theme, file_uploader, file_browser, custom_config))
 
     @staticmethod
     def create():
@@ -117,12 +125,6 @@ class _CKEditor(object):
             <script>hljs.initHighlightingOnLoad();</script>''' % (css_url, js_url))
 
 
-def random_filename(old_filename):
-    ext = os.path.splitext(old_filename)[1]
-    new_filename = uuid.uuid4().hex + ext
-    return new_filename
-
-
 class CKEditor(object):
     def __init__(self, app=None):
         if app is not None:
@@ -131,7 +133,7 @@ class CKEditor(object):
     def init_app(self, app):
         blueprint = Blueprint('ckeditor', __name__,
             static_folder='static',
-            static_url_path= app.static_url_path + '/ckeditor')
+            static_url_path= app.static_url_path + '/ckeditor')  # delete?
         app.register_blueprint(blueprint)
 
         if not hasattr(app, 'extensions'):
@@ -146,8 +148,9 @@ class CKEditor(object):
         app.config.setdefault('CKEDITOR_HEIGHT', '')
         app.config.setdefault('CKEDITOR_WIDTH', '')
         app.config.setdefault('CKEDITOR_CODE_THEME', 'monokai_sublime')
-        app.config.setdefault('CKEDITOR_FILE_UPLOAD_URL', '')
-        app.config.setdefault('CKEDITOR_FILE_BROWSER_URL', '')
+
+        app.config.setdefault('CKEDITOR_FILE_UPLOADER', '')
+        app.config.setdefault('CKEDITOR_FILE_BROWSER', '')
 
     @staticmethod
     def context_processor():
@@ -175,6 +178,7 @@ class CKEditor(object):
 
         .. versionadded:: 0.3
         """
+        @wraps(func)
         def wrapper(*args, **kwargs):
             func_num = request.args.get('CKEditorFuncNum') 
             ckeditor = request.args.get('CKEditor') 

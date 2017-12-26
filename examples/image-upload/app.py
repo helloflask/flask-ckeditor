@@ -13,7 +13,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
 app.config['CKEDITOR_SERVE_LOCAL'] = True
 app.config['CKEDITOR_HEIGHT'] = 400
-app.config['CKEDITOR_FILE_UPLOAD_URL'] = '/upload'
+app.config['CKEDITOR_FILE_UPLOADER'] = 'upload'
 app.config['UPLOADED_PATH'] = basedir + '/uploads'
 
 app.secret_key = 'secret string'
