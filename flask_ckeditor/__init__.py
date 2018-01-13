@@ -132,8 +132,7 @@ class CKEditor(object):
 
     def init_app(self, app):
         blueprint = Blueprint('ckeditor', __name__,
-            static_folder='static',
-            static_url_path= app.static_url_path + '/ckeditor')  # delete?
+            static_folder='static', static_url_path= '/ckeditor' + app.static_url_path)
         app.register_blueprint(blueprint)
 
         if not hasattr(app, 'extensions'):
