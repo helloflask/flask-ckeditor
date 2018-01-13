@@ -162,11 +162,10 @@ Aside from the basic example, there are two additional examples:
 
 ### 0.3.1
 
-Release date: --
+Release date: 2018/1/13
 
 - The value of `CKEDITOR_FILE_UPLOADER`, `CKEDITOR_FILE_BROWSER`, `file_uploader`
 and `file_browser` in `ckeditor.config()` can be URL or endpoint.
-endpoint.
 - Change `CKEDITOR_FILE_UPLOAD_URL` to `CKEDITOR_FILE_UPLOADER`.
 - Change `CKEDITOR_FILE_BROWSER_URL` to `CKEDITOR_FILE_BROWSER`.
 - Change `ckeditor.config(file_upload_url)` to `ckeditor.config(file_uploader)`.
@@ -174,7 +173,7 @@ endpoint.
 
 ### 0.3
 
-Release date: 2017/12/4.
+Release date: 2017/12/4
 
 - Set custom resource url with `custom_url` argument in `load()`.
 - Added support for configuration, `config()` method used to load config.
