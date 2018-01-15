@@ -160,6 +160,12 @@ Aside from the basic example, there are two additional examples:
 
 ## Changelog
 
+### 0.3.2
+
+Release date: 2018/1/15
+
+- Fixed built-in resources bug.
+
 ### 0.3.1
 
 Release date: 2018/1/13

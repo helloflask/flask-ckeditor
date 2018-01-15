@@ -21,7 +21,7 @@ from setuptools import setup
 
 setup(
     name='Flask-CKEditor',
-    version='0.3.1',
+    version='0.3.2',
     url='http://github.com/greyli/flask-ckeditor',
     download_url = 'https://github.com/greyli/flask-ckeditor/archive/0.3.1.tar.gz',
     license='MIT',
