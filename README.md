@@ -33,7 +33,7 @@ You can use `custom_url` to load your custom CKEditor build:
 
 ## How it work?
 
-Here is a simple example. You can defined a form class with Flask-WTF just like normal. Then import
+Here is a simple example. You can defined a form class with Flask-WTF/WTForms just like normal. Then import
 the CKEditorField provided by Flask-CKEditor and use it like `StringField`:
 
 ```python
@@ -67,8 +67,8 @@ You can load settings for CKEditor with `config()` method in Jinja2 template:
 </body>
 ```
 
-When using Flask-WTF, you have to pass the field name as `name` in `ckeditor.config()`.
-If you create the CKEditor through `ckeditor.create()`, the default value will be used.
+When using Flask-WTF/WTForms, you have to pass the field name as `name` in `ckeditor.config()`.
+If you create the CKEditor through `ckeditor.create()`, the default value (e.g. `ckeditor`) will be used.
 
 The configuration options available were listed below:
 
@@ -159,6 +159,13 @@ Aside from the basic example, there are two additional examples:
 - [ ] Integrate with a file browser
 
 ## Changelog
+
+### 0.3.3
+
+Release date: 2018/2/4
+
+- Added support to set `name` and `value` when using `ckeditor.create()`.
+
 
 ### 0.3.2
 

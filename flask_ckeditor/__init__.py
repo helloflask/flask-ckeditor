@@ -41,7 +41,8 @@ class _CKEditor(object):
                file_uploader=None, file_browser=None, custom_config=''):
         """Config CKEditor.
 
-        :param name: The input field's name when using Flask-WTF. 
+        :param name: The target input field's name. If you use Flask-WTF/WTForms, it need to set
+        to field's name. Default to 'ckeditor'. 
         :param language: The lang code string to set UI language in ISO 639 format, one of 
         ``zh``, ``zh-cn``,  ``ko``, ``ja``, ``es``, ``fr``, ``de`` and ``en``, 
         default to ``en``(i.e. English).
@@ -103,12 +104,16 @@ class _CKEditor(object):
     </script>''' % (name, language, height, width, code_theme, file_uploader, file_browser, custom_config))
 
     @staticmethod
-    def create():
+    def create(name='ckeditor', value=''):
         """Create a ckeditor textarea directly.
-
+        
+        :param name: The name attribute of CKEditor textarea, set it when you need to create
+        more than one textarea in one page. Default to `ckeditor`.
+        :param value: The preset value for textarea.
+        
         .. versionadded:: 0.3
         """
-        return Markup('<textarea class="ckeditor" id="ckeditor" name="ckeditor"></textarea>')
+        return Markup('<textarea class="ckeditor" name="%s">%s</textarea>' % (name, value))
 
     @staticmethod
     def load_code_theme():

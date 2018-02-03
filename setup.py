@@ -21,9 +21,9 @@ from setuptools import setup
 
 setup(
     name='Flask-CKEditor',
-    version='0.3.2',
+    version='0.3.3',
     url='http://github.com/greyli/flask-ckeditor',
-    download_url = 'https://github.com/greyli/flask-ckeditor/archive/0.3.1.tar.gz',
+    download_url = 'https://github.com/greyli/flask-ckeditor/archive/0.3.3.tar.gz',
     license='MIT',
     author='Grey Li',
     author_email='withlihui@gmail.com',
@@ -35,8 +35,7 @@ setup(
     platforms='any',
     test_suite='test_flask_ckeditor',
     install_requires=[
-        'Flask',
-        'WTForms'
+        'Flask'
     ],
     classifiers=[
         'Environment :: Web Environment',
