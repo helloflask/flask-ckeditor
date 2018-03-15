@@ -95,7 +95,7 @@ settings on [CKEditor documentation](https://docs.ckeditor.com/ckeditor4/docs/#!
 
 ## Image upload
 
-The image can be uploaded with image widget. When you set `CKEDITOR_FILE_UPLOAD_URL`
+The image can be uploaded with image widget. When you set `CKEDITOR_FILE_UPLOADER`
 with proper value (URL or endpoint), you will see the upload tab appear in image widget. You need to use `ckeditor.uploader`
 to decorate the view function that handle the file upload. And, The upload view must return the uploaded 
 image's url. For example:
@@ -136,7 +136,7 @@ Another step was load code theme resources in the page you want to display the t
 </head>
 ```
 
-## Code Snippet Highlight
+## Markdown support
 
 Since 0.3.4, the bulit-in CKEditor package included a [Markdown](ckeditor.com/addon/markdown) plugin. 
 You can set `CKEDITOR_ENABLE_MARKDOWN` to `True` to eanble Markdown support. 
@@ -154,10 +154,11 @@ $ python app.py
 
 Then go to http://127.0.0.1:5000 with your favourite browser.
 
-Aside from the basic example, there are two additional examples:
+Aside from the basic example, there are three additional examples:
 
 - examples/image-upload: This example demonstrate how to support image upload in Flaks-CKEditor.
 - examples/without-flask-wtf: This example demonstrate how to use CKEditor without Flask-WTF.
+- examples/markdown: This example demonstrate how to use add Markdown support.
 
 ## TODO
 - [ ] Documentation
