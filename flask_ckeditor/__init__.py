@@ -38,14 +38,14 @@ class _CKEditor(object):
 
     @staticmethod
     def config(name='ckeditor', language=None, height=None, width=None, code_theme=None,
-               file_uploader=None, file_browser=None, custom_config=''):
+               file_uploader=None, file_browser=None, markdown=False, custom_config=''):
         """Config CKEditor.
 
         :param name: The target input field's name. If you use Flask-WTF/WTForms, it need to set
         to field's name. Default to 'ckeditor'. 
         :param language: The lang code string to set UI language in ISO 639 format, one of 
         ``zh``, ``zh-cn``,  ``ko``, ``ja``, ``es``, ``fr``, ``de`` and ``en``, 
-        default to ``en``(i.e. English).
+        default to ``en``(i.e. English). You can bulid your own package on ckeditor.com to add more.
         :param height: The heighe of CKEditor window, default to 200.
         :param width: The heighe of CKEditor window.
         :param code_theme: The theme's name in string used for code snippets, default to 
@@ -54,7 +54,7 @@ class _CKEditor(object):
         must be decorated with ``ckeditor.uploader`` and return the uploaded image's url. 
         For example::
             
-            @app.route('/files/<filename>')
+            @app.route('/files/<path:filename>')
             def files(filename):
                 path = app.config['UPLOADED_PATH']
                 return send_from_directory(path, filename)
@@ -88,20 +88,27 @@ class _CKEditor(object):
         height = height or current_app.config['CKEDITOR_HEIGHT']
         width = width or current_app.config['CKEDITOR_WIDTH']
         code_theme = code_theme or current_app.config['CKEDITOR_CODE_THEME']
-        
+        enable_md = markdown or current_app.config['CKEDITOR_ENABLE_MARKDOWN']
+        extra_plugins = current_app.config['CKEDITOR_EXTRA_PLUGINS']
+        if enable_md and 'markdown' not in extra_plugins:
+            extra_plugins.append('markdown')
+
         return Markup('''
 <script type="text/javascript">
-        CKEDITOR.replace( %r, {
-            language: %r,
-            height: %r,
-            width: %r,
-            //toolbarCanCollapse: true,
-            codeSnippet_theme: %r,
-            filebrowserUploadUrl: %r,
-            filebrowserBrowseUrl: %r,
-            %s
-        });
-    </script>''' % (name, language, height, width, code_theme, file_uploader, file_browser, custom_config))
+$(document).ready(function() {
+    CKEDITOR.replace( %r, {
+        language: %r,
+        height: %r,
+        width: %r,
+        //toolbarCanCollapse: true,
+        codeSnippet_theme: %r,
+        filebrowserUploadUrl: %r,
+        filebrowserBrowseUrl: %r,
+        extraPlugins: %r,
+        %s
+    });
+});
+</script>''' % (name, language, height, width, code_theme, file_uploader, file_browser, ','.join(extra_plugins), custom_config))
 
     @staticmethod
     def create(name='ckeditor', value=''):
@@ -155,6 +162,14 @@ class CKEditor(object):
 
         app.config.setdefault('CKEDITOR_FILE_UPLOADER', '')
         app.config.setdefault('CKEDITOR_FILE_BROWSER', '')
+
+        # Enable Markdown mode
+        # .. versionadded:: 0.3.4
+        app.config.setdefault('CKEDITOR_ENABLE_MARKDOWN', False)
+        # Register extra CKEditor plugins
+        # .. versionadded:: 0.3.4
+        app.config.setdefault('CKEDITOR_EXTRA_PLUGINS', [])
+
 
     @staticmethod
     def context_processor():

@@ -2,7 +2,7 @@
 
 **WARNING: This project is under active development. Nothing is set in stone at this point of time.**
 
-CKEditor integration for Flask, including image upload, code syntax highlight and more.
+CKEditor integration for Flask, including image upload, code syntax highlight, Markdown mode and more.
 
 ## Installation
 
@@ -155,10 +155,16 @@ Aside from the basic example, there are two additional examples:
 ## TODO
 - [ ] Documentation
 - [ ] Test
-- [ ] Markdown mode
 - [ ] Integrate with a file browser
 
 ## Changelog
+
+### 0.3.4
+
+Release date: 2018/3/15
+
+- Added Markdown plugin into built-in resouce, enabled markdown mode via `CKEDITOR_ENABLE_MARKDOWN`.
+- The `config()` method now support to called in `<head></head>`.
 
 ### 0.3.3
 

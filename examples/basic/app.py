@@ -11,7 +11,6 @@ from flask_ckeditor import CKEditor, CKEditorField
 app = Flask(__name__)
 app.config['CKEDITOR_SERVE_LOCAL'] = True
 app.config['CKEDITOR_HEIGHT'] = 400
-
 app.secret_key = 'secret string'
 
 ckeditor = CKEditor(app)
