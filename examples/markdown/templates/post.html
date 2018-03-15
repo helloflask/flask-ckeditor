@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ 	<meta charset="UTF-8">
+ 	<title>Flask-CKEditor Demo</title>
+ 	<!-- Load code snippets CSS theme -->
+ 	{{ ckeditor.load_code_theme() }}
+</head>
+<body>
+	<div class="warpper" style="width: 700px; margin: auto">
+		<h1>{{ title }}</h1>
+		<hr>
+		<p>{{ body|safe }}</p>
+		<hr>
+		<a href="{{ url_for('index') }}">Back Home</a>
+	</div>
+</body>
+</html>
+

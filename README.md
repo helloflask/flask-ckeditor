@@ -80,6 +80,8 @@ The configuration options available were listed below:
 - CKEDITOR_CODE_THEME
 - CKEDITOR_FILE_UPLOADER
 - CKEDITOR_FILE_BROWSER
+- CKEDITOR_ENABLE_MARKDOWN
+- CKEDITOR_EXTRA_PLUGINS
 
 In addition, you can pass custom settings with `custom_config` argument:
 
@@ -134,6 +136,11 @@ Another step was load code theme resources in the page you want to display the t
 </head>
 ```
 
+## Code Snippet Highlight
+
+Since 0.3.4, the bulit-in CKEditor package included a [Markdown](ckeditor.com/addon/markdown) plugin. 
+You can set `CKEDITOR_ENABLE_MARKDOWN` to `True` to eanble Markdown support. 
+
 ## Try Examples
 
 Open a terminal, type the commands below one by one:
@@ -165,6 +172,7 @@ Release date: 2018/3/15
 
 - Added Markdown plugin into built-in resouce, enabled markdown mode via `CKEDITOR_ENABLE_MARKDOWN`.
 - The `config()` method now support to called in `<head></head>`.
+- Added configuration parameter `CKEDITOR_EXTRA_PLUGINS`, a list used to register extra plugins. 
 
 ### 0.3.3
 
