@@ -4,12 +4,12 @@ from functools import wraps
 from flask import current_app, Markup, Blueprint, url_for, request
 
 from flask_ckeditor.fields import CKEditorField
-from flask_ckeditor.utils import get_url
+from flask_ckeditor.utils import get_url, random_filename
 
 
 class _CKEditor(object):
-    """The class implement funcitons for Jinja2.
-    """
+    """The class implement functions for Jinja2 template."""
+
     @staticmethod
     def load(custom_url=None, pkg_type=None, version='4.9.0'):
         """Load CKEditor resource from CDN or local.
@@ -23,18 +23,18 @@ class _CKEditor(object):
         pkg_type = pkg_type or current_app.config['CKEDITOR_PKG_TYPE']
 
         if pkg_type not in ['basic', 'standard', 'full']:
-            warnings.warn('The provided pkg_type string was invalid, ' 
-                'it should be one of basic/standard/full.')
+            warnings.warn('The provided pkg_type string was invalid, '
+                          'it should be one of basic/standard/full.')
             pkg_type = 'standard'
 
         if current_app.config['CKEDITOR_SERVE_LOCAL']:
             url = url_for('ckeditor.static', filename='%s/ckeditor.js' % pkg_type)
         else:
             url = '//cdn.ckeditor.com/%s/%s/ckeditor.js' % (version, pkg_type)
-        
+
         if custom_url:
             url = custom_url
-        return Markup('<script src="%s"></script>'% url)
+        return Markup('<script src="%s"></script>' % url)
 
     @staticmethod
     def config(name='ckeditor', language=None, height=None, width=None, code_theme=None,
@@ -83,7 +83,7 @@ class _CKEditor(object):
             file_uploader = get_url(file_uploader)
         if file_browser != '':
             file_browser = get_url(file_browser)
-        
+
         language = language or current_app.config['CKEDITOR_LANGUAGE']
         height = height or current_app.config['CKEDITOR_HEIGHT']
         width = width or current_app.config['CKEDITOR_WIDTH']
@@ -95,7 +95,6 @@ class _CKEditor(object):
 
         return Markup('''
 <script type="text/javascript">
-$(document).ready(function() {
     CKEDITOR.replace( %r, {
         language: %r,
         height: %r,
@@ -107,8 +106,8 @@ $(document).ready(function() {
         extraPlugins: %r,
         %s
     });
-});
-</script>''' % (name, language, height, width, code_theme, file_uploader, file_browser, ','.join(extra_plugins), custom_config))
+</script>''' % (
+        name, language, height, width, code_theme, file_uploader, file_browser, ','.join(extra_plugins), custom_config))
 
     @staticmethod
     def create(name='ckeditor', value=''):
@@ -129,10 +128,10 @@ $(document).ready(function() {
         .. versionadded:: 0.3
         """
         theme = current_app.config['CKEDITOR_CODE_THEME']
-        js_url = url_for('ckeditor.static', 
-                    filename='basic/plugins/codesnippet/lib/highlight/highlight.pack.js')
-        css_url = url_for('ckeditor.static', 
-                    filename='basic/plugins/codesnippet/lib/highlight/styles/%s.css' % theme)
+        js_url = url_for('ckeditor.static',
+                         filename='basic/plugins/codesnippet/lib/highlight/highlight.pack.js')
+        css_url = url_for('ckeditor.static',
+                          filename='basic/plugins/codesnippet/lib/highlight/styles/%s.css' % theme)
         return Markup('''<link href="%s" rel="stylesheet">\n<script src="%s"></script>\n
             <script>hljs.initHighlightingOnLoad();</script>''' % (css_url, js_url))
 
@@ -144,7 +143,7 @@ class CKEditor(object):
 
     def init_app(self, app):
         blueprint = Blueprint('ckeditor', __name__,
-            static_folder='static', static_url_path= '/ckeditor' + app.static_url_path)
+                              static_folder='static', static_url_path='/ckeditor' + app.static_url_path)
         app.register_blueprint(blueprint)
 
         if not hasattr(app, 'extensions'):
@@ -169,7 +168,6 @@ class CKEditor(object):
         # Register extra CKEditor plugins
         # .. versionadded:: 0.3.4
         app.config.setdefault('CKEDITOR_EXTRA_PLUGINS', [])
-
 
     @staticmethod
     def context_processor():
@@ -197,10 +195,11 @@ class CKEditor(object):
 
         .. versionadded:: 0.3
         """
+
         @wraps(func)
         def wrapper(*args, **kwargs):
-            func_num = request.args.get('CKEditorFuncNum') 
-            ckeditor = request.args.get('CKEditor') 
+            func_num = request.args.get('CKEditorFuncNum')
+            ckeditor = request.args.get('CKEditor')
             # language code used for error message, not used yet.
             lang_code = request.args.get('langCode')
             # the error message to display when upload failed, not used yet.
@@ -209,5 +208,6 @@ class CKEditor(object):
             return Markup('''
 <script type="text/javascript">
 window.parent.CKEDITOR.tools.callFunction(%s, "%s", "%s");</script>'''
-% (func_num, url, message))
+                          % (func_num, url, message))
+
         return wrapper
