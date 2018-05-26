@@ -95,7 +95,8 @@ settings on [CKEditor documentation](https://docs.ckeditor.com/ckeditor4/docs/#!
 
 ## Image upload
 
-The image can be uploaded with image widget. When you set `CKEDITOR_FILE_UPLOADER`
+The bulit-in CKEditor package include a [File Browser](ckeditor.com/addon/filebrowser) plugin. With this
+plugin, you can upload and insert image with image widget. When you set `CKEDITOR_FILE_UPLOADER`
 with proper value (URL or endpoint), you will see the upload tab appear in image widget. You need to use `ckeditor.uploader`
 to decorate the view function that handle the file upload. And, The upload view must return the uploaded 
 image's url. For example:
@@ -103,7 +104,7 @@ image's url. For example:
 ```python
 app.config['CKEDITOR_FILE_UPLOADER'] = 'upload'
 
-@app.route('/files/<filename>')
+@app.route('/files/<path:filename>')
 def files(filename):
     path = '/the/uploaded/directory'
     return send_from_directory(path, filename)
