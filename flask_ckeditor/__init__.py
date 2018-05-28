@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import warnings
 from functools import wraps
-from flask import current_app, Markup, Blueprint, url_for, request
+from flask import current_app, Markup, Blueprint, url_for, request, jsonify
 
 from flask_ckeditor.fields import CKEditorField
 from flask_ckeditor.utils import get_url, random_filename
@@ -11,7 +11,7 @@ class _CKEditor(object):
     """The class implement functions for Jinja2 template."""
 
     @staticmethod
-    def load(custom_url=None, pkg_type=None, version='4.9.0'):
+    def load(custom_url=None, pkg_type=None, version='4.9.2'):
         """Load CKEditor resource from CDN or local.
 
         :param custom_url: The custom resoucre url to use, build your CKEditor
@@ -101,13 +101,15 @@ class _CKEditor(object):
         width: %r,
         //toolbarCanCollapse: true,
         codeSnippet_theme: %r,
+        imageUploadUrl: %r,
         filebrowserUploadUrl: %r,
         filebrowserBrowseUrl: %r,
         extraPlugins: %r,
         %s
     });
 </script>''' % (
-        name, language, height, width, code_theme, file_uploader, file_browser, ','.join(extra_plugins), custom_config))
+            name, language, height, width, code_theme, file_uploader, file_uploader, file_browser,
+            ','.join(extra_plugins), custom_config))
 
     @staticmethod
     def create(name='ckeditor', value=''):
@@ -162,12 +164,16 @@ class CKEditor(object):
         app.config.setdefault('CKEDITOR_FILE_UPLOADER', '')
         app.config.setdefault('CKEDITOR_FILE_BROWSER', '')
 
+        # Default error message for upload fail
+        # .. versionadded:: 0.3.5
+        app.config.setdefault('CKEDITOR_UPLOAD_ERROR_MESSAGE', 'Upload failed.')
+
         # Enable Markdown mode
         # .. versionadded:: 0.3.4
         app.config.setdefault('CKEDITOR_ENABLE_MARKDOWN', False)
         # Register extra CKEditor plugins
         # .. versionadded:: 0.3.4
-        app.config.setdefault('CKEDITOR_EXTRA_PLUGINS', [])
+        app.config.setdefault('CKEDITOR_EXTRA_PLUGINS', ['uploadimage'])
 
     @staticmethod
     def context_processor():
@@ -175,7 +181,10 @@ class CKEditor(object):
 
     @staticmethod
     def uploader(func):
-        """Decorated the view function that handle the file upload. The upload 
+        """This method only used for CKEditor under version 4.5, in newer version,
+        you should use ``upload_success()`` and ``upload_fail()`` instead.
+
+        Decorated the view function that handle the file upload. The upload
         view must return the uploaded image's url. For example::
             
             @app.route('/files/<filename>')
@@ -203,11 +212,31 @@ class CKEditor(object):
             # language code used for error message, not used yet.
             lang_code = request.args.get('langCode')
             # the error message to display when upload failed, not used yet.
-            message = ''
+            message = current_app.config['CKEDITOR_UPLOAD_ERROR_MESSAGE']
             url = func(*args, **kwargs)
-            return Markup('''
-<script type="text/javascript">
-window.parent.CKEDITOR.tools.callFunction(%s, "%s", "%s");</script>'''
-                          % (func_num, url, message))
-
+            return Markup('''<script type="text/javascript">
+        window.parent.CKEDITOR.tools.callFunction(%s, "%s", "%s");</script>''' % (func_num, url, message))
         return wrapper
+
+
+def upload_success(url, filename=''):
+    """Return a upload success response, for CKEditor >= 4.5.
+
+    :param url: the URL of uploaded image.
+    :param filename: the filename of uploaded image, optional.
+
+    .. versionadded:: 0.3.5
+    """
+    return jsonify(uploaded=1, url=url, filename=filename)
+
+
+def upload_fail(message=None):
+    """Return a upload failed response, for CKEditor >= 4.5.
+
+    :param message: error message.
+
+    .. versionadded:: 0.3.5
+    """
+    if message is None:
+        message = current_app.config['CKEDITOR_UPLOAD_ERROR_MESSAGE']
+    return jsonify(uploaded=0, error={'message': message})
