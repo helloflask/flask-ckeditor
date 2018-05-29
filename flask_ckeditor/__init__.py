@@ -14,7 +14,7 @@ class _CKEditor(object):
     def load(custom_url=None, pkg_type=None, version='4.9.2'):
         """Load CKEditor resource from CDN or local.
 
-        :param custom_url: The custom resoucre url to use, build your CKEditor
+        :param custom_url: The custom resource url to use, build your CKEditor
         on `CKEditor builder <https://ckeditor.com/cke4/builder>`_.
         :param pkg_type: The type of CKEditor package, one of ``basic``, 
         ``standard`` and ``full``. Default to ``standard``.
@@ -28,7 +28,7 @@ class _CKEditor(object):
             pkg_type = 'standard'
 
         if current_app.config['CKEDITOR_SERVE_LOCAL']:
-            url = url_for('ckeditor.static', filename='%s/ckeditor.js' % pkg_type)
+            url = url_for('ckeditor.static', filename='ckeditor_%s_%s/ckeditor/ckeditor.js' % (version, pkg_type))
         else:
             url = '//cdn.ckeditor.com/%s/%s/ckeditor.js' % (version, pkg_type)
 
@@ -43,9 +43,8 @@ class _CKEditor(object):
 
         :param name: The target input field's name. If you use Flask-WTF/WTForms, it need to set
         to field's name. Default to 'ckeditor'. 
-        :param language: The lang code string to set UI language in ISO 639 format, one of 
-        ``zh``, ``zh-cn``,  ``ko``, ``ja``, ``es``, ``fr``, ``de`` and ``en``, 
-        default to ``en``(i.e. English). You can bulid your own package on ckeditor.com to add more.
+        :param language: The lang code string to set UI language in ISO 639 format, for example:
+        ``zh``, ``zh-cn``,  ``ko``, ``ja``, ``es``, ``fr``, ``de``, ``en`` etc, default to ``en``(i.e. English).
         :param height: The heighe of CKEditor window, default to 200.
         :param width: The heighe of CKEditor window.
         :param code_theme: The theme's name in string used for code snippets, default to 
@@ -76,20 +75,26 @@ class _CKEditor(object):
 
         .. versionadded:: 0.3
         """
+        extra_plugins = current_app.config['CKEDITOR_EXTRA_PLUGINS']
+
         file_uploader = file_uploader or current_app.config['CKEDITOR_FILE_UPLOADER']
         file_browser = file_browser or current_app.config['CKEDITOR_FILE_BROWSER']
 
         if file_uploader != '':
             file_uploader = get_url(file_uploader)
+            if 'filebrowser' not in extra_plugins:
+                extra_plugins.append('filebrowser')
         if file_browser != '':
             file_browser = get_url(file_browser)
+            if 'filebrowser' not in extra_plugins:
+                extra_plugins.append('filebrowser')
 
         language = language or current_app.config['CKEDITOR_LANGUAGE']
         height = height or current_app.config['CKEDITOR_HEIGHT']
         width = width or current_app.config['CKEDITOR_WIDTH']
         code_theme = code_theme or current_app.config['CKEDITOR_CODE_THEME']
+
         enable_md = markdown or current_app.config['CKEDITOR_ENABLE_MARKDOWN']
-        extra_plugins = current_app.config['CKEDITOR_EXTRA_PLUGINS']
         if enable_md and 'markdown' not in extra_plugins:
             extra_plugins.append('markdown')
 
@@ -131,9 +136,9 @@ class _CKEditor(object):
         """
         theme = current_app.config['CKEDITOR_CODE_THEME']
         js_url = url_for('ckeditor.static',
-                         filename='basic/plugins/codesnippet/lib/highlight/highlight.pack.js')
+                         filename='ckeditor_4.9.2_basic/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js')
         css_url = url_for('ckeditor.static',
-                          filename='basic/plugins/codesnippet/lib/highlight/styles/%s.css' % theme)
+                          filename='ckeditor_4.9.2_basic/ckeditor/plugins/codesnippet/lib/highlight/styles/%s.css' % theme)
         return Markup('''<link href="%s" rel="stylesheet">\n<script src="%s"></script>\n
             <script>hljs.initHighlightingOnLoad();</script>''' % (css_url, js_url))
 
@@ -173,7 +178,7 @@ class CKEditor(object):
         app.config.setdefault('CKEDITOR_ENABLE_MARKDOWN', False)
         # Register extra CKEditor plugins
         # .. versionadded:: 0.3.4
-        app.config.setdefault('CKEDITOR_EXTRA_PLUGINS', ['uploadimage'])
+        app.config.setdefault('CKEDITOR_EXTRA_PLUGINS', [])
 
     @staticmethod
     def context_processor():

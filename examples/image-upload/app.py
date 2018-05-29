@@ -11,7 +11,7 @@ from flask_ckeditor import CKEditor, CKEditorField, upload_fail, upload_success
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 app = Flask(__name__)
-# app.config['CKEDITOR_SERVE_LOCAL'] = True
+app.config['CKEDITOR_SERVE_LOCAL'] = True
 app.config['CKEDITOR_HEIGHT'] = 400
 app.config['CKEDITOR_FILE_UPLOADER'] = 'upload'
 app.config['UPLOADED_PATH'] = os.path.join(basedir, 'uploads')
