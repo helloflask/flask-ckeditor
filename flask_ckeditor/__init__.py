@@ -28,7 +28,7 @@ class _CKEditor(object):
             pkg_type = 'standard'
 
         if current_app.config['CKEDITOR_SERVE_LOCAL']:
-            url = url_for('ckeditor.static', filename='ckeditor_%s_%s/ckeditor/ckeditor.js' % (version, pkg_type))
+            url = url_for('ckeditor.static', filename='%s/ckeditor.js' % pkg_type)
         else:
             url = '//cdn.ckeditor.com/%s/%s/ckeditor.js' % (version, pkg_type)
 
@@ -129,9 +129,9 @@ class _CKEditor(object):
         """
         theme = current_app.config['CKEDITOR_CODE_THEME']
         js_url = url_for('ckeditor.static',
-                         filename='ckeditor_4.9.2_basic/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js')
+                         filename='basic/plugins/codesnippet/lib/highlight/highlight.pack.js')
         css_url = url_for('ckeditor.static',
-                          filename='ckeditor_4.9.2_basic/ckeditor/plugins/codesnippet/lib/highlight/styles/%s.css' % theme)
+                          filename='basic/plugins/codesnippet/lib/highlight/styles/%s.css' % theme)
         return Markup('''<link href="%s" rel="stylesheet">\n<script src="%s"></script>\n
             <script>hljs.initHighlightingOnLoad();</script>''' % (css_url, js_url))
 
@@ -206,6 +206,7 @@ class CKEditor(object):
 
         .. versionadded:: 0.3
         """
+
         @wraps(func)
         def wrapper(*args, **kwargs):
             func_num = request.args.get('CKEditorFuncNum')
@@ -217,6 +218,7 @@ class CKEditor(object):
             url = func(*args, **kwargs)
             return Markup('''<script type="text/javascript">
         window.parent.CKEDITOR.tools.callFunction(%s, "%s", "%s");</script>''' % (func_num, url, message))
+
         return wrapper
 
 
