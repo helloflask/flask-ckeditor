@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Flask-CKEditor Demo</title>
-    {{ ckeditor.load() }}
 </head>
 <body>
 	<div class="warpper" style="width: 700px; margin: auto">
@@ -18,6 +17,7 @@
 			{{ form.submit }}
 		</form>
 	</div>
+	{{ ckeditor.load() }}
 	{{ ckeditor.config(name='body') }}
 </body>
 </html>

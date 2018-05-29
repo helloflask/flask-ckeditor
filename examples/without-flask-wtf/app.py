@@ -16,13 +16,13 @@ ckeditor = CKEditor(app)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-	if request.method == 'POST':
-		title = request.form.get('title')
-		body = request.form.get('ckeditor')
-		# You may need to store the data in database here
-		return render_template('post.html', title=title, body=body)
-	return render_template('index.html')
+    if request.method == 'POST':
+        title = request.form.get('title')
+        body = request.form.get('ckeditor')
+        # You may need to store the data in database here
+        return render_template('post.html', title=title, body=body)
+    return render_template('index.html')
 
 
 if __name__ == '__main__':
-	app.run(debug=True)
+    app.run(debug=True)

@@ -3,22 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Flask-CKEditor Demo</title>
-    {{ ckeditor.load() }}
 </head>
 <body>
 	<div class="warpper" style="width: 700px; margin: auto">
 		<h1>Flask-CKEditor Demo: Without Flask-WTF</h1>
 		<form method="post">
-			<label for="title">Title</label>
-			<br>
-			<input type="text" name="title">
-			<br><br>			
+			<label for="title">Title</label><br>
+			<input type="text" name="title"><br><br>
 			<label for="ckeditor">Body</label>
-			{{ ckeditor.create() }}
-			<br>
+			{{ ckeditor.create() }}<br>
 			<input type="submit" value="Submit">
 		</form>
 	</div>
+	{{ ckeditor.load() }}
 	{{ ckeditor.config() }}
 </body>
 </html>

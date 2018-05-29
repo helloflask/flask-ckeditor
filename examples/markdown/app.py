@@ -12,27 +12,28 @@ app = Flask(__name__)
 app.config['CKEDITOR_SERVE_LOCAL'] = True
 app.config['CKEDITOR_HEIGHT'] = 400
 # enable markdown mode
-app.config['CKEDITOR_ENABLE_MARKDOWN'] = 400
+app.config['CKEDITOR_ENABLE_MARKDOWN'] = True
 app.secret_key = 'secret string'
 
 ckeditor = CKEditor(app)
 
+
 class PostForm(FlaskForm):
-	title = StringField('Title')
-	body = CKEditorField('Body', validators=[DataRequired()])
-	submit = SubmitField('Submit')
+    title = StringField('Title')
+    body = CKEditorField('Body', validators=[DataRequired()])
+    submit = SubmitField('Submit')
 
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-	form = PostForm()
-	if form.validate_on_submit():
-		title = form.title.data
-		body = form.body.data
-		# You may need to store the data in database here
-		return render_template('post.html', title=title, body=body)
-	return render_template('index.html', form=form)
+    form = PostForm()
+    if form.validate_on_submit():
+        title = form.title.data
+        body = form.body.data
+        # You may need to store the data in database here
+        return render_template('post.html', title=title, body=body)
+    return render_template('index.html', form=form)
 
 
 if __name__ == '__main__':
-	app.run(debug=True)
+    app.run(debug=True)

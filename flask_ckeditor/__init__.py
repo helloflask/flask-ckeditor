@@ -204,7 +204,6 @@ class CKEditor(object):
 
         .. versionadded:: 0.3
         """
-
         @wraps(func)
         def wrapper(*args, **kwargs):
             func_num = request.args.get('CKEditorFuncNum')
