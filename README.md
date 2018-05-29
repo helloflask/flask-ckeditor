@@ -21,10 +21,13 @@ app = Flask(__name__)
 ckeditor = CKEditor(app)
 ```
 
-In the template which you want to put a CKEditor textarea, add this line in `<head></head>`:
+In the template which you want to put a CKEditor textarea, add this line in `<head></head>` or before `</body>`:
 
 ```python
-{{ ckeditor.load() }}
+<body>
+    ...
+    {{ ckeditor.load() }}
+</body>
 ```
 You can use `custom_url` to load your custom CKEditor build:
 ```python
@@ -51,8 +54,8 @@ Instead, you can also create the CKEditor textarea manually through `create()` m
 
 ```html
 <form method="post">
-{{ ckeditor.create() }}
-<input type="submit">
+    {{ ckeditor.create() }}
+    <input type="submit">
 </form>
 ```
 
@@ -60,11 +63,12 @@ Check the demo application at `examples/basic/` and `examples/without-flask-wtf`
 
 ## Configuration
 
-You can load settings for CKEditor with `config()` method in Jinja2 template:
+You can load settings for CKEditor with `config()` method in Jinja2 template, after the `load()` call:
 
 ```html
 <body>
     ...
+    {{ ckeditor.load() }}
     {{ ckeditor.config(name='body') }}
 </body>
 ```
