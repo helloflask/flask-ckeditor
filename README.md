@@ -167,9 +167,9 @@ Open a terminal, type the commands below one by one:
 
 ```bash
 $ git clone https://github.com/greyli/flask-ckeditor
-$ cd flask-ckeditor/examples/basic
+$ cd flask-ckeditor/examples
 $ pip install -r requirements.txt
-$ python app.py
+$ python basic/app.py
 ```
 
 Then go to http://127.0.0.1:5000 with your favourite browser.
