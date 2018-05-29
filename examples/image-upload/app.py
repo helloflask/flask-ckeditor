@@ -39,7 +39,7 @@ def index():
 
 
 @app.route('/files/<filename>')
-def files(filename):
+def uploaded_files(filename):
     path = app.config['UPLOADED_PATH']
     return send_from_directory(path, filename)
 
@@ -51,7 +51,7 @@ def upload():
     if extension not in ['jpg', 'gif', 'png', 'jpeg']:
         return upload_fail(message='Image only!')
     f.save(os.path.join(app.config['UPLOADED_PATH'], f.filename))
-    url = url_for('files', filename=f.filename)
+    url = url_for('uploaded_files', filename=f.filename)
     return upload_success(url=url)
 
 

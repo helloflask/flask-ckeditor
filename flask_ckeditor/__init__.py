@@ -38,35 +38,24 @@ class _CKEditor(object):
 
     @staticmethod
     def config(name='ckeditor', language=None, height=None, width=None, code_theme=None,
-               file_uploader=None, file_browser=None, markdown=False, custom_config=''):
+               file_uploader=None, file_browser=None, markdown=False, codesnippet=False, custom_config=''):
         """Config CKEditor.
 
         :param name: The target input field's name. If you use Flask-WTF/WTForms, it need to set
         to field's name. Default to 'ckeditor'. 
         :param language: The lang code string to set UI language in ISO 639 format, for example:
         ``zh``, ``zh-cn``,  ``ko``, ``ja``, ``es``, ``fr``, ``de``, ``en`` etc, default to ``en``(i.e. English).
-        :param height: The heighe of CKEditor window, default to 200.
-        :param width: The heighe of CKEditor window.
+        :param height: The height of CKEditor window, default to 200.
+        :param width: The width of CKEditor window.
         :param code_theme: The theme's name in string used for code snippets, default to 
         ``monokai_sublime``.
-        :param file_uploader: The url or endpoint to send the upload data. The releated view function 
-        must be decorated with ``ckeditor.uploader`` and return the uploaded image's url. 
-        For example::
-            
-            @app.route('/files/<path:filename>')
-            def files(filename):
-                path = app.config['UPLOADED_PATH']
-                return send_from_directory(path, filename)
+        :param file_uploader: The url or endpoint to send the upload data. The related view function
+        should return the ``upload_success()`` or ``upload_fail()`` call.
+        Check ``examples/image-upload/app.py`` for more detail.
 
-            @app.route('/upload', methods=['POST'])
-            @ckeditor.uploader
-            def upload():
-                f = request.files.get('upload')
-                f.save(os.path.join(app.config['UPLOADED_PATH'], f.filename))
-                url = url_for('files', filename=f.filename)
-                return url
-        
         :param file_browser: The url or endpoint to link a file browser.
+        :param markdown: Enable/disable the `Markdown <https://ckeditor.com/cke4/addon/markdown>`_ plugin.
+        :param codesnippet: Enable/disable the `Code Snippet <https://ckeditor.com/cke4/addon/codesnippet>`_ plugin.
         :param custom_config: The addition config, for example ``uiColor: '#9AB8F3'``.
         The proper syntax for each option is ``configuration name : configuration value``.
         You can use comma to separate multiple key-value pairs. See the list of available
@@ -92,7 +81,11 @@ class _CKEditor(object):
         language = language or current_app.config['CKEDITOR_LANGUAGE']
         height = height or current_app.config['CKEDITOR_HEIGHT']
         width = width or current_app.config['CKEDITOR_WIDTH']
+
         code_theme = code_theme or current_app.config['CKEDITOR_CODE_THEME']
+        enable_codesnippet = codesnippet or current_app.config['CKEDITOR_ENABLE_CODESNIPPET']
+        if enable_codesnippet and 'codesnippet' not in extra_plugins:
+            extra_plugins.append('codesnippet')
 
         enable_md = markdown or current_app.config['CKEDITOR_ENABLE_MARKDOWN']
         if enable_md and 'markdown' not in extra_plugins:
@@ -176,6 +169,10 @@ class CKEditor(object):
         # Enable Markdown mode
         # .. versionadded:: 0.3.4
         app.config.setdefault('CKEDITOR_ENABLE_MARKDOWN', False)
+        # Enable Code Snippet plugin
+        # .. versionadded:: 0.3.5
+        app.config.setdefault('CKEDITOR_ENABLE_CODESNIPPET', False)
+
         # Register extra CKEditor plugins
         # .. versionadded:: 0.3.4
         app.config.setdefault('CKEDITOR_EXTRA_PLUGINS', [])
@@ -192,8 +189,10 @@ class CKEditor(object):
         Decorated the view function that handle the file upload. The upload
         view must return the uploaded image's url. For example::
             
+            from flask import send_from_directory
+
             @app.route('/files/<filename>')
-            def files(filename):
+            def uploaded_files(filename):
                 path = app.config['UPLOADED_PATH']
                 return send_from_directory(path, filename)
 
@@ -202,10 +201,8 @@ class CKEditor(object):
             def upload():
                 f = request.files.get('upload')
                 f.save(os.path.join(app.config['UPLOADED_PATH'], f.filename))
-                url = url_for('files', filename=f.filename)
+                url = url_for('uploaded_files', filename=f.filename)
                 return url
-        
-        Check ``example/app.py`` for complete code. 
 
         .. versionadded:: 0.3
         """
@@ -215,7 +212,7 @@ class CKEditor(object):
             ckeditor = request.args.get('CKEditor')
             # language code used for error message, not used yet.
             lang_code = request.args.get('langCode')
-            # the error message to display when upload failed, not used yet.
+            # the error message to display when upload failed.
             message = current_app.config['CKEDITOR_UPLOAD_ERROR_MESSAGE']
             url = func(*args, **kwargs)
             return Markup('''<script type="text/javascript">
@@ -225,9 +222,27 @@ class CKEditor(object):
 
 def upload_success(url, filename=''):
     """Return a upload success response, for CKEditor >= 4.5.
+    For example::
+
+        from flask import send_from_directory
+        from flask_ckeditor import upload_success
+
+        @app.route('/files/<path:filename>')
+        def uploaded_files(filename):
+            path = app.config['UPLOADED_PATH']
+            return send_from_directory(path, filename)
+
+        @app.route('/upload', methods=['POST'])
+        def upload():
+            f = request.files.get('upload')
+            f.save(os.path.join(app.config['UPLOADED_PATH'], f.filename))
+            url = url_for('uploaded_files', filename=f.filename)
+            return upload_success(url=url)  # <--
 
     :param url: the URL of uploaded image.
     :param filename: the filename of uploaded image, optional.
+
+
 
     .. versionadded:: 0.3.5
     """
@@ -236,6 +251,24 @@ def upload_success(url, filename=''):
 
 def upload_fail(message=None):
     """Return a upload failed response, for CKEditor >= 4.5.
+    For example::
+
+        from flask import send_from_directory
+        from flask_ckeditor import upload_success, upload_fail
+
+        @app.route('/files/<path:filename>')
+        def uploaded_files(filename):
+            path = app.config['UPLOADED_PATH']
+            return send_from_directory(path, filename)
+
+        @app.route('/upload', methods=['POST'])
+        def upload():
+            f = request.files.get('upload')
+            if extension not in ['jpg', 'gif', 'png', 'jpeg']:
+                return upload_fail(message='Image only!')  # <--
+            f.save(os.path.join(app.config['UPLOADED_PATH'], f.filename))
+            url = url_for('uploaded_files', filename=f.filename)
+            return upload_success(url=url)
 
     :param message: error message.
 

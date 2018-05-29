@@ -81,6 +81,7 @@ The configuration options available were listed below:
 - CKEDITOR_FILE_UPLOADER
 - CKEDITOR_FILE_BROWSER
 - CKEDITOR_ENABLE_MARKDOWN
+- CKEDITOR_ENABLE_CODESNIPPET
 - CKEDITOR_EXTRA_PLUGINS
 
 In addition, you can pass custom settings with `custom_config` argument:
@@ -93,40 +94,48 @@ Keep it mind that the proper syntax for each option is ``configuration name : co
 You can use comma to separate multiple key-value pairs. See the list of available configuration 
 settings on [CKEditor documentation](https://docs.ckeditor.com/ckeditor4/docs/#!/api/CKEDITOR.config>).
 
-## Image upload
+## Image Upload
 
-The bulit-in CKEditor package include a [File Browser](ckeditor.com/addon/filebrowser) plugin. With this
-plugin, you can upload and insert image with image widget. When you set `CKEDITOR_FILE_UPLOADER`
-with proper value (URL or endpoint), you will see the upload tab appear in image widget. You need to use `ckeditor.uploader`
-to decorate the view function that handle the file upload. And, The upload view must return the uploaded 
-image's url. For example:
+The bulit-in CKEditor package include a [File Browser](ckeditor.com/addon/filebrowser)
+plugin. With this plugin, you can upload and insert image with image widget.
+You need set `CKEDITOR_FILE_UPLOADER` to the URL or endpoint which handle
+upload files, and the upload view must return `upload_success()` call with the uploaded
+image's url. Usually, you also need to validate uploaded image,
+then you can use `upload_fail()` to return a error message (with `message` argument). For example:
 
 ```python
+from flask_ckeditor import upload_success, upload_fail
+
 app.config['CKEDITOR_FILE_UPLOADER'] = 'upload'
 
 @app.route('/files/<path:filename>')
-def files(filename):
+def uploaded_files(filename):
     path = '/the/uploaded/directory'
     return send_from_directory(path, filename)
 
 @app.route('/upload', methods=['POST'])
-@ckeditor.uploader
 def upload():
     f = request.files.get('upload')
+    # Add more validations here
+    if extension not in ['jpg', 'gif', 'png', 'jpeg']:
+        return upload_fail(message='Image only!')
     f.save(os.path.join('/the/uploaded/directory', f.filename))
-    url = url_for('files', filename=f.filename)
-    return url
+    url = url_for('uploaded_files', filename=f.filename)
+    return upload_success(url=url)  # return upload_success call
 ```
 
-Check the complete applicaiton at `examples/image-upload`. When you start the application, you can click
-the image icon, then you will find a `Upload` tab.
+Now you will find the `Upload` tab appear in image widget. Besides, you can drag
+and drop image directly into the editor area or copy and paste the image (CKEditor >= 4.5).
+
+Check the complete application at `examples/image-upload`.
 
 ## Code Snippet Highlight
 
 The bulit-in CKEditor package include a [Code Snippet](ckeditor.com/addon/codesnippet) plugin. 
-You can set the code theme through configuration option `CKEDITOR_CODE_THEME`. The default theme was 
-`monokai_sublime`. See all available themes and the list of valid theme string on this 
-[page](https://sdk.ckeditor.com/samples/codesnippet.html).
+You need to set `CKEDITOR_ENABLE_CODESNIPPET` to `True` to enable it.
+You can set the code theme through configuration option `CKEDITOR_CODE_THEME`.
+The default theme was `monokai_sublime`. See all available themes and the
+list of valid theme string on [this page](https://sdk.ckeditor.com/samples/codesnippet.html).
 
 Another step was load code theme resources in the page you want to display the text:
 
@@ -137,10 +146,10 @@ Another step was load code theme resources in the page you want to display the t
 </head>
 ```
 
-## Markdown support
+## Markdown Mode
 
 Since 0.3.4, the bulit-in CKEditor package included a [Markdown](ckeditor.com/addon/markdown) plugin. 
-You can set `CKEDITOR_ENABLE_MARKDOWN` to `True` to eanble Markdown support. 
+You can set `CKEDITOR_ENABLE_MARKDOWN` to `True` to eanble Markdown mode.
 
 ## Try Examples
 
@@ -165,13 +174,17 @@ Aside from the basic example, there are three additional examples:
 - [ ] Documentation
 - [ ] Test
 - [ ] Integrate with a file browser
+- [ ] CSRF protection for image upload
 
 ## Changelog
 
-### 0.3.4
+### 0.4
 
-Release date: 2018/3/15
+Release date: 2018/5/29
 
+- Add basic unit test.
+- Update resources, use CKEditor 4.9.2.
+- Add configuration `CKEDITOR_ENABLE_CODESNIPPET`.
 - Added Markdown plugin into built-in resouce, enabled markdown mode via `CKEDITOR_ENABLE_MARKDOWN`.
 - The `config()` method now support to called in `<head></head>`.
 - Added configuration parameter `CKEDITOR_EXTRA_PLUGINS`, a list used to register extra plugins. 
