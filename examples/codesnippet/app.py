@@ -11,8 +11,8 @@ from flask_ckeditor import CKEditor, CKEditorField
 app = Flask(__name__)
 app.config['CKEDITOR_SERVE_LOCAL'] = True
 app.config['CKEDITOR_HEIGHT'] = 400
-# enable markdown plugin
-app.config['CKEDITOR_ENABLE_MARKDOWN'] = True
+# enable code snippet plugin
+app.config['CKEDITOR_ENABLE_CODESNIPPET'] = True
 
 app.secret_key = 'secret string'
 
