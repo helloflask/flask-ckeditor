@@ -93,16 +93,16 @@ class _CKEditor(object):
 
         return Markup('''
 <script type="text/javascript">
-    CKEDITOR.replace( %r, {
-        language: %r,
-        height: %r,
-        width: %r,
+    CKEDITOR.replace( "%s", {
+        language: "%s",
+        height: %s,
+        width: %s,
         //toolbarCanCollapse: true,
-        codeSnippet_theme: %r,
-        imageUploadUrl: %r,
-        filebrowserUploadUrl: %r,
-        filebrowserBrowseUrl: %r,
-        extraPlugins: %r,
+        codeSnippet_theme: "%s",
+        imageUploadUrl: "%s",
+        filebrowserUploadUrl: "%s",
+        filebrowserBrowseUrl: "%s",
+        extraPlugins: "%s",
         %s
     });
 </script>''' % (
@@ -155,8 +155,8 @@ class CKEditor(object):
         app.config.setdefault('CKEDITOR_PKG_TYPE', 'standard')
 
         app.config.setdefault('CKEDITOR_LANGUAGE', '')
-        app.config.setdefault('CKEDITOR_HEIGHT', '')
-        app.config.setdefault('CKEDITOR_WIDTH', '')
+        app.config.setdefault('CKEDITOR_HEIGHT', 0)
+        app.config.setdefault('CKEDITOR_WIDTH', 0)
         app.config.setdefault('CKEDITOR_CODE_THEME', 'monokai_sublime')
 
         app.config.setdefault('CKEDITOR_FILE_UPLOADER', '')
