@@ -56,6 +56,8 @@ Instead, you can also create the CKEditor textarea manually through `create()` m
 </form>
 ```
 
+Check the demo application at `examples/basic/` and `examples/without-flask-wtf`.
+
 ## Configuration
 
 You can load settings for CKEditor with `config()` method in Jinja2 template:
@@ -127,7 +129,7 @@ def upload():
 Now you will find the `Upload` tab appear in image widget. Besides, you can drag
 and drop image directly into the editor area or copy and paste the image (CKEditor >= 4.5).
 
-Check the complete application at `examples/image-upload`.
+Check the demo application at `examples/image-upload/`.
 
 ## Code Snippet Highlight
 
@@ -146,10 +148,14 @@ Another step was load code theme resources in the page you want to display the t
 </head>
 ```
 
+Check the demo application at `examples/codesnippet/`.
+
 ## Markdown Mode
 
 Since 0.3.4, the bulit-in CKEditor package included a [Markdown](ckeditor.com/addon/markdown) plugin. 
 You can set `CKEDITOR_ENABLE_MARKDOWN` to `True` to eanble Markdown mode.
+
+Check the demo application at `examples/markdown/`.
 
 ## Try Examples
 
@@ -164,15 +170,15 @@ $ python app.py
 
 Then go to http://127.0.0.1:5000 with your favourite browser.
 
-Aside from the basic example, there are three additional examples:
+Aside from the basic example, there are four additional examples:
 
 - examples/image-upload: This example demonstrate how to support image upload in Flaks-CKEditor.
+- examples/codesnippet: This example demonstrate how to use Code Snippet plugin.
 - examples/without-flask-wtf: This example demonstrate how to use CKEditor without Flask-WTF.
-- examples/markdown: This example demonstrate how to use add Markdown support.
+- examples/markdown: This example demonstrate how to use add Markdown plugin.
 
 ## TODO
 - [ ] Documentation
-- [ ] Test
 - [ ] Integrate with a file browser
 - [ ] CSRF protection for image upload
 
@@ -183,11 +189,10 @@ Aside from the basic example, there are three additional examples:
 Release date: 2018/5/29
 
 - Add basic unit test.
-- Update resources, use CKEditor 4.9.2.
-- Add configuration `CKEDITOR_ENABLE_CODESNIPPET`.
+- Update resources, fix plugin register bug, use CKEditor 4.9.2.
+- Add configuration parameter `CKEDITOR_ENABLE_CODESNIPPET`, used to enable/disable ``Code Snippet plugin.
 - Added Markdown plugin into built-in resouce, enabled markdown mode via `CKEDITOR_ENABLE_MARKDOWN`.
-- The `config()` method now support to called in `<head></head>`.
-- Added configuration parameter `CKEDITOR_EXTRA_PLUGINS`, a list used to register extra plugins. 
+- Added configuration parameter `CKEDITOR_EXTRA_PLUGINS`, a list used to register extra plugins.
 
 ### 0.3.3
 
