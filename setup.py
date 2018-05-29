@@ -16,24 +16,17 @@ Go to `Github page
 <https://github.com/greyli/flask-ckeditor>`_ , which you can check for more
 details.
 """
-from os import path
-from codecs import open
 from setuptools import setup
-
-basedir = path.abspath(path.dirname(__file__))
-with open(path.join(basedir, 'README.md'), encoding='utf-8') as f:
-    long_description = f.read()
 
 setup(
     name='Flask-CKEditor',
-    version='0.4',
+    version='0.4.0',
     url='http://github.com/greyli/flask-ckeditor',
     license='MIT',
     author='Grey Li',
     author_email='withlihui@gmail.com',
     description='CKEditor integration for Flask.',
-    long_description=long_description,
-    long_description_content_type='text/markdown',
+    long_description=__doc__,
     packages=['flask_ckeditor'],
     zip_safe=False,
     include_package_data=True,

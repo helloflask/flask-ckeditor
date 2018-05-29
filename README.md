@@ -194,7 +194,7 @@ Release date: 2018/5/29
 
 - Add basic unit test.
 - Update resources, fix plugin register bug, use CKEditor 4.9.2.
-- Add configuration parameter `CKEDITOR_ENABLE_CODESNIPPET`, used to enable/disable ``Code Snippet plugin.
+- Add configuration parameter `CKEDITOR_ENABLE_CODESNIPPET`, used to enable/disable `Code Snippet` plugin.
 - Added Markdown plugin into built-in resouce, enabled markdown mode via `CKEDITOR_ENABLE_MARKDOWN`.
 - Added configuration parameter `CKEDITOR_EXTRA_PLUGINS`, a list used to register extra plugins.
 
