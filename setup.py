@@ -10,7 +10,7 @@ Main Features:
 * Config CKEditor through Flask's configuration system.
 * Image upload support.
 * Code snippet highlight.
-* Bulit-in CKEditor resources.
+* Built-in CKEditor resources.
 
 Go to `Github page
 <https://github.com/greyli/flask-ckeditor>`_ , which you can check for more
@@ -26,7 +26,7 @@ with open(path.join(basedir, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='Flask-CKEditor',
-    version='0.3.4',
+    version='0.4',
     url='http://github.com/greyli/flask-ckeditor',
     license='MIT',
     author='Grey Li',
@@ -51,7 +51,6 @@ setup(
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',

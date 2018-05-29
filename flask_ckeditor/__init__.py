@@ -3,8 +3,8 @@ import warnings
 from functools import wraps
 from flask import current_app, Markup, Blueprint, url_for, request, jsonify
 
-from flask_ckeditor.fields import CKEditorField
-from flask_ckeditor.utils import get_url, random_filename
+from flask_ckeditor.fields import CKEditorField  # noqa
+from flask_ckeditor.utils import get_url, random_filename  # noqa
 
 
 class _CKEditor(object):
@@ -16,7 +16,7 @@ class _CKEditor(object):
 
         :param custom_url: The custom resource url to use, build your CKEditor
         on `CKEditor builder <https://ckeditor.com/cke4/builder>`_.
-        :param pkg_type: The type of CKEditor package, one of ``basic``, 
+        :param pkg_type: The type of CKEditor package, one of ``basic``,
         ``standard`` and ``full``. Default to ``standard``.
         :param version: The version of CKEditor.
         """
@@ -42,13 +42,12 @@ class _CKEditor(object):
         """Config CKEditor.
 
         :param name: The target input field's name. If you use Flask-WTF/WTForms, it need to set
-        to field's name. Default to 'ckeditor'. 
+        to field's name. Default to 'ckeditor'.
         :param language: The lang code string to set UI language in ISO 639 format, for example:
         ``zh``, ``zh-cn``,  ``ko``, ``ja``, ``es``, ``fr``, ``de``, ``en`` etc, default to ``en``(i.e. English).
         :param height: The height of CKEditor window, default to 200.
         :param width: The width of CKEditor window.
-        :param code_theme: The theme's name in string used for code snippets, default to 
-        ``monokai_sublime``.
+        :param code_theme: The theme's name in string used for code snippets, default to ``monokai_sublime``.
         :param file_uploader: The url or endpoint to send the upload data. The related view function
         should return the ``upload_success()`` or ``upload_fail()`` call.
         Check ``examples/image-upload/app.py`` for more detail.
@@ -71,12 +70,11 @@ class _CKEditor(object):
 
         if file_uploader != '':
             file_uploader = get_url(file_uploader)
-            if 'filebrowser' not in extra_plugins:
-                extra_plugins.append('filebrowser')
         if file_browser != '':
             file_browser = get_url(file_browser)
-            if 'filebrowser' not in extra_plugins:
-                extra_plugins.append('filebrowser')
+
+        if file_uploader or file_browser and 'filebrowser' not in extra_plugins:
+            extra_plugins.append('filebrowser')
 
         language = language or current_app.config['CKEDITOR_LANGUAGE']
         height = height or current_app.config['CKEDITOR_HEIGHT']
@@ -112,11 +110,11 @@ class _CKEditor(object):
     @staticmethod
     def create(name='ckeditor', value=''):
         """Create a ckeditor textarea directly.
-        
+
         :param name: The name attribute of CKEditor textarea, set it when you need to create
         more than one textarea in one page. Default to `ckeditor`.
         :param value: The preset value for textarea.
-        
+
         .. versionadded:: 0.3
         """
         return Markup('<textarea class="ckeditor" name="%s">%s</textarea>' % (name, value))
@@ -163,14 +161,14 @@ class CKEditor(object):
         app.config.setdefault('CKEDITOR_FILE_BROWSER', '')
 
         # Default error message for upload fail
-        # .. versionadded:: 0.3.5
+        # .. versionadded:: 0.4.0
         app.config.setdefault('CKEDITOR_UPLOAD_ERROR_MESSAGE', 'Upload failed.')
 
         # Enable Markdown mode
         # .. versionadded:: 0.3.4
         app.config.setdefault('CKEDITOR_ENABLE_MARKDOWN', False)
         # Enable Code Snippet plugin
-        # .. versionadded:: 0.3.5
+        # .. versionadded:: 0.4.0
         app.config.setdefault('CKEDITOR_ENABLE_CODESNIPPET', False)
 
         # Register extra CKEditor plugins
@@ -188,7 +186,7 @@ class CKEditor(object):
 
         Decorated the view function that handle the file upload. The upload
         view must return the uploaded image's url. For example::
-            
+
             from flask import send_from_directory
 
             @app.route('/files/<filename>')
@@ -210,9 +208,9 @@ class CKEditor(object):
         @wraps(func)
         def wrapper(*args, **kwargs):
             func_num = request.args.get('CKEditorFuncNum')
-            ckeditor = request.args.get('CKEditor')
+            # ckeditor = request.args.get('CKEditor')
             # language code used for error message, not used yet.
-            lang_code = request.args.get('langCode')
+            # lang_code = request.args.get('langCode')
             # the error message to display when upload failed.
             message = current_app.config['CKEDITOR_UPLOAD_ERROR_MESSAGE']
             url = func(*args, **kwargs)
@@ -246,7 +244,7 @@ def upload_success(url, filename=''):
 
 
 
-    .. versionadded:: 0.3.5
+    .. versionadded:: 0.4.0
     """
     return jsonify(uploaded=1, url=url, filename=filename)
 
@@ -274,7 +272,7 @@ def upload_fail(message=None):
 
     :param message: error message.
 
-    .. versionadded:: 0.3.5
+    .. versionadded:: 0.4.0
     """
     if message is None:
         message = current_app.config['CKEDITOR_UPLOAD_ERROR_MESSAGE']

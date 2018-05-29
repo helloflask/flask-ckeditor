@@ -16,7 +16,7 @@ class CKEditorTestCase(unittest.TestCase):
         self.app.secret_key = 'for test'
         self.app.config['WTF_ENABLE_CSRF'] = False
 
-        ckeditor = CKEditor(self.app)
+        ckeditor = CKEditor(self.app)  # noqa
 
         self.ckeditor = _CKEditor
 
