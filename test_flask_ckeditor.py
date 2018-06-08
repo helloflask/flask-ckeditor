@@ -63,22 +63,22 @@ class CKEditorTestCase(unittest.TestCase):
     def test_local_resources(self):
         current_app.config['CKEDITOR_SERVE_LOCAL'] = True
 
-        response = self.client.get('/static/ckeditor/basic/ckeditor.js')
+        response = self.client.get('/ckeditor/static/basic/ckeditor.js')
         self.assertNotEqual(response.status_code, 404)
 
-        response = self.client.get('/static/ckeditor/standard/ckeditor.js')
+        response = self.client.get('/ckeditor/static/standard/ckeditor.js')
         self.assertNotEqual(response.status_code, 404)
 
-        response = self.client.get('/static/ckeditor/full/ckeditor.js')
+        response = self.client.get('/ckeditor/static/full/ckeditor.js')
         self.assertNotEqual(response.status_code, 404)
 
         rv = self.ckeditor.load()
-        self.assertIn('/static/ckeditor/standard/ckeditor.js', rv)
+        self.assertIn('/ckeditor/static/standard/ckeditor.js', rv)
         self.assertNotIn('//cdn.ckeditor.com', rv)
 
         current_app.config['CKEDITOR_PKG_TYPE'] = 'full'
         rv = self.ckeditor.load()
-        self.assertIn('/static/ckeditor/full/ckeditor.js', rv)
+        self.assertIn('/ckeditor/static/full/ckeditor.js', rv)
 
     def test_config(self):
         current_app.config['CKEDITOR_LANGUAGE'] = 'zh'
