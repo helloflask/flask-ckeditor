@@ -188,7 +188,14 @@ Aside from the basic example, there are four additional examples:
 
 ## Changelog
 
-### 0.4
+### 0.4.1
+
+Release date: 2018/6/8
+
+- Change built-in resource's url path to `ckeditor/static/...` to prevent conflict with user's static path.
+
+
+### 0.4.0
 
 Release date: 2018/5/29
 
