@@ -130,6 +130,9 @@ def upload():
     return upload_success(url=url)  # return upload_success call
 ```
 
+**Note: The key pass to `request.files.get()` must be `'upload'`, it's defined
+by CKEditor.**
+
 Now you will find the `Upload` tab appear in image widget. Besides, you can drag
 and drop image directly into the editor area or copy and paste the image (CKEditor >= 4.5).
 
