@@ -78,17 +78,19 @@ If you create the CKEditor through `ckeditor.create()`, the default value (e.g. 
 
 The configuration options available were listed below:
 
-- CKEDITOR_SERVE_LOCAL
-- CKEDITOR_PKG_TYPE
-- CKEDITOR_LANGUAGE
-- CKEDITOR_HEIGHT
-- CKEDITOR_WIDTH
-- CKEDITOR_CODE_THEME
-- CKEDITOR_FILE_UPLOADER
-- CKEDITOR_FILE_BROWSER
-- CKEDITOR_ENABLE_MARKDOWN
-- CKEDITOR_ENABLE_CODESNIPPET
-- CKEDITOR_EXTRA_PLUGINS
+| Name                     | Default Value | Info |
+| ------------------------ | ------------- | ---- |
+| `CKEDITOR_SERVE_LOCAL` | `False` | Flag used to set serve resources from local when use `ckeditor.load()`, default to retrieve from CDN. |
+| `CKEDITOR_PKG_TYPE` | `'standard'` | The package type of CKEditor, one of `basic`, `standard` and `full`. |
+| `CKEDITOR_LANGUAGE` | `None` | The lang code string to set UI language in ISO 639 format, for example: `zh`, `en`,  `jp` etc. Leave it unset to enable auto detection by user's browser setting. |
+| `CKEDITOR_HEIGHT` | CKEditor default | The height of CKEditor textarea, in pixel. |
+| `CKEDITOR_WIDTH` | CKEditor default | The width of CKEditor textarea, in pixel. |
+| `CKEDITOR_FILE_UPLOADER` | `None` | The URL or endpoint that handle file upload. |
+| `CKEDITOR_FILE_BROWSER` | `None` | The URL or endpoint that handle file browser. |
+| `CKEDITOR_ENABLE_MARKDOWN` | `False` | Flag used to enable markdown plugin, the plugin must be installed (included in built-in resouces）. |
+| `CKEDITOR_ENABLE_CODESNIPPET` | `False` | Flag used to enable codesnippet plugin, the plugin must be installed (included in built-in resouces). |
+| `CKEDITOR_CODE_THEME` | `'monokai_sublime'` | Set code snippet highlight theme when codesnippet plugin was enabled.|
+| `CKEDITOR_EXTRA_PLUGINS` | `[]` | A list of extra plugins used in CKEditor, the plugins must be installed. |
 
 In addition, you can pass custom settings with `custom_config` argument:
 
@@ -131,7 +133,7 @@ def upload():
 ```
 
 **Note: The key pass to `request.files.get()` must be `'upload'`, it's defined
-by CKEditor.**
+by CKEditor and it's not the name of the view function.**
 
 Now you will find the `Upload` tab appear in image widget. Besides, you can drag
 and drop image directly into the editor area or copy and paste the image (CKEditor >= 4.5).
@@ -186,6 +188,7 @@ Aside from the basic example, there are four additional examples:
 
 ## TODO
 - [ ] Documentation
+- [ ] Fix English grammar error everywhere
 - [ ] Integrate with a file browser
 - [ ] CSRF protection for image upload
 
