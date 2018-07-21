@@ -1,4 +1,12 @@
 # -*- coding: utf-8 -*-
+"""
+    flask_ckeditor
+    ~~~~~~~~~~~~~~~
+
+    :author: Grey Li <withlihui@gmail.com>
+    :copyright: (c) 2017 by Grey Li.
+    :license: MIT, see LICENSE for more details.
+"""
 import warnings
 from functools import wraps
 from flask import current_app, Markup, Blueprint, url_for, request, jsonify
@@ -27,7 +35,7 @@ class _CKEditor(object):
                           'it should be one of basic/standard/full.')
             pkg_type = 'standard'
 
-        if current_app.config['CKEDITOR_SERVE_LOCAL']:
+        if current_app.config['CKEDITOR_SERVE_LOCAL'] or current_app.config['ENV'] == 'development':
             url = url_for('ckeditor.static', filename='%s/ckeditor.js' % pkg_type)
         else:
             url = '//cdn.ckeditor.com/%s/%s/ckeditor.js' % (version, pkg_type)
