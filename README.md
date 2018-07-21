@@ -194,6 +194,12 @@ Aside from the basic example, there are four additional examples:
 
 ## Changelog
 
+### 0.4.2
+
+Release date: --
+
+* Built-in resources will be used when `FLASK_ENV` set to `development`.
+
 ### 0.4.1
 
 Release date: 2018/6/8
