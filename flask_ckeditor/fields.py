@@ -1,4 +1,13 @@
 # -*- coding: utf-8 -*-
+"""
+    flask_ckeditor.fields
+    ~~~~~~~~~~~~~~~~~~~~~
+    Add support for WTForms/Flask-WTF.
+
+    :author: Grey Li <withlihui@gmail.com>
+    :copyright: (c) 2017 by Grey Li.
+    :license: MIT, see LICENSE for more details.
+"""
 from wtforms import TextAreaField
 from wtforms.widgets import TextArea
 

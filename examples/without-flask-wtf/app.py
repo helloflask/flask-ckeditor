@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
-import os
-
+"""
+    :author: Grey Li <withlihui@gmail.com>
+    :copyright: (c) 2017 by Grey Li.
+    :license: MIT, see LICENSE for more details.
+"""
 from flask import Flask, render_template, request
 
 from flask_ckeditor import CKEditor

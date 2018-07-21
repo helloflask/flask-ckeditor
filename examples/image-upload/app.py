@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
+"""
+    :author: Grey Li <withlihui@gmail.com>
+    :copyright: (c) 2017 by Grey Li.
+    :license: MIT, see LICENSE for more details.
+"""
 import os
 
-from flask import Flask, render_template, request, Markup, url_for, send_from_directory
+from flask import Flask, render_template, request, url_for, send_from_directory
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired

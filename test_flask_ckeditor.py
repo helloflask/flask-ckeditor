@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+"""
+    test_flask_ckeditor
+    ~~~~~~~~~~~~~~~~~~~~
+
+    :author: Grey Li <withlihui@gmail.com>
+    :copyright: (c) 2017 by Grey Li.
+    :license: MIT, see LICENSE for more details.
+"""
 import unittest
 
 from flask import Flask, render_template_string, current_app
@@ -62,6 +71,26 @@ class CKEditorTestCase(unittest.TestCase):
 
     def test_local_resources(self):
         current_app.config['CKEDITOR_SERVE_LOCAL'] = True
+
+        response = self.client.get('/ckeditor/static/basic/ckeditor.js')
+        self.assertNotEqual(response.status_code, 404)
+
+        response = self.client.get('/ckeditor/static/standard/ckeditor.js')
+        self.assertNotEqual(response.status_code, 404)
+
+        response = self.client.get('/ckeditor/static/full/ckeditor.js')
+        self.assertNotEqual(response.status_code, 404)
+
+        rv = self.ckeditor.load()
+        self.assertIn('/ckeditor/static/standard/ckeditor.js', rv)
+        self.assertNotIn('//cdn.ckeditor.com', rv)
+
+        current_app.config['CKEDITOR_PKG_TYPE'] = 'full'
+        rv = self.ckeditor.load()
+        self.assertIn('/ckeditor/static/full/ckeditor.js', rv)
+
+    def test_local_resources_on_dev(self):
+        current_app.config['ENV'] = 'development'
 
         response = self.client.get('/ckeditor/static/basic/ckeditor.js')
         self.assertNotEqual(response.status_code, 404)

@@ -1,20 +1,11 @@
+# -*- coding: utf-8 -*-
 """
-Flask-CKEditor
---------------
+    Flask-CKEditor
+    ~~~~~~~~~~~~~~~
 
-CKEditor integration for Flask, including image upload, code syntax highlight and more.
-
-Main Features:
-
-* Integrated with Flask-WTF/WTForms.
-* Config CKEditor through Flask's configuration system.
-* Image upload support.
-* Code snippet highlight.
-* Built-in CKEditor resources.
-
-Go to `Github page
-<https://github.com/greyli/flask-ckeditor>`_ , which you can check for more
-details.
+    :author: Grey Li <withlihui@gmail.com>
+    :copyright: (c) 2017 by Grey Li.
+    :license: MIT, see LICENSE for more details.
 """
 from setuptools import setup
 
