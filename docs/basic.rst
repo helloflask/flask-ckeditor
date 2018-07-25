@@ -59,11 +59,20 @@ to True to use built-in resources. You can use ``custom_url`` to load your custo
    {{ ckeditor.load(custom_url=url_for('static', filename='ckeditor/ckeditor.js')) }}
 
 
-CKEditor provide three type
-default to use standard
+CKEditor provide three type of preset (i.e. ``basic``, ``standard`` and ``full``), this method default to load ``standard``.
+You can use `pkg_type` parameter or ``CKEDITOR_PKG_TYPE`` configuration variable to set the package type. For example:
 
-CKEDITOR_PKG_TYPE
+.. code-block:: python
 
+   {{ ckeditor.load(pkg_type="basic") }}
+
+Or:
+
+.. code-block:: python
+
+    app = Flask(__name__)
+    app.config['CKEDITOR_PKG_TYPE'] = 'basic'
+    ckeditor = CKEditor(app)
 
 This method is just a helper to generate ``<script>`` to include CKEditor resources, you can also
 write ``<script>`` element directly:
