@@ -12,8 +12,7 @@ you have to call ``ckeditor.config()`` in template to make them register with CK
 
    <body>
        ...
-       {{ ckeditor.load() }}
-       {{ ckeditor.config(name='body') }}
+       {{ ckeditor.config() }}
    </body>
 
 
