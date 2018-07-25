@@ -1,5 +1,5 @@
-Basic
-=======
+Basic Usage
+============
 
 Installation
 -------------
@@ -44,7 +44,7 @@ Include CKEditor Resources
 In the template which you want to put a CKEditor textarea, call ``ckeditor.load()``
 in ``<head></head>`` or before ``</body>``:
 
-.. code-block:: html
+.. code-block:: jinja
 
    <body>
        ...
@@ -54,7 +54,7 @@ in ``<head></head>`` or before ``</body>``:
 In default, it will load the CKEditor resources from CND (cdn.ckeditor.com), you can set ``CKEDITOR_SERVE_LOCAL``
 to True to use built-in resources. You can use ``custom_url`` to load your custom CKEditor build:
 
-.. code-block:: python
+.. code-block:: jinja
 
    {{ ckeditor.load(custom_url=url_for('static', filename='ckeditor/ckeditor.js')) }}
 
@@ -62,7 +62,7 @@ to True to use built-in resources. You can use ``custom_url`` to load your custo
 CKEditor provide three type of preset (i.e. ``basic``, ``standard`` and ``full``), this method default to load ``standard``.
 You can use `pkg_type` parameter or ``CKEDITOR_PKG_TYPE`` configuration variable to set the package type. For example:
 
-.. code-block:: python
+.. code-block:: jinja
 
    {{ ckeditor.load(pkg_type="basic") }}
 
@@ -86,7 +86,7 @@ Create A CKEditor textarea
 
 It's quite simple, just call ``ckeditor.create()`` in the template:
 
-.. code-block:: html
+.. code-block:: jinja
 
    <form method="post">
        {{ ckeditor.create() }}
@@ -130,7 +130,7 @@ provided by Flask-CKEditor and use it just like ``StringField``:
 
 One more step is to call ``ckeditor.config()`` and pass the CKEditorField attribute's name:
 
-.. code-block:: html
+.. code-block:: jinja
 
     <form method="post">
        {{ form.title() }}

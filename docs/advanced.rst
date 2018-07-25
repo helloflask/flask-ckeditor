@@ -1,5 +1,5 @@
-Advanced
-=========
+Advanced Usage
+===============
 
 
 Image Upload
@@ -40,7 +40,7 @@ it's defined by CKEditor and it's not the name of the view function.**
 
 In the template, you have to call ``ckeditor.config()`` to make configuration work:
 
-.. code-block:: html
+.. code-block:: jinja
 
     {{ ckeditor.config() }}
 
@@ -65,7 +65,7 @@ page <https://sdk.ckeditor.com/samples/codesnippet.html>`__.
 Another step was load code theme resources in the page you want to
 display the text:
 
-.. code:: html
+.. code:: jinja
 
    <head>
        ...

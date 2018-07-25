@@ -5,15 +5,17 @@ Configuration
 Register Configuration
 -----------------------
 
-Except ``CKEDITOR_SERVE_LOCAL`` and ``CKEDITOR_PKG_TYPE``, when you use other configuration variabel,
+Except ``CKEDITOR_SERVE_LOCAL`` and ``CKEDITOR_PKG_TYPE``, when you use other configuration variable,
 you have to call ``ckeditor.config()`` in template to make them register with CKEditor:
 
-.. code:: html
+.. code:: jinja
 
    <body>
        ...
        {{ ckeditor.config() }}
    </body>
+
+.. tip:: Call this method after ``dropzone.load_js()`` or ``<script>`` that include Dropzonejs.
 
 
 .. tip::
@@ -50,7 +52,7 @@ Custom Configuration String
 In addition, you can pass custom settings with ``custom_config``
 argument:
 
-.. code:: html
+.. code:: jinja
 
    {{ ckeditor.config(name='body', custom_config="uiColor: '#9AB8F3'") }}
 
@@ -58,4 +60,4 @@ Keep it mind that the proper syntax for each option is
 ``configuration name : configuration value``. You can use comma to
 separate multiple key-value pairs. See the list of available
 configuration settings on `CKEditor
-documentation <https://docs.ckeditor.com/ckeditor4/docs/#!/api/CKEDITOR.config%3E>`__.
+documentation <https://docs.ckeditor.com/ckeditor4/docs/#!/api/CKEDITOR.config%3E>`_.
