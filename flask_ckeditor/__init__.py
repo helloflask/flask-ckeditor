@@ -23,9 +23,9 @@ class _CKEditor(object):
         """Load CKEditor resource from CDN or local.
 
         :param custom_url: The custom resource url to use, build your CKEditor
-        on `CKEditor builder <https://ckeditor.com/cke4/builder>`_.
+            on `CKEditor builder <https://ckeditor.com/cke4/builder>`_.
         :param pkg_type: The type of CKEditor package, one of ``basic``,
-        ``standard`` and ``full``. Default to ``standard``.
+            ``standard`` and ``full``. Default to ``standard``.
         :param version: The version of CKEditor.
         """
         pkg_type = pkg_type or current_app.config['CKEDITOR_PKG_TYPE']
@@ -50,24 +50,23 @@ class _CKEditor(object):
         """Config CKEditor.
 
         :param name: The target input field's name. If you use Flask-WTF/WTForms, it need to set
-        to field's name. Default to 'ckeditor'.
+            to field's name. Default to ``'ckeditor'``.
         :param language: The lang code string to set UI language in ISO 639 format, for example:
-        ``zh``, ``zh-cn``,  ``ko``, ``ja``, ``es``, ``fr``, ``de``, ``en`` etc, default to ``en``(i.e. English).
+            ``zh``, ``zh-cn``,  ``ko``, ``ja``, ``es``, ``fr``, ``de``, ``en`` etc, default to ``en``.
         :param height: The height of CKEditor window, default to 200.
         :param width: The width of CKEditor window.
         :param code_theme: The theme's name in string used for code snippets, default to ``monokai_sublime``.
         :param file_uploader: The url or endpoint to send the upload data. The related view function
-        should return the ``upload_success()`` or ``upload_fail()`` call.
-        Check ``examples/image-upload/app.py`` for more detail.
-
+            should return the ``upload_success()`` or ``upload_fail()`` call.
+            Check ``examples/image-upload/app.py`` for more detail.
         :param file_browser: The url or endpoint to link a file browser.
         :param markdown: Enable/disable the `Markdown <https://ckeditor.com/cke4/addon/markdown>`_ plugin.
         :param codesnippet: Enable/disable the `Code Snippet <https://ckeditor.com/cke4/addon/codesnippet>`_ plugin.
         :param custom_config: The addition config, for example ``uiColor: '#9AB8F3'``.
-        The proper syntax for each option is ``configuration name : configuration value``.
-        You can use comma to separate multiple key-value pairs. See the list of available
-        configuration settings on
-        `CKEditor documentation <https://docs.ckeditor.com/ckeditor4/docs/#!/api/CKEDITOR.config>`_.
+            The proper syntax for each option is ``configuration name : configuration value``.
+            You can use comma to separate multiple key-value pairs. See the list of available
+            configuration settings on
+            `CKEditor documentation <https://docs.ckeditor.com/ckeditor4/docs/#!/api/CKEDITOR.config>`_.
 
         .. versionadded:: 0.3
         """
@@ -120,7 +119,7 @@ class _CKEditor(object):
         """Create a ckeditor textarea directly.
 
         :param name: The name attribute of CKEditor textarea, set it when you need to create
-        more than one textarea in one page. Default to `ckeditor`.
+            more than one textarea in one page. Default to ``ckeditor``.
         :param value: The preset value for textarea.
 
         .. versionadded:: 0.3
