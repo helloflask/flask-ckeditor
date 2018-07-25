@@ -77,7 +77,7 @@ pygments_style = 'sphinx'
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'flask_small'
+html_theme = 'flask'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -85,8 +85,8 @@ html_theme = 'flask_small'
 #
 html_theme_options = {
     # 'github_user': 'greyli',
-    'index_logo': 'logo.png',
-    'github_fork': 'greyli/flask-ckeditor',
+    'index_logo': 'flask-ckeditor.png',
+    # 'github_fork': 'greyli/flask-ckeditor',
     # 'description': 'Create social share component in Jinja2 template based on share.js.',
 }
 
@@ -103,7 +103,11 @@ html_theme_path = ['_themes']
 # default: ``['localtoc.html', 'relations.html', 'sourcelink.html',
 # 'searchbox.html']``.
 #
-
+html_sidebars = {
+    'index': ['sidebarintro.html', 'sourcelink.html', 'searchbox.html'],
+    '**': ['sidebarlogo.html', 'localtoc.html', 'relations.html',
+                 'sourcelink.html', 'searchbox.html']
+}
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
