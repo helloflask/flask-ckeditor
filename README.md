@@ -6,9 +6,9 @@ CKEditor integration for Flask, including image upload, code syntax highlight an
 
 ## Links
 
-* Documentation
-* PyPI
-* Examples
+* [Documentation](https://flask-ckeditor.readthedocs.io/en/latest/)
+* [PyPI](https://pypi.org/project/Flask-CKEditor/)
+* [Examples](https://github.com/greyli/flask-ckeditor/tree/master/examples)
 
 ## TODO
 
