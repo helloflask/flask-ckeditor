@@ -54,7 +54,7 @@ argument:
 
 .. code:: jinja
 
-   {{ ckeditor.config(name='body', custom_config="uiColor: '#9AB8F3'") }}
+   {{ ckeditor.config(custom_config="uiColor: '#9AB8F3'") }}
 
 Keep it mind that the proper syntax for each option is
 ``configuration name : configuration value``. You can use comma to
