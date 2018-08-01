@@ -1,7 +1,5 @@
 # Flask-CKEditor
 
-**WARNING: This project is under active development. Nothing is set in stone at this point of time.**
-
 CKEditor integration for Flask, including image upload, code syntax highlight and more.
 
 ## Links
@@ -15,6 +13,7 @@ CKEditor integration for Flask, including image upload, code syntax highlight an
 - [ ] Fix English grammar error everywhere
 - [ ] Integrate with a file browser
 - [ ] CSRF protection for image upload
+- [ ] Add documentation and example for intergrate with Flask-Admin
 
 ## License
 
