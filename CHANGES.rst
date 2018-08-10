@@ -6,7 +6,6 @@ Changelog
 
 Release date: –
 
-- Built-in resources will be used when ``FLASK_ENV`` set to ``development``.
 - Add documentation.
 
 0.4.1
