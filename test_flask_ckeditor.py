@@ -89,26 +89,6 @@ class CKEditorTestCase(unittest.TestCase):
         rv = self.ckeditor.load()
         self.assertIn('/ckeditor/static/full/ckeditor.js', rv)
 
-    def test_local_resources_on_dev(self):
-        current_app.config['ENV'] = 'development'
-
-        response = self.client.get('/ckeditor/static/basic/ckeditor.js')
-        self.assertNotEqual(response.status_code, 404)
-
-        response = self.client.get('/ckeditor/static/standard/ckeditor.js')
-        self.assertNotEqual(response.status_code, 404)
-
-        response = self.client.get('/ckeditor/static/full/ckeditor.js')
-        self.assertNotEqual(response.status_code, 404)
-
-        rv = self.ckeditor.load()
-        self.assertIn('/ckeditor/static/standard/ckeditor.js', rv)
-        self.assertNotIn('//cdn.ckeditor.com', rv)
-
-        current_app.config['CKEDITOR_PKG_TYPE'] = 'full'
-        rv = self.ckeditor.load()
-        self.assertIn('/ckeditor/static/full/ckeditor.js', rv)
-
     def test_config(self):
         current_app.config['CKEDITOR_LANGUAGE'] = 'zh'
         current_app.config['CKEDITOR_HEIGHT'] = '300'

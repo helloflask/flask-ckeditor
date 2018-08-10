@@ -35,7 +35,7 @@ class _CKEditor(object):
                           'it should be one of basic/standard/full.')
             pkg_type = 'standard'
 
-        if current_app.config['CKEDITOR_SERVE_LOCAL'] or current_app.config['ENV'] == 'development':
+        if current_app.config['CKEDITOR_SERVE_LOCAL']:
             url = url_for('ckeditor.static', filename='%s/ckeditor.js' % pkg_type)
         else:
             url = '//cdn.ckeditor.com/%s/%s/ckeditor.js' % (version, pkg_type)
