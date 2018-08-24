@@ -12,7 +12,7 @@ Contents
 
    basic
    configuration
-   advanced
+   plugins
    examples
 
 
