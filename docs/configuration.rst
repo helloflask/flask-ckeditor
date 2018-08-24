@@ -39,7 +39,6 @@ CKEDITOR_HEIGHT 	         CKEditor default      	The height of CKEditor textarea
 CKEDITOR_WIDTH 	             CKEditor default      	The width of CKEditor textarea, in pixel.
 CKEDITOR_FILE_UPLOADER 	     ``None`` 	            The URL or endpoint that handle file upload.
 CKEDITOR_FILE_BROWSER 	     ``None`` 	            The URL or endpoint that handle file browser.
-CKEDITOR_ENABLE_MARKDOWN 	 ``False`` 	            Flag used to enable markdown plugin, the plugin must be installed (included in built-in resources).
 CKEDITOR_ENABLE_CODESNIPPET  ``False`` 	            Flag used to enable codesnippet plugin, the plugin must be installed (included in built-in resources).
 CKEDITOR_CODE_THEME 	     ``'monokai_sublime'`` 	Set code snippet highlight theme when codesnippet plugin was enabled.
 CKEDITOR_EXTRA_PLUGINS 	     ``[]`` 	            A list of extra plugins used in CKEditor, the plugins must be installed.

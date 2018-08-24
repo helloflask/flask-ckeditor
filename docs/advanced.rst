@@ -73,15 +73,3 @@ display the text:
    </head>
 
 Check the demo application at ``examples/codesnippet/``.
-
-Markdown Mode
---------------
-
-.. warning:: This plugin did not compitable with CKEditor after 4.6.1, do not enable it until
-`#22 <https://github.com/hectorguo/CKEditor-Markdown-Plugin/issues/22>`_ was fixed.
-
-Since 0.3.4, the bulit-in CKEditor package included a
-`Markdown <ckeditor.com/addon/markdown>`__ plugin. You can set
-``CKEDITOR_ENABLE_MARKDOWN`` to ``True`` to eanble Markdown mode.
-
-.. tip:: Check the demo application at ``examples/markdown/``.
