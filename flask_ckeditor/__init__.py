@@ -79,12 +79,13 @@ class _CKEditor(object):
 
         code_theme = kwargs.get('code_theme', current_app.config['CKEDITOR_CODE_THEME'])
 
-
         wrong_key_arg = kwargs.get('codesnippet', None)
         if wrong_key_arg:
             warnings.warn('Argument codesnippet was renamed to enable_codesnippet and will be removed in future.')
 
-        enable_codesnippet = kwargs.get('enable_codesnippet', wrong_key_arg) or current_app.config['CKEDITOR_ENABLE_CODESNIPPET']
+        enable_codesnippet = kwargs.get('enable_codesnippet', wrong_key_arg) or \
+            current_app.config['CKEDITOR_ENABLE_CODESNIPPET']
+
         if enable_codesnippet and 'codesnippet' not in extra_plugins:
             extra_plugins.append('codesnippet')
 

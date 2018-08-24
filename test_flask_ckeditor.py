@@ -120,8 +120,8 @@ class CKEditorTestCase(unittest.TestCase):
         current_app.config['CKEDITOR_ENABLE_CODESNIPPET'] = True
         current_app.config['CKEDITOR_EXTRA_PLUGINS'] = ['foo', 'bar']
 
-        rv = self.ckeditor.config(language='en', height=1000, width=800, code_theme='theme_bar', 
-                                  file_uploader='/1', file_browser='/2', enable_codesnippet=False, 
+        rv = self.ckeditor.config(language='en', height=1000, width=800, code_theme='theme_bar',
+                                  file_uploader='/1', file_browser='/2', enable_codesnippet=False,
                                   extra_plugins=['1', '2'])
         self.assertNotIn('language: "zh",', rv)
         self.assertNotIn('height: 300,', rv)
