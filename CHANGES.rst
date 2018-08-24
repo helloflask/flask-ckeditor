@@ -4,10 +4,12 @@ Changelog
 0.4.2
 -----
 
-Release date: –
+Release date: 2018/8/24
 
 - Add documentation.
 - Remove built-in support for markdown plugin since it's unmaintained and not work with CKEditor > 4.6.
+- Rename argument ``codesnippet`` to ``enable_codesnippet`` in ``ckeditor.config()``.
+- Add ``serve_local`` argument for ``ckeditor.load()``.
 
 0.4.1
 -----
