@@ -45,34 +45,23 @@ class _CKEditor(object):
         return Markup('<script src="%s"></script>' % url)
 
     @staticmethod
-    def config(name='ckeditor', language=None, height=None, width=None, code_theme=None,
-               file_uploader=None, file_browser=None, codesnippet=False, custom_config=''):
+    def config(name='ckeditor', custom_config='', **kwargs):
         """Config CKEditor.
 
         :param name: The target input field's name. If you use Flask-WTF/WTForms, it need to set
             to field's name. Default to ``'ckeditor'``.
-        :param language: The lang code string to set UI language in ISO 639 format, for example:
-            ``zh``, ``zh-cn``,  ``ko``, ``ja``, ``es``, ``fr``, ``de``, ``en`` etc, default to ``en``.
-        :param height: The height of CKEditor window, default to 200.
-        :param width: The width of CKEditor window.
-        :param code_theme: The theme's name in string used for code snippets, default to ``monokai_sublime``.
-        :param file_uploader: The url or endpoint to send the upload data. The related view function
-            should return the ``upload_success()`` or ``upload_fail()`` call.
-            Check ``examples/image-upload/app.py`` for more detail.
-        :param file_browser: The url or endpoint to link a file browser.
-        :param codesnippet: Enable/disable the `Code Snippet <https://ckeditor.com/cke4/addon/codesnippet>`_ plugin.
         :param custom_config: The addition config, for example ``uiColor: '#9AB8F3'``.
             The proper syntax for each option is ``configuration name : configuration value``.
             You can use comma to separate multiple key-value pairs. See the list of available
             configuration settings on
             `CKEditor documentation <https://docs.ckeditor.com/ckeditor4/docs/#!/api/CKEDITOR.config>`_.
-
+        :param kwargs: Mirror arguments to overwritten configuration variables, see docs for more details.
         .. versionadded:: 0.3
         """
-        extra_plugins = current_app.config['CKEDITOR_EXTRA_PLUGINS']
+        extra_plugins = kwargs.get('extra_plugins', current_app.config['CKEDITOR_EXTRA_PLUGINS'])
 
-        file_uploader = file_uploader or current_app.config['CKEDITOR_FILE_UPLOADER']
-        file_browser = file_browser or current_app.config['CKEDITOR_FILE_BROWSER']
+        file_uploader = kwargs.get('file_uploader', current_app.config['CKEDITOR_FILE_UPLOADER'])
+        file_browser = kwargs.get('file_browser', current_app.config['CKEDITOR_FILE_BROWSER'])
 
         if file_uploader != '':
             file_uploader = get_url(file_uploader)
@@ -82,12 +71,18 @@ class _CKEditor(object):
         if file_uploader or file_browser and 'filebrowser' not in extra_plugins:
             extra_plugins.append('filebrowser')
 
-        language = language or current_app.config['CKEDITOR_LANGUAGE']
-        height = height or current_app.config['CKEDITOR_HEIGHT']
-        width = width or current_app.config['CKEDITOR_WIDTH']
+        language = kwargs.get('language', current_app.config['CKEDITOR_LANGUAGE'])
+        height = kwargs.get('height', current_app.config['CKEDITOR_HEIGHT'])
+        width = kwargs.get('width', current_app.config['CKEDITOR_WIDTH'])
 
-        code_theme = code_theme or current_app.config['CKEDITOR_CODE_THEME']
-        enable_codesnippet = codesnippet or current_app.config['CKEDITOR_ENABLE_CODESNIPPET']
+        code_theme = kwargs.get('code_theme', current_app.config['CKEDITOR_CODE_THEME'])
+
+
+        wrong_key_arg = kwargs.get('codesnippet', None)
+        if wrong_key_arg:
+            warnings.warn('Argument codesnippet was renamed to enable_codesnippet and will be removed in future.')
+
+        enable_codesnippet = kwargs.get('enable_codesnippet', wrong_key_arg) or current_app.config['CKEDITOR_ENABLE_CODESNIPPET']
         if enable_codesnippet and 'codesnippet' not in extra_plugins:
             extra_plugins.append('codesnippet')
 
@@ -97,7 +92,6 @@ class _CKEditor(object):
         language: "%s",
         height: %s,
         width: %s,
-        //toolbarCanCollapse: true,
         codeSnippet_theme: "%s",
         imageUploadUrl: "%s",
         filebrowserUploadUrl: "%s",
