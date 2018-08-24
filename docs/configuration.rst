@@ -60,3 +60,83 @@ Keep it mind that the proper syntax for each option is
 separate multiple key-value pairs. See the list of available
 configuration settings on `CKEditor
 documentation <https://docs.ckeditor.com/ckeditor4/docs/#!/api/CKEDITOR.config%3E>`_.
+
+
+Configuring Multiple Text Area
+--------------------------------
+
+If you need create multiple text area in one page, here are some tips:
+
+Without Flask-WTF/WTForms
+==========================
+
+Create two text area with different name and configure it with the name:
+
+.. code-block:: jinja
+
+    <h1>About me</h1>
+    {{ ckeditor.create(name='bio') }}
+
+    <h1>About my team</h1>
+    {{ ckeditor.create(name='team') }}
+
+
+    {{ ckeditor.load() }}
+
+    {{ ckeditor.config(name='bio') }}
+    {{ ckeditor.config(name='team') }}
+
+With Flask-WTF/WTForms
+=======================
+
+When create multiple form with Flask-WTF/WTForms, you just need to create
+multiple ``CKEditorField`` field:
+
+.. code-block:: python
+
+   from flask_wtf import FlaskForm
+   from flask_ckeditor import CKEditorField
+   from wtforms import StringField, SubmitField
+
+   class PostForm(FlaskForm):
+       title = StringField('Title')
+       bio = CKEditorField('About me')  # <--
+       team = CKEditorField('About my team')  # <--
+       submit = SubmitField('Submit')
+
+In the template, you render them and configure them with the right name:
+
+.. code-block:: jinja
+
+    {{ form.bio() }}
+    {{ form.team() }}
+    {{ form.submit() }}
+
+    {{ ckeditor.load() }}
+
+    {{ ckeditor.config(name='bio') }}
+    {{ ckeditor.config(name='team') }}
+
+
+Overwriting Global Configurations
+----------------------------------
+Sometimes you may want to use different configuration for multiple text area, in this case, you can
+pass the specific keyword arguments into ``ckeditor.config()`` directly.
+
+The keyword arguments should mapping the corresponding configration variable in this way:
+
+- CKEDITOR_LANGUAGE --> language
+- CKEDITOR_WIDTH --> width
+- CKEDITOR_FILE_UPLOADER --> file_uploader
+- etc
+
+example:
+
+.. code-block:: jinja
+
+    {{ ckeditor.config(lanuage='en', width=500) }}
+
+In the end, the keyword argument you pass will overwrite the corresponding configurations.
+
+Comparatively, you can use ``serve_local`` and ``pkg_type`` in ``ckeditor.load()`` to overwrite
+``CKEDITOR_SERVE_LOCAL`` and ``CKEDITOR_PKG_TYPE``.
