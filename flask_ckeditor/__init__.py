@@ -19,13 +19,15 @@ class _CKEditor(object):
     """The class implement functions for Jinja2 template."""
 
     @staticmethod
-    def load(custom_url=None, pkg_type=None, version='4.9.2'):
+    def load(custom_url=None, pkg_type=None, serve_local=None, version='4.9.2'):
         """Load CKEditor resource from CDN or local.
 
         :param custom_url: The custom resource url to use, build your CKEditor
             on `CKEditor builder <https://ckeditor.com/cke4/builder>`_.
         :param pkg_type: The type of CKEditor package, one of ``basic``,
-            ``standard`` and ``full``. Default to ``standard``.
+            ``standard`` and ``full``. Default to ``standard``. It's a
+            mirror argument to overwrite ``CKEDITOR_PKG_TYPE``.
+        :param serve_local: Mirror argument to overwrite ``CKEDITOR_SERVE_LOCAL``.
         :param version: The version of CKEditor.
         """
         pkg_type = pkg_type or current_app.config['CKEDITOR_PKG_TYPE']
@@ -35,7 +37,7 @@ class _CKEditor(object):
                           'it should be one of basic/standard/full.')
             pkg_type = 'standard'
 
-        if current_app.config['CKEDITOR_SERVE_LOCAL']:
+        if serve_local or current_app.config['CKEDITOR_SERVE_LOCAL']:
             url = url_for('ckeditor.static', filename='%s/ckeditor.js' % pkg_type)
         else:
             url = '//cdn.ckeditor.com/%s/%s/ckeditor.js' % (version, pkg_type)
