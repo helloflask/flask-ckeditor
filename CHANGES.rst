@@ -7,6 +7,7 @@ Changelog
 Release date: –
 
 - Add documentation.
+- Remove built-in support for markdown plugin since it's unmaintained and not work with CKEditor > 4.6.
 
 0.4.1
 -----

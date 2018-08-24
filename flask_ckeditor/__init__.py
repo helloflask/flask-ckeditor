@@ -46,7 +46,7 @@ class _CKEditor(object):
 
     @staticmethod
     def config(name='ckeditor', language=None, height=None, width=None, code_theme=None,
-               file_uploader=None, file_browser=None, markdown=False, codesnippet=False, custom_config=''):
+               file_uploader=None, file_browser=None, codesnippet=False, custom_config=''):
         """Config CKEditor.
 
         :param name: The target input field's name. If you use Flask-WTF/WTForms, it need to set
@@ -60,7 +60,6 @@ class _CKEditor(object):
             should return the ``upload_success()`` or ``upload_fail()`` call.
             Check ``examples/image-upload/app.py`` for more detail.
         :param file_browser: The url or endpoint to link a file browser.
-        :param markdown: Enable/disable the `Markdown <https://ckeditor.com/cke4/addon/markdown>`_ plugin.
         :param codesnippet: Enable/disable the `Code Snippet <https://ckeditor.com/cke4/addon/codesnippet>`_ plugin.
         :param custom_config: The addition config, for example ``uiColor: '#9AB8F3'``.
             The proper syntax for each option is ``configuration name : configuration value``.
@@ -91,10 +90,6 @@ class _CKEditor(object):
         enable_codesnippet = codesnippet or current_app.config['CKEDITOR_ENABLE_CODESNIPPET']
         if enable_codesnippet and 'codesnippet' not in extra_plugins:
             extra_plugins.append('codesnippet')
-
-        enable_md = markdown or current_app.config['CKEDITOR_ENABLE_MARKDOWN']
-        if enable_md and 'markdown' not in extra_plugins:
-            extra_plugins.append('markdown')
 
         return Markup('''
 <script type="text/javascript">
@@ -171,9 +166,6 @@ class CKEditor(object):
         # .. versionadded:: 0.4.0
         app.config.setdefault('CKEDITOR_UPLOAD_ERROR_MESSAGE', 'Upload failed.')
 
-        # Enable Markdown mode
-        # .. versionadded:: 0.3.4
-        app.config.setdefault('CKEDITOR_ENABLE_MARKDOWN', False)
         # Enable Code Snippet plugin
         # .. versionadded:: 0.4.0
         app.config.setdefault('CKEDITOR_ENABLE_CODESNIPPET', False)

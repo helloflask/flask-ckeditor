@@ -96,7 +96,6 @@ class CKEditorTestCase(unittest.TestCase):
         current_app.config['CKEDITOR_CODE_THEME'] = 'theme_foo'
         current_app.config['CKEDITOR_FILE_UPLOADER'] = '/foo'
         current_app.config['CKEDITOR_FILE_BROWSER'] = '/bar'
-        current_app.config['CKEDITOR_ENABLE_MARKDOWN'] = True
         current_app.config['CKEDITOR_ENABLE_CODESNIPPET'] = True
         current_app.config['CKEDITOR_EXTRA_PLUGINS'] = ['foo', 'bar']
 
@@ -108,7 +107,7 @@ class CKEditorTestCase(unittest.TestCase):
         self.assertIn('imageUploadUrl: "/foo",', rv)
         self.assertIn('filebrowserUploadUrl: "/foo",', rv)
         self.assertIn('filebrowserBrowseUrl: "/bar",', rv)
-        self.assertIn('extraPlugins: "foo,bar,filebrowser,codesnippet,markdown",', rv)
+        self.assertIn('extraPlugins: "foo,bar,filebrowser,codesnippet",', rv)
         self.assertIn('uiColor: "#9AB8F3"', rv)
 
     def test_ckeditor_field(self):
