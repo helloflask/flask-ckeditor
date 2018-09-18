@@ -68,7 +68,7 @@ Configuring Multiple Text Area
 If you need create multiple text area in one page, here are some tips:
 
 Without Flask-WTF/WTForms
-==========================
+##########################
 
 Create two text area with different name and configure it with the name:
 
@@ -87,7 +87,7 @@ Create two text area with different name and configure it with the name:
     {{ ckeditor.config(name='team') }}
 
 With Flask-WTF/WTForms
-=======================
+#######################
 
 When create multiple form with Flask-WTF/WTForms, you just need to create
 multiple ``CKEditorField`` field:
