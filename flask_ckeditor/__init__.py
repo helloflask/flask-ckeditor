@@ -238,8 +238,6 @@ def upload_success(url, filename=''):
     :param url: the URL of uploaded image.
     :param filename: the filename of uploaded image, optional.
 
-
-
     .. versionadded:: 0.4.0
     """
     return jsonify(uploaded=1, url=url, filename=filename)
