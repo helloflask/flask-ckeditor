@@ -10,7 +10,7 @@
 import unittest
 
 from flask import Flask, render_template_string, current_app
-from flask_wtf import FlaskForm
+from flask_wtf import FlaskForm, CSRFProtect
 
 from flask_ckeditor import CKEditorField
 from flask_ckeditor import _CKEditor, CKEditor
@@ -164,3 +164,10 @@ class CKEditorTestCase(unittest.TestCase):
         self.assertIn('//cdn.ckeditor.com', data)
         self.assertIn('CKEDITOR.replace', data)
         self.assertIn('<textarea class="ckeditor"', data)
+
+    def test_csrf_protect(self):
+        csrf = CSRFProtect(self.app)  # noqa
+        
+        current_app.config['CKEDITOR_ENABLE_CSRF'] = True
+        rv = self.ckeditor.config()
+        self.assertIn('X-CSRFToken', rv)
