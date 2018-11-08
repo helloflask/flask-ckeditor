@@ -46,7 +46,7 @@ class _CKEditor(object):
             url = custom_url
         return Markup('<script src="%s"></script>' % url)
 
-    @staticmethod
+    @staticmethod  # noqa
     def config(name='ckeditor', custom_config='', **kwargs):
         """Config CKEditor.
 
@@ -58,6 +58,7 @@ class _CKEditor(object):
             configuration settings on
             `CKEditor documentation <https://docs.ckeditor.com/ckeditor4/docs/#!/api/CKEDITOR.config>`_.
         :param kwargs: Mirror arguments to overwritten configuration variables, see docs for more details.
+
         .. versionadded:: 0.3
         """
         extra_plugins = kwargs.get('extra_plugins', current_app.config['CKEDITOR_EXTRA_PLUGINS'])
@@ -88,7 +89,6 @@ class _CKEditor(object):
 
         if enable_codesnippet and 'codesnippet' not in extra_plugins:
             extra_plugins.append('codesnippet')
-
 
         enable_csrf = kwargs.get('enable_csrf', current_app.config['CKEDITOR_ENABLE_CSRF'])
 
