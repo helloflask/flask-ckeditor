@@ -167,7 +167,7 @@ class CKEditorTestCase(unittest.TestCase):
 
     def test_csrf_protect(self):
         csrf = CSRFProtect(self.app)  # noqa
-        
+
         current_app.config['CKEDITOR_ENABLE_CSRF'] = True
         rv = self.ckeditor.config()
         self.assertIn('X-CSRFToken', rv)
