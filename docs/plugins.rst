@@ -51,6 +51,37 @@ paste the image (CKEditor >= 4.5).
 
 .. tip:: Check the demo application at ``examples/image-upload/``.
 
+
+CSRF Protect for Image Upload
+------------------------------
+
+The CSRF Protect feature was provided by Flask-WTF's ``CSRFProtect``
+extension, so you have to install Flask-WTF first:
+
+.. code-block:: bash
+
+    $ pip install flask-wtf
+
+Then initialize the CSRFProtect:
+
+.. code-block:: python
+
+    from flask_wtf.csrf import CSRFProtect
+
+    app = Flask(__name__)
+
+    # the secret key used to generate CSRF token
+    app.config['SECRET_KEY'] = 'dev key'
+
+    # enable CSRF protection
+    app.config['CKEDITOR_ENABLE_CSRF'] = True
+
+    csrf = CSRFProtect(app)
+
+Make sure to set the secret key and set ``CKEDITOR_ENABLE_CSRF`` to
+True. Now all the image upload request will be protected!
+
+
 Code Snippet Highlight
 ------------------------
 
