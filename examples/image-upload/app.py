@@ -12,6 +12,7 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 
 from flask_ckeditor import CKEditor, CKEditorField, upload_fail, upload_success
+# from flask_wtf import CSRFProtect  # if you want to enable CSRF protect, uncomment this line
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -19,11 +20,13 @@ app = Flask(__name__)
 app.config['CKEDITOR_SERVE_LOCAL'] = True
 app.config['CKEDITOR_HEIGHT'] = 400
 app.config['CKEDITOR_FILE_UPLOADER'] = 'upload'
+# app.config['CKEDITOR_ENABLE_CSRF'] = True  # if you want to enable CSRF protect, uncomment this line
 app.config['UPLOADED_PATH'] = os.path.join(basedir, 'uploads')
 
 app.secret_key = 'secret string'
 
 ckeditor = CKEditor(app)
+# csrf = CSRFProtect(app)  # if you want to enable CSRF protect, uncomment this line
 
 
 class PostForm(FlaskForm):
