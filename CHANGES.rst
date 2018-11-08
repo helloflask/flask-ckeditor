@@ -1,6 +1,15 @@
 Changelog
 =========
 
+
+0.4.3
+-----
+
+Release date: 2018/11/8
+
+- Add CSRF protect support for image uplaoding, based on Flask-WTF (CSRFProtect).
+
+
 0.4.2
 -----
 
