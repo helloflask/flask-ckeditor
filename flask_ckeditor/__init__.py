@@ -9,7 +9,7 @@
 """
 import warnings
 from functools import wraps
-from flask import current_app, Markup, Blueprint, url_for, request, jsonify
+from flask import current_app, Markup, Blueprint, url_for, request, jsonify, render_template_string
 
 from flask_ckeditor.fields import CKEditorField  # noqa
 from flask_ckeditor.utils import get_url, random_filename  # noqa
@@ -89,6 +89,20 @@ class _CKEditor(object):
         if enable_codesnippet and 'codesnippet' not in extra_plugins:
             extra_plugins.append('codesnippet')
 
+
+        enable_csrf = kwargs.get('enable_csrf', current_app.config['CKEDITOR_ENABLE_CSRF'])
+
+        if enable_csrf:
+            if 'csrf' not in current_app.extensions:
+                raise RuntimeError("CSRFProtect is not initialized. It's required to enable CSRF protect, \
+                    see docs for more details.")
+            csrf_header = render_template_string('''
+                fileTools_requestHeaders: {
+                    'X-CSRFToken': '{{ csrf_token() }}',
+                },''')
+        else:
+            csrf_header = ''
+
         return Markup('''
 <script type="text/javascript">
     CKEDITOR.replace( "%s", {
@@ -100,11 +114,12 @@ class _CKEditor(object):
         filebrowserUploadUrl: "%s",
         filebrowserBrowseUrl: "%s",
         extraPlugins: "%s",
+        %s // CSRF token header for XHR request
         %s
     });
 </script>''' % (
             name, language, height, width, code_theme, file_uploader, file_uploader, file_browser,
-            ','.join(extra_plugins), custom_config))
+            ','.join(extra_plugins), csrf_header, custom_config))
 
     @staticmethod
     def create(name='ckeditor', value=''):
@@ -170,6 +185,10 @@ class CKEditor(object):
         # Register extra CKEditor plugins
         # .. versionadded:: 0.3.4
         app.config.setdefault('CKEDITOR_EXTRA_PLUGINS', [])
+
+        # Add CSRF protect support for image uplaoding
+        # .. versionadded:: 0.4.3
+        app.config.setdefault('CKEDITOR_ENABLE_CSRF', False)
 
     @staticmethod
     def context_processor():
