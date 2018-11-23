@@ -15,7 +15,7 @@ you have to call ``ckeditor.config()`` in template to make them register with CK
        {{ ckeditor.config() }}
    </body>
 
-.. tip::
+.. note::
     When using Flask-WTF/WTForms, you have to pass the field name as
     ``name`` in ``ckeditor.config()``, for example ``ckeditor.config(name='description')``. 
     If you create the CKEditor through ``ckeditor.create()``, the default value (``ckeditor``) 
