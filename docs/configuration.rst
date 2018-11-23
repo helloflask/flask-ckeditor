@@ -11,12 +11,9 @@ you have to call ``ckeditor.config()`` in template to make them register with CK
 .. code:: jinja
 
    <body>
-       ...
+       ...  <!-- {{ ckeditor.load() }} or <script src="/path/to/ckeditor.js"> -->
        {{ ckeditor.config() }}
    </body>
-
-.. tip:: Call this method after ``dropzone.load_js()`` or ``<script>`` that include Dropzonejs.
-
 
 .. tip::
     When using Flask-WTF/WTForms, you have to pass the field name as
