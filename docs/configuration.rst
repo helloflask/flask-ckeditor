@@ -8,7 +8,7 @@ Register Configuration
 Except ``CKEDITOR_SERVE_LOCAL`` and ``CKEDITOR_PKG_TYPE``, when you use other configuration variable,
 you have to call ``ckeditor.config()`` in template to make them register with CKEditor:
 
-.. code:: jinja
+.. code-block:: jinja
 
    <body>
        ...  <!-- {{ ckeditor.load() }} or <script src="/path/to/ckeditor.js"> -->
@@ -49,7 +49,7 @@ Custom Configuration String
 In addition, you can pass custom settings with ``custom_config``
 argument:
 
-.. code:: jinja
+.. code-block:: jinja
 
    {{ ckeditor.config(custom_config="uiColor: '#9AB8F3'") }}
 
