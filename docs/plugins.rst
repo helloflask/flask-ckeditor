@@ -155,7 +155,7 @@ page <https://sdk.ckeditor.com/samples/codesnippet.html>`__.
 Another step was load code theme resources in the page you want to
 display the text:
 
-.. code:: jinja
+.. code-block:: jinja
 
    <head>
        ...
