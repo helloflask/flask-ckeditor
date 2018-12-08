@@ -204,16 +204,19 @@ class CKEditor(object):
 
             from flask import send_from_directory
 
+            app.config['CKEDITOR_FILE_UPLOADER'] = 'upload'  # this value can be endpoint or url
+
+
             @app.route('/files/<filename>')
             def uploaded_files(filename):
-                path = app.config['UPLOADED_PATH']
+                path = '/the/uploaded/directory'
                 return send_from_directory(path, filename)
 
             @app.route('/upload', methods=['POST'])
             @ckeditor.uploader
             def upload():
                 f = request.files.get('upload')
-                f.save(os.path.join(app.config['UPLOADED_PATH'], f.filename))
+                f.save(os.path.join('/the/uploaded/directory', f.filename))
                 url = url_for('uploaded_files', filename=f.filename)
                 return url
 
@@ -242,15 +245,18 @@ def upload_success(url, filename=''):
         from flask import send_from_directory
         from flask_ckeditor import upload_success
 
+        app.config['CKEDITOR_FILE_UPLOADER'] = 'upload'  # this value can be endpoint or url
+        
+
         @app.route('/files/<path:filename>')
         def uploaded_files(filename):
-            path = app.config['UPLOADED_PATH']
+            path = '/the/uploaded/directory'
             return send_from_directory(path, filename)
 
         @app.route('/upload', methods=['POST'])
         def upload():
             f = request.files.get('upload')
-            f.save(os.path.join(app.config['UPLOADED_PATH'], f.filename))
+            f.save(os.path.join('/the/uploaded/directory', f.filename))
             url = url_for('uploaded_files', filename=f.filename)
             return upload_success(url=url)  # <--
 
@@ -268,10 +274,13 @@ def upload_fail(message=None):
 
         from flask import send_from_directory
         from flask_ckeditor import upload_success, upload_fail
+        
+        app.config['CKEDITOR_FILE_UPLOADER'] = 'upload'  # this value can be endpoint or url
+
 
         @app.route('/files/<path:filename>')
         def uploaded_files(filename):
-            path = app.config['UPLOADED_PATH']
+            path = '/the/uploaded/directory'
             return send_from_directory(path, filename)
 
         @app.route('/upload', methods=['POST'])
@@ -279,7 +288,7 @@ def upload_fail(message=None):
             f = request.files.get('upload')
             if extension not in ['jpg', 'gif', 'png', 'jpeg']:
                 return upload_fail(message='Image only!')  # <--
-            f.save(os.path.join(app.config['UPLOADED_PATH'], f.filename))
+            f.save(os.path.join('/the/uploaded/directory', f.filename))
             url = url_for('uploaded_files', filename=f.filename)
             return upload_success(url=url)
 

@@ -29,21 +29,22 @@ Available Configuration
 
 The configuration options available were listed below:
 
-============================ ====================== ======================================================================================================================================================================
+=============================== ====================== ======================================================================================================================================================================
             Name                  Default Value                                                         Info
-============================ ====================== ======================================================================================================================================================================
-CKEDITOR_SERVE_LOCAL         ``False`` 	            Flag used to set serve resources from local when use ``ckeditor.load()``, default to retrieve from CDN.
-CKEDITOR_PKG_TYPE 	         ``'standard'`` 	    The package type of CKEditor, one of ``basic``, ``standard`` and ``full``.
-CKEDITOR_LANGUAGE 	         ``None`` 	            The lang code string to set UI language in ISO 639 format, for example: ``zh``, ``en``, ``jp`` etc. Leave it unset to enable auto detection by user's browser setting.
-CKEDITOR_HEIGHT 	         CKEditor default      	The height of CKEditor textarea, in pixel.
-CKEDITOR_WIDTH 	             CKEditor default      	The width of CKEditor textarea, in pixel.
-CKEDITOR_FILE_UPLOADER 	     ``None`` 	            The URL or endpoint that handle file upload.
-CKEDITOR_FILE_BROWSER 	     ``None`` 	            The URL or endpoint that handle file browser.
-CKEDITOR_ENABLE_CODESNIPPET  ``False`` 	            Flag used to enable codesnippet plugin, the plugin must be installed (included in built-in resources).
-CKEDITOR_CODE_THEME 	     ``'monokai_sublime'`` 	Set code snippet highlight theme when codesnippet plugin was enabled.
-CKEDITOR_EXTRA_PLUGINS       ``[]``               A list of extra plugins used in CKEditor, the plugins must be installed.
-CKEDITOR_ENABLE_CSRF 	       ``False`` 	            Flag used to enable CSRF protect for image uploading, see :doc:`/plugins` for more details.
-============================ ====================== ======================================================================================================================================================================
+=============================== ====================== ======================================================================================================================================================================
+CKEDITOR_SERVE_LOCAL            ``False`` 	           Flag used to set serve resources from local when use ``ckeditor.load()``, default to retrieve from CDN.
+CKEDITOR_PKG_TYPE 	            ``'standard'`` 	       The package type of CKEditor, one of ``basic``, ``standard`` and ``full``.
+CKEDITOR_LANGUAGE 	            ``None`` 	             The lang code string to set UI language in ISO 639 format, for example: ``zh``, ``en``, ``jp`` etc. Leave it unset to enable auto detection by user's browser setting.
+CKEDITOR_HEIGHT 	              CKEditor default       The height of CKEditor textarea, in pixel.
+CKEDITOR_WIDTH 	                CKEditor default       The width of CKEditor textarea, in pixel.
+CKEDITOR_FILE_UPLOADER 	        ``None`` 	             The URL or endpoint that handle file upload.
+CKEDITOR_FILE_BROWSER 	        ``None`` 	             The URL or endpoint that handle file browser.
+CKEDITOR_ENABLE_CODESNIPPET     ``False`` 	           Flag used to enable codesnippet plugin, the plugin must be installed (included in built-in resources).
+CKEDITOR_CODE_THEME 	          ``'monokai_sublime'``  Set code snippet highlight theme when codesnippet plugin was enabled.
+CKEDITOR_EXTRA_PLUGINS          ``[]``                 A list of extra plugins used in CKEditor, the plugins must be installed.
+CKEDITOR_ENABLE_CSRF            ``False``              Flag used to enable CSRF protect for image uploading, see :doc:`/plugins` for more details.
+CKEDITOR_UPLOAD_ERROR_MESSAGE 	``Upload failed.`` 	   Default error message for failed upload.
+=============================== ====================== ======================================================================================================================================================================
 
 
 Custom Configuration String
