@@ -12,7 +12,6 @@ CKEditor integration for Flask, including image upload, code syntax highlight an
 
 - [ ] Fix English grammar error everywhere
 - [ ] Integrate with a file browser
-- [ ] CSRF protection for image upload
 - [ ] Add documentation and example for intergrate with Flask-Admin
 
 ## License
