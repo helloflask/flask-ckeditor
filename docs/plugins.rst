@@ -8,7 +8,7 @@ CKEditor >= 4.5
 ################
 
 The bulit-in CKEditor package include a `File
-Browser <ckeditor.com/addon/filebrowser>`__ plugin. With this plugin,
+Browser <https://ckeditor.com/addon/filebrowser>`__ plugin. With this plugin,
 you can upload and insert image with image widget. You need set
 ``CKEDITOR_FILE_UPLOADER`` to the URL or endpoint which handle upload
 files, and the upload view must return ``upload_success()`` call with
@@ -145,7 +145,7 @@ Code Snippet Highlight
 ------------------------
 
 The bulit-in CKEditor package include a `Code
-Snippet <ckeditor.com/addon/codesnippet>`__ plugin. You need to set
+Snippet <https://ckeditor.com/addon/codesnippet>`__ plugin. You need to set
 ``CKEDITOR_ENABLE_CODESNIPPET`` to ``True`` to enable it. You can set
 the code theme through configuration option ``CKEDITOR_CODE_THEME``. The
 default theme was ``monokai_sublime``. See all available themes and the
