@@ -15,3 +15,4 @@ Aside from the basic example, there are four additional examples:
 - examples/image-upload: This example demonstrate how to support image upload in Flaks-CKEditor.
 - examples/codesnippet: This example demonstrate how to use Code Snippet plugin.
 - examples/without-flask-wtf: This example demonstrate how to use CKEditor without Flask-WTF.
+- examples/flask-admin: This example demonstrate how to use CKEditor for Flask-Admin.

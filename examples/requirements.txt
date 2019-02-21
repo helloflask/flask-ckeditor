@@ -1,3 +1,6 @@
 Flask
 Flask-WTF
 Flask-CKEditor
+Flask-Admin
+Flask-SQLAlchemy
+tablib
