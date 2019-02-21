@@ -13,6 +13,7 @@ Contents
    basic
    configuration
    plugins
+   faq
    examples
 
 
