@@ -54,13 +54,17 @@ def uploaded_files(filename):
 
 @app.route('/upload', methods=['POST'])
 def upload():
-    f = request.files.get('upload')
-    extension = f.filename.split('.')[1].lower()
-    if extension not in ['jpg', 'gif', 'png', 'jpeg']:
-        return upload_fail(message='Image only!')
-    f.save(os.path.join(app.config['UPLOADED_PATH'], f.filename))
-    url = url_for('uploaded_files', filename=f.filename)
-    return upload_success(url=url)
+    if request.method == 'POST':
+        f = request.files.get('upload')
+        extension = f.filename.split('.')[1].lower()
+        if extension not in ['jpg', 'gif', 'png', 'jpeg']:
+            return upload_fail(message='Image only!')
+        if not os.path.exists(op.join(app.config['UPLOADED_PATH'], f.filename)):
+            f.save(op.join(app.config['UPLOADED_PATH'], f.filename))
+            url = url_for('uploaded_files', filename=f.filename)
+            return upload_success(url=url)
+        else:
+            return upload_fail(message='Image Already Exist!')
 
 
 if __name__ == '__main__':
