@@ -5,8 +5,8 @@ Configuration
 Register Configuration
 -----------------------
 
-Except ``CKEDITOR_SERVE_LOCAL`` and ``CKEDITOR_PKG_TYPE``, when you use other configuration variable,
-you have to call ``ckeditor.config()`` in template to make them register with CKEditor:
+Except for ``CKEDITOR_SERVE_LOCAL`` and ``CKEDITOR_PKG_TYPE``, when you use other configuration variables,
+you have to call ``ckeditor.config()`` in the template to make them register with CKEditor:
 
 .. code-block:: jinja
 
@@ -24,22 +24,22 @@ you have to call ``ckeditor.config()`` in template to make them register with CK
 Available Configuration
 ------------------------
 
-The configuration options available were listed below:
+The configuration options available are listed below:
 
 =============================== ======================= =========================================================================================================================================================================
             Name                    Default Value                                                                                  Info
 =============================== ======================= =========================================================================================================================================================================
-CKEDITOR_SERVE_LOCAL             ``False``               Flag used to set serve resources from local when use ``ckeditor.load()``, default to retrieve from CDN.
-CKEDITOR_PKG_TYPE                ``'standard'``          The package type of CKEditor, one of ``basic``, ``standard`` and ``full``.
+CKEDITOR_SERVE_LOCAL             ``False``               Flag used to enable serving resources from local when use ``ckeditor.load()``, default is to retrieve from CDN.
+CKEDITOR_PKG_TYPE                ``'standard'``          The package type of CKEditor, one of ``basic``, ``standard`` or ``full``.
 CKEDITOR_LANGUAGE                ``None``                The lang code string to set UI language in ISO 639 format, for example: ``zh``, ``en``, ``jp`` etc. Leave it unset to enable auto detection by user's browser setting.
 CKEDITOR_HEIGHT                  CKEditor default        The height of CKEditor textarea, in pixel.
 CKEDITOR_WIDTH                   CKEditor default        The width of CKEditor textarea, in pixel.
-CKEDITOR_FILE_UPLOADER           ``None``                The URL or endpoint that handle file upload.
-CKEDITOR_FILE_BROWSER            ``None``                The URL or endpoint that handle file browser.
+CKEDITOR_FILE_UPLOADER           ``None``                The URL or endpoint that handles file upload.
+CKEDITOR_FILE_BROWSER            ``None``                The URL or endpoint that handles file browser.
 CKEDITOR_ENABLE_CODESNIPPET      ``False``               Flag used to enable codesnippet plugin, the plugin must be installed (included in built-in resources).
 CKEDITOR_CODE_THEME              ``'monokai_sublime'``   Set code snippet highlight theme when codesnippet plugin was enabled.
 CKEDITOR_EXTRA_PLUGINS           ``[]``                  A list of extra plugins used in CKEditor, the plugins must be installed.
-CKEDITOR_ENABLE_CSRF             ``False``               Flag used to enable CSRF protect for image uploading, see :doc:`/plugins` for more details.
+CKEDITOR_ENABLE_CSRF             ``False``               Flag used to enable CSRF protection for image uploading, see :doc:`/plugins` for more details.
 CKEDITOR_UPLOAD_ERROR_MESSAGE    ``'Upload failed.'``    Default error message for failed upload.
 =============================== ======================= =========================================================================================================================================================================
 
@@ -58,18 +58,18 @@ Keep it mind that the proper syntax for each option is
 ``configuration name : configuration value``. You can use comma to
 separate multiple key-value pairs. See the list of available
 configuration settings on `CKEditor
-documentation <https://docs.ckeditor.com/ckeditor4/docs/#!/api/CKEDITOR.config%3E>`_.
+documentation <https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_config.html>`_.
 
 
 Configuring Multiple Text Area
 --------------------------------
 
-If you need create multiple text area in one page, here are some tips:
+If you need to create multiple text areas in one page, here are some tips:
 
 Without Flask-WTF/WTForms
 ##########################
 
-Create two text area with different name and configure it with the name:
+Create two text areas with different name and configure them with a unique name:
 
 .. code-block:: jinja
 
@@ -88,8 +88,8 @@ Create two text area with different name and configure it with the name:
 With Flask-WTF/WTForms
 #######################
 
-When create multiple form with Flask-WTF/WTForms, you just need to create
-multiple ``CKEditorField`` field:
+When creating multiple forms with Flask-WTF/WTForms, you just need to create
+multiple ``CKEditorField`` fields:
 
 .. code-block:: python
 
@@ -119,10 +119,9 @@ In the template, you render them and configure them with the right name:
 
 Overwriting Global Configurations
 ----------------------------------
-Sometimes you may want to use different configuration for multiple text area, in this case, you can
-pass the specific keyword arguments into ``ckeditor.config()`` directly.
+Sometimes you may want to use a different configuration for multiple text areas, in this case, you can pass the specific keyword arguments into ``ckeditor.config()`` directly.
 
-The keyword arguments should mapping the corresponding configration variable in this way:
+The keyword arguments should map the corresponding configuration variables in this way:
 
 - CKEDITOR_LANGUAGE --> language
 - CKEDITOR_WIDTH --> width

@@ -7,16 +7,16 @@ Image Upload
 CKEditor >= 4.5
 ################
 
-The bulit-in CKEditor package include a `File
+The built-in CKEditor package includes a `File
 Browser <https://ckeditor.com/addon/filebrowser>`__ plugin. With this plugin,
-you can upload and insert image with image widget. You need set
-``CKEDITOR_FILE_UPLOADER`` to the URL or endpoint which handle upload
+you can upload and insert images with the image widget. You need to set
+``CKEDITOR_FILE_UPLOADER`` to the URL or endpoint which handles uploading
 files, and the upload view must return ``upload_success()`` call with
-the uploaded image's url. Usually, you also need to validate uploaded
+the url of the uploaded image. Usually, you also need to validate the uploaded
 image, then you can use ``upload_fail()`` to return an error message
-with ``message`` argument. If ``message`` was ``None``, the value in 
-configuration variable ``CKEDITOR_UPLOAD_ERROR_MESSAGE`` will be used, 
-default to ``Upload failed.``. Here is the full example:
+with the ``message`` argument. If ``message`` was ``None``, the value in 
+the configuration variable ``CKEDITOR_UPLOAD_ERROR_MESSAGE`` will be used, 
+defaults to ``Upload failed.``. Here is the full example:
 
 .. code-block:: python
 
@@ -33,17 +33,17 @@ default to ``Upload failed.``. Here is the full example:
    def upload():
        f = request.files.get('upload')
        # Add more validations here
-       extension = f.filename.split('.')[1].lower()
+       extension = f.filename.split('.')[-1].lower()
        if extension not in ['jpg', 'gif', 'png', 'jpeg']:
            return upload_fail(message='Image only!')
        f.save(os.path.join('/the/uploaded/directory', f.filename))
        url = url_for('uploaded_files', filename=f.filename)
        return upload_success(url=url)  # return upload_success call
 
-.. note:: The key pass to ``request.files.get()`` must be ``'upload'``,
+.. note:: The key passed to ``request.files.get()`` must be ``'upload'``,
 it's defined by CKEditor and it's not the name of the view function.
 
-In the template, you have to call ``ckeditor.config()`` to make configuration work:
+In the template, you have to call ``ckeditor.config()`` to make the configuration work:
 
 .. code-block:: jinja
 
@@ -55,8 +55,8 @@ In the template, you have to call ``ckeditor.config()`` to make configuration wo
     If you create the CKEditor through ``ckeditor.create()``, the default value (``ckeditor``) 
     will be used.
 
-Now you will find the ``Upload`` tab appear in image widget. Besides,
-you can drag and drop image directly into the editor area or copy and
+Now you will find the ``Upload`` tab appear in the image widget. Besides,
+you can drag and drop the image directly into the editor area or copy and
 paste the image (CKEditor >= 4.5).
 
 .. tip:: Check the demo application at ``examples/image-upload/``.
@@ -65,9 +65,7 @@ paste the image (CKEditor >= 4.5).
 CKEditor < 4.5
 ###############
 
-If the CKEditor version you use was under 4.5, you will need to use ``@ckeditor.uploader``
-to decorated the view function that handle the file upload. The upload view must return the 
-uploaded image's url. For example:
+If the CKEditor version you use is below 4.5, you will need to use ``@ckeditor.uploader`` to decorate the view function that handles the file upload. The upload view must return the url of the uploaded image. For example:
 
 .. code-block:: python
 
@@ -88,13 +86,12 @@ uploaded image's url. For example:
         url = url_for('uploaded_files', filename=f.filename)
         return url
 
-You can use configuration variable ``CKEDITOR_UPLOAD_ERROR_MESSAGE`` to customize the error 
-message when upload failed, default to ``Upload failed.``
+You can use the configuration variable ``CKEDITOR_UPLOAD_ERROR_MESSAGE`` to customize the error message when the upload failed, it defaults to ``Upload failed.``
 
-.. note:: The key pass to ``request.files.get()`` must be ``'upload'``,
+.. note:: The key passed to ``request.files.get()`` must be ``'upload'``,
 it's defined by CKEditor and it's not the name of the view function.
 
-In the template, you have to call ``ckeditor.config()`` to make configuration work:
+In the template, you have to call ``ckeditor.config()`` to make the configuration work:
 
 .. code-block:: jinja
 
@@ -103,18 +100,17 @@ In the template, you have to call ``ckeditor.config()`` to make configuration wo
 .. tip::
     When using Flask-WTF/WTForms, you have to pass the field name as
     ``name`` in ``ckeditor.config()``, for example ``ckeditor.config(name='description')``. 
-    If you create the CKEditor through ``ckeditor.create()``, the default value (``ckeditor``) 
-    will be used.
+    If you create the CKEditor through ``ckeditor.create()``, the default value (``ckeditor``) will be used.
 
-Now you will find the ``Upload`` tab appear in image widget.
+Now you will find the ``Upload`` tab appear in the image widget.
 
 
-CSRF Protect for Image Upload
-------------------------------
+CSRF Protection for Image Upload
+--------------------------------
 
 Required version: CKEditor >= 4.9.0
 
-The CSRF Protect feature was provided by Flask-WTF's ``CSRFProtect``
+The CSRF Protection feature was provided by Flask-WTF's ``CSRFProtect``
 extension, so you have to install Flask-WTF first:
 
 .. code-block:: bash
@@ -137,23 +133,15 @@ Then initialize the CSRFProtect extension:
 
     csrf = CSRFProtect(app)
 
-Make sure to set the secret key and set ``CKEDITOR_ENABLE_CSRF`` to
-True. Now all the image upload request will be protected!
+Make sure to set the secret key and set ``CKEDITOR_ENABLE_CSRF`` to True. Now all the image upload requests will be protected!
 
 
 Code Snippet Highlight
 ------------------------
 
-The bulit-in CKEditor package include a `Code
-Snippet <https://ckeditor.com/addon/codesnippet>`__ plugin. You need to set
-``CKEDITOR_ENABLE_CODESNIPPET`` to ``True`` to enable it. You can set
-the code theme through configuration option ``CKEDITOR_CODE_THEME``. The
-default theme was ``monokai_sublime``. See all available themes and the
-list of valid theme string on `this
-page <https://sdk.ckeditor.com/samples/codesnippet.html>`__.
+The built-in CKEditor package includes a `Code Snippet <https://ckeditor.com/addon/codesnippet>`__ plugin. You need to set ``CKEDITOR_ENABLE_CODESNIPPET`` to ``True`` to enable it. You can set the code theme through the configuration option ``CKEDITOR_CODE_THEME``. The default theme is ``monokai_sublime``. See all available themes and the list of valid theme strings on `this page <https://sdk.ckeditor.com/samples/codesnippet.html>`__.
 
-Another step was load code theme resources in the page you want to
-display the text:
+Another step is to load code theme resources on the page you want to display the text in:
 
 .. code-block:: jinja
 

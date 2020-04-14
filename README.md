@@ -1,6 +1,6 @@
 # Flask-CKEditor
 
-CKEditor integration for Flask, including image upload, code syntax highlight and more.
+CKEditor integration for Flask, including image upload, code syntax highlighting and more.
 
 ## Links
 
