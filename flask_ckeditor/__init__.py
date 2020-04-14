@@ -40,7 +40,7 @@ class _CKEditor(object):
         if serve_local or current_app.config['CKEDITOR_SERVE_LOCAL']:
             url = url_for('ckeditor.static', filename='%s/ckeditor.js' % pkg_type)
         else:
-            url = '//cdn.ckeditor.com/%s/%s/ckeditor.js' % (version, pkg_type)
+            url = 'https://cdn.ckeditor.com/%s/%s/ckeditor.js' % (version, pkg_type)
 
         if custom_url:
             url = custom_url
