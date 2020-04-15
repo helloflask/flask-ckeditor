@@ -246,7 +246,7 @@ def upload_success(url, filename=''):
         from flask_ckeditor import upload_success
 
         app.config['CKEDITOR_FILE_UPLOADER'] = 'upload'  # this value can be endpoint or url
-        
+
 
         @app.route('/files/<path:filename>')
         def uploaded_files(filename):
@@ -274,7 +274,7 @@ def upload_fail(message=None):
 
         from flask import send_from_directory
         from flask_ckeditor import upload_success, upload_fail
-        
+
         app.config['CKEDITOR_FILE_UPLOADER'] = 'upload'  # this value can be endpoint or url
 
 
