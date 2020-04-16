@@ -61,12 +61,12 @@ class CKEditorTestCase(unittest.TestCase):
 
     def test_load(self):
         rv = self.ckeditor.load()
-        self.assertIn('//cdn.ckeditor.com', rv)
+        self.assertIn('https://cdn.ckeditor.com', rv)
         self.assertIn('standard/ckeditor.js', rv)
 
         current_app.config['CKEDITOR_PKG_TYPE'] = 'basic'
         rv = self.ckeditor.load()
-        self.assertIn('//cdn.ckeditor.com', rv)
+        self.assertIn('https://cdn.ckeditor.com', rv)
         self.assertIn('basic/ckeditor.js', rv)
 
     def test_local_resources(self):
@@ -83,7 +83,7 @@ class CKEditorTestCase(unittest.TestCase):
 
         rv = self.ckeditor.load()
         self.assertIn('/ckeditor/static/standard/ckeditor.js', rv)
-        self.assertNotIn('//cdn.ckeditor.com', rv)
+        self.assertNotIn('https://cdn.ckeditor.com', rv)
 
         current_app.config['CKEDITOR_PKG_TYPE'] = 'full'
         rv = self.ckeditor.load()
@@ -144,7 +144,7 @@ class CKEditorTestCase(unittest.TestCase):
     def test_ckeditor_field(self):
         response = self.client.get('/field')
         data = response.get_data(as_text=True)
-        self.assertIn('//cdn.ckeditor.com', data)
+        self.assertIn('https://cdn.ckeditor.com', data)
         self.assertIn('CKEDITOR.replace', data)
         self.assertIn('<textarea class="ckeditor', data)
         self.assertIn('name="body"', data)
@@ -161,7 +161,7 @@ class CKEditorTestCase(unittest.TestCase):
     def test_render_template(self):
         response = self.client.get('/')
         data = response.get_data(as_text=True)
-        self.assertIn('//cdn.ckeditor.com', data)
+        self.assertIn('https://cdn.ckeditor.com', data)
         self.assertIn('CKEDITOR.replace', data)
         self.assertIn('<textarea class="ckeditor"', data)
 

@@ -41,7 +41,7 @@ a CKEditor object and then separately initialize it for an app:
 Include CKEditor Resources
 --------------------------
 
-In the template which you want to put a CKEditor textarea, call ``ckeditor.load()``
+In the template in which you want to put a CKEditor textarea, call ``ckeditor.load()``
 in ``<head></head>`` or before ``</body>``:
 
 .. code-block:: jinja
@@ -51,7 +51,7 @@ in ``<head></head>`` or before ``</body>``:
        {{ ckeditor.load() }}
    </body>
 
-In default, it will load the CKEditor resources from CND (cdn.ckeditor.com), you can set ``CKEDITOR_SERVE_LOCAL``
+By default, it will load the CKEditor resources from CND (cdn.ckeditor.com), you can set ``CKEDITOR_SERVE_LOCAL``
 to True to use built-in resources. You can use ``custom_url`` to load your custom CKEditor build:
 
 .. code-block:: jinja
@@ -59,7 +59,7 @@ to True to use built-in resources. You can use ``custom_url`` to load your custo
    {{ ckeditor.load(custom_url=url_for('static', filename='ckeditor/ckeditor.js')) }}
 
 
-CKEditor provide three type of preset (i.e. ``basic``, ``standard`` and ``full``), this method default to load ``standard``.
+CKEditor provides three types of preset (i.e. ``basic``, ``standard`` and ``full``), this method defaults to load ``standard``.
 You can use `pkg_type` parameter or ``CKEDITOR_PKG_TYPE`` configuration variable to set the package type. For example:
 
 .. code-block:: jinja
@@ -96,7 +96,7 @@ It's quite simple, just call ``ckeditor.create()`` in the template:
 Get the Data
 ------------
 
-Since the CKEditor textarea is just a normal ``<textarea>`` element, so you can get the data
+Since the CKEditor textarea is just a normal ``<textarea>`` element, you can get the data
 from ``request.form`` by passing ``ckeditor`` as key:
 
 .. code-block:: python

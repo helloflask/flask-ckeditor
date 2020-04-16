@@ -2,7 +2,7 @@ Flask-CKEditor
 ==============
 
 CKEditor integration for Flask, add support to image upload, code syntax
-highlight and more.
+highlighting and more.
 
 Contents
 ---------
