@@ -2,6 +2,16 @@ Changelog
 =========
 
 
+0.4.4
+-----
+
+Release date: 2020/4/19
+
+- Upgrade CKEditor from 4.9.2 to 4.14.0.
+- Fix multiple minor bugs.
+- Fix documentation.
+
+
 0.4.3
 -----
 
