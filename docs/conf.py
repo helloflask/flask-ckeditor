@@ -20,7 +20,7 @@
 # -- Project information -----------------------------------------------------
 
 project = u'Flask-CKEditor'
-copyright = u'2018, Grey Li'
+copyright = u'2020, Grey Li'
 author = u'Grey Li'
 
 # The short X.Y version

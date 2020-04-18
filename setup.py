@@ -4,7 +4,7 @@
     ~~~~~~~~~~~~~~~
 
     :author: Grey Li <withlihui@gmail.com>
-    :copyright: (c) 2017 by Grey Li.
+    :copyright: (c) 2020 by Grey Li.
     :license: MIT, see LICENSE for more details.
 """
 from setuptools import setup
