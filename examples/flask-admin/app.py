@@ -10,6 +10,7 @@ app.config['SECRET_KEY'] = 'dev'
 
 # Create in-memory database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 ckeditor = CKEditor(app)

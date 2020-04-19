@@ -4,14 +4,14 @@
     ~~~~~~~~~~~~~~~
 
     :author: Grey Li <withlihui@gmail.com>
-    :copyright: (c) 2017 by Grey Li.
+    :copyright: (c) 2020 by Grey Li.
     :license: MIT, see LICENSE for more details.
 """
 from setuptools import setup
 
 setup(
     name='Flask-CKEditor',
-    version='0.4.3',
+    version='0.4.4',
     url='http://github.com/greyli/flask-ckeditor',
     license='MIT',
     author='Grey Li',
@@ -38,6 +38,7 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
         'Topic :: Software Development :: Libraries :: Python Modules'
     ]

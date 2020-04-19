@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2020, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -467,12 +467,12 @@
  * button is pressed. If configured, the **Browse Server** button will appear in the
  * **Link**, **Image**, and **Flash** dialog windows.
  *
- * Read more in the [documentation](#!/guide/dev_file_browse_upload)
- * and see the [SDK sample](https://sdk.ckeditor.com/samples/fileupload.html).
+ * Read more in the {@glink guide/dev_file_browse_upload documentation}
+ * and see the {@glink examples/fileupload example}.
  *
  *		config.filebrowserBrowseUrl = '/browser/browse.php';
  *
- * @since 3.0
+ * @since 3.0.0
  * @cfg {String} [filebrowserBrowseUrl='' (empty string = disabled)]
  * @member CKEDITOR.config
  */
@@ -482,16 +482,16 @@
  * If set, the **Upload** tab will appear in the **Link**, **Image**,
  * and **Flash** dialog windows.
  *
- * Read more in the [documentation](#!/guide/dev_file_browse_upload)
- * and see the [SDK sample](https://sdk.ckeditor.com/samples/fileupload.html).
+ * Read more in the {@glink guide/dev_file_browse_upload documentation}
+ * and see the {@glink examples/fileupload example}.
  *
  *		config.filebrowserUploadUrl = '/uploader/upload.php';
  *
- * **Note:** This is a configuration setting for a [file browser/uploader](#!/guide/dev_file_browse_upload).
- * To configure [uploading dropped or pasted files](#!/guide/dev_file_upload) use the {@link CKEDITOR.config#uploadUrl}
+ * **Note:** This is a configuration setting for a {@glink guide/dev_file_browse_upload file browser/uploader}.
+ * To configure {@glink guide/dev_file_upload uploading dropped or pasted files} use the {@link CKEDITOR.config#uploadUrl}
  * configuration option.
  *
- * @since 3.0
+ * @since 3.0.0
  * @cfg {String} [filebrowserUploadUrl='' (empty string = disabled)]
  * @member CKEDITOR.config
  */
@@ -503,11 +503,11 @@
  * If not set, CKEditor will use {@link CKEDITOR.config#filebrowserBrowseUrl}.
  *
  * Read more in the [documentation](#!/guide/dev_file_manager_configuration-section-adding-file-manager-scripts-for-selected-dialog-windows)
- * and see the [SDK sample](https://sdk.ckeditor.com/samples/fileupload.html).
+ * and see the {@glink examples/fileupload example}.
  *
  *		config.filebrowserImageBrowseUrl = '/browser/browse.php?type=Images';
  *
- * @since 3.0
+ * @since 3.0.0
  * @cfg {String} [filebrowserImageBrowseUrl='' (empty string = disabled)]
  * @member CKEDITOR.config
  */
@@ -519,11 +519,11 @@
  * If not set, CKEditor will use {@link CKEDITOR.config#filebrowserBrowseUrl}.
  *
  * Read more in the [documentation](#!/guide/dev_file_manager_configuration-section-adding-file-manager-scripts-for-selected-dialog-windows)
- * and see the [SDK sample](https://sdk.ckeditor.com/samples/fileupload.html).
+ * and see the {@glink examples/fileupload example}.
  *
  *		config.filebrowserFlashBrowseUrl = '/browser/browse.php?type=Flash';
  *
- * @since 3.0
+ * @since 3.0.0
  * @cfg {String} [filebrowserFlashBrowseUrl='' (empty string = disabled)]
  * @member CKEDITOR.config
  */
@@ -534,15 +534,15 @@
  * If not set, CKEditor will use {@link CKEDITOR.config#filebrowserUploadUrl}.
  *
  * Read more in the [documentation](#!/guide/dev_file_manager_configuration-section-adding-file-manager-scripts-for-selected-dialog-windows)
- * and see the [SDK sample](https://sdk.ckeditor.com/samples/fileupload.html).
+ * and see the {@glink examples/fileupload example}.
  *
  *		config.filebrowserImageUploadUrl = '/uploader/upload.php?type=Images';
  *
- * **Note:** This is a configuration setting for a [file browser/uploader](#!/guide/dev_file_browse_upload).
- * To configure [uploading dropped or pasted files](#!/guide/dev_file_upload) use the {@link CKEDITOR.config#uploadUrl}
+ * **Note:** This is a configuration setting for a {@glink guide/dev_file_browse_upload file browser/uploader}.
+ * To configure {@glink guide/dev_file_upload uploading dropped or pasted files} use the {@link CKEDITOR.config#uploadUrl}
  * or {@link CKEDITOR.config#imageUploadUrl} configuration option.
  *
- * @since 3.0
+ * @since 3.0.0
  * @cfg {String} [filebrowserImageUploadUrl='' (empty string = disabled)]
  * @member CKEDITOR.config
  */
@@ -553,11 +553,11 @@
  * If not set, CKEditor will use {@link CKEDITOR.config#filebrowserUploadUrl}.
  *
  * Read more in the [documentation](#!/guide/dev_file_manager_configuration-section-adding-file-manager-scripts-for-selected-dialog-windows)
- * and see the [SDK sample](https://sdk.ckeditor.com/samples/fileupload.html).
+ * and see the {@glink examples/fileupload example}.
  *
  *		config.filebrowserFlashUploadUrl = '/uploader/upload.php?type=Flash';
  *
- * @since 3.0
+ * @since 3.0.0
  * @cfg {String} filebrowserFlashUploadUrl='' (empty string = disabled)]
  * @member CKEDITOR.config
  */
@@ -569,11 +569,11 @@
  * If not set, CKEditor will use {@link CKEDITOR.config#filebrowserBrowseUrl}.
  *
  * Read more in the [documentation](#!/guide/dev_file_manager_configuration-section-adding-file-manager-scripts-for-selected-dialog-windows)
- * and see the [SDK sample](https://sdk.ckeditor.com/samples/fileupload.html).
+ * and see the {@glink examples/fileupload example}.
  *
  *		config.filebrowserImageBrowseLinkUrl = '/browser/browse.php';
  *
- * @since 3.2
+ * @since 3.2.0
  * @cfg {String} [filebrowserImageBrowseLinkUrl='' (empty string = disabled)]
  * @member CKEDITOR.config
  */
@@ -593,7 +593,7 @@
  * pixels or a percent string.
  *
  * Read more in the [documentation](#!/guide/dev_file_manager_configuration-section-file-manager-window-size)
- * and see the [SDK sample](https://sdk.ckeditor.com/samples/fileupload.html).
+ * and see the {@glink examples/fileupload example}.
  *
  *		config.filebrowserWindowWidth = 750;
  *
@@ -608,7 +608,7 @@
  * pixels or a percent string.
  *
  * Read more in the [documentation](#!/guide/dev_file_manager_configuration-section-file-manager-window-size)
- * and see the [SDK sample](https://sdk.ckeditor.com/samples/fileupload.html).
+ * and see the {@glink examples/fileupload example}.
  *
  *		config.filebrowserWindowHeight = 580;
  *
