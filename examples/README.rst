@@ -10,9 +10,10 @@ Open a terminal, type the commands below one by one::
 
 Then go to http://127.0.0.1:5000 with your favourite browser.
 
-Aside from the basic example, there are four additional examples:
+Aside from the basic example, there are five additional examples:
 
-- examples/image-upload: This example demonstrates how to support image upload in Flaks-CKEditor.
 - examples/codesnippet: This example demonstrates how to use the Code Snippet plugin.
-- examples/without-flask-wtf: This example demonstrates how to use CKEditor without Flask-WTF.
 - examples/flask-admin: This example demonstrates how to use CKEditor for Flask-Admin.
+- examples/flask-admin-upload: This example demonstrates how to use CKEditor for Flask-Admin with image upload.
+- examples/image-upload: This example demonstrates how to support image upload in Flaks-CKEditor.
+- examples/without-flask-wtf: This example demonstrates how to use CKEditor without Flask-WTF.
