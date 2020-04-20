@@ -22,6 +22,7 @@ def index():
     if request.method == 'POST':
         title = request.form.get('title')
         body = request.form.get('ckeditor')
+        # WARNING: use bleach or something similar to clean the data (escape JavaScript code)
         # You may need to store the data in database here
         return render_template('post.html', title=title, body=body)
     return render_template('index.html')
