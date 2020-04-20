@@ -1,0 +1,8 @@
+{% extends 'admin/model/edit.html' %}
+
+{% block tail %}
+    {{ super() }}
+    {{ ckeditor.load() }}
+    {# the name value must be 'text' #}
+    {{ ckeditor.config(name='text') }}
+{% endblock %}

@@ -176,3 +176,5 @@ docs/_build/
 venv
 examples/image-upload/uploads/*
 !examples/image-upload/uploads/.gitkeep
+examples/flask-admin-upload/uploads/*
+!examples/flask-admin-upload/uploads/.gitkeep
