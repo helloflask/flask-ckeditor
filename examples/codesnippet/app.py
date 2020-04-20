@@ -17,6 +17,11 @@ app.config['CKEDITOR_HEIGHT'] = 400
 # enable code snippet plugin
 app.config['CKEDITOR_ENABLE_CODESNIPPET'] = True
 
+# If you set CKEDITOR_PKG_TYPE = 'basic', you will get a error, because the basic 
+# CKEditor package not include Line Utilities and Widget Selection which is required by 
+# Code Snippet plugin, if you want to use Code Snippet on basic package, build your own
+# CKEditor package to include all required plugins (https://ckeditor.com/cke4/builder).
+
 app.secret_key = 'secret string'
 
 ckeditor = CKEditor(app)

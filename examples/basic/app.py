@@ -6,7 +6,7 @@
 """
 from flask import Flask, render_template
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField
+from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 
 from flask_ckeditor import CKEditor, CKEditorField
