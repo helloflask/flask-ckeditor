@@ -178,3 +178,4 @@ examples/image-upload/uploads/*
 !examples/image-upload/uploads/.gitkeep
 examples/flask-admin-upload/uploads/*
 !examples/flask-admin-upload/uploads/.gitkeep
+!flask_ckeditor/static/*/plugins/codesnippet/lib
