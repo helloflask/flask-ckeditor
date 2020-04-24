@@ -140,10 +140,11 @@ class _CKEditor(object):
         .. versionadded:: 0.3
         """
         theme = current_app.config['CKEDITOR_CODE_THEME']
+        pkg_type = current_app.config['CKEDITOR_PKG_TYPE']
         js_url = url_for('ckeditor.static',
-                         filename='basic/plugins/codesnippet/lib/highlight/highlight.pack.js')
+                         filename='%s/plugins/codesnippet/lib/highlight/highlight.pack.js' % pkg_type)
         css_url = url_for('ckeditor.static',
-                          filename='basic/plugins/codesnippet/lib/highlight/styles/%s.css' % theme)
+                          filename='%s/plugins/codesnippet/lib/highlight/styles/%s.css' % (pkg_type, theme))
         return Markup('''<link href="%s" rel="stylesheet">\n<script src="%s"></script>\n
             <script>hljs.initHighlightingOnLoad();</script>''' % (css_url, js_url))
 
