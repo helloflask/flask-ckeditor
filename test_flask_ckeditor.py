@@ -73,12 +73,15 @@ class CKEditorTestCase(unittest.TestCase):
         current_app.config['CKEDITOR_SERVE_LOCAL'] = True
 
         response = self.client.get('/ckeditor/static/basic/ckeditor.js')
+        response.close()
         self.assertNotEqual(response.status_code, 404)
 
         response = self.client.get('/ckeditor/static/standard/ckeditor.js')
+        response.close()
         self.assertNotEqual(response.status_code, 404)
 
         response = self.client.get('/ckeditor/static/full/ckeditor.js')
+        response.close()
         self.assertNotEqual(response.status_code, 404)
 
         rv = self.ckeditor.load()
@@ -171,3 +174,29 @@ class CKEditorTestCase(unittest.TestCase):
         current_app.config['CKEDITOR_ENABLE_CSRF'] = True
         rv = self.ckeditor.config()
         self.assertIn('X-CSRFToken', rv)
+
+    def test_local_resources_plugins(self):
+        # basic package plugins
+        plugins = {'filebrowser', 'lineutils', 'widgetselection',
+                   'codesnippet', 'filetools', 'popup', 'widget'}
+        for plugin in plugins:
+            url = '/ckeditor/static/basic/plugins/%s/plugin.js' % plugin
+            response = self.client.get(url)
+            response.close()
+            self.assertEqual(response.status_code, 200)
+
+        # standard package plugins
+        plugins = {'codesnippet', 'filetools', 'popup', 'widget'}
+        for plugin in plugins:
+            url = '/ckeditor/static/standard/plugins/%s/plugin.js' % plugin
+            response = self.client.get(url)
+            response.close()
+            self.assertEqual(response.status_code, 200)
+
+        # full package plugins
+        plugins = {'codesnippet', 'filetools', 'popup', 'widget'}
+        for plugin in plugins:
+            url = '/ckeditor/static/full/plugins/%s/plugin.js' % plugin
+            response = self.client.get(url)
+            response.close()
+            self.assertEqual(response.status_code, 200)
