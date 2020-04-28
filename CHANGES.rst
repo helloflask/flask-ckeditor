@@ -1,6 +1,13 @@
 Changelog
 =========
 
+0.4.4.1
+-------
+
+Release date 2020/4/28
+
+- Fix project description.
+
 
 0.4.4
 -----
