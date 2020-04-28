@@ -18,6 +18,7 @@ setup(
     author_email='withlihui@gmail.com',
     description='CKEditor integration for Flask.',
     long_description=__doc__,
+    long_description_content_type='text/markdown',
     packages=['flask_ckeditor'],
     zip_safe=False,
     include_package_data=True,
