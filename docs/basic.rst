@@ -172,12 +172,12 @@ Then pass it to CKEditor with ``value`` parameter:
        <input type="submit">
    </form>
 
-If you are using Flask-WTF/WTForms, it's even more simple, just pass the value to the form field:
+If you are using Flask-WTF/WTForms, it's even more simple, just pass the value to the form field's ``data`` attribute:
 
 .. code-block:: python
 
     @app.route('/edit')
     def edit_post():
         form = EditForm()
-        form.body = get_the_article_body_from_somewhere()
+        form.body.data = get_the_article_body_from_somewhere()  # <--
         return render_template('edit.html', form=form)
