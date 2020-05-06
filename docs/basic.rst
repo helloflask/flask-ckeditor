@@ -81,7 +81,7 @@ write ``<script>`` element directly:
 
     <script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
 
-Create A CKEditor textarea
+Create a CKEditor Textarea
 ---------------------------
 
 It's quite simple, just call ``ckeditor.create()`` in the template:
@@ -92,6 +92,8 @@ It's quite simple, just call ``ckeditor.create()`` in the template:
        {{ ckeditor.create() }}
        <input type="submit">
    </form>
+
+You can use ``value`` parameter to pass preset value (i.e. ``ckeditor.create(value='blah...blah...')``.
 
 Get the Data
 ------------
@@ -146,3 +148,36 @@ In the view function, you can get the data either by ``request.form.get('body')`
 
 
 .. tip:: Check the demo application at ``examples/basic`` and ``examples/without-flask-wtf``.
+
+
+Preset Value in CKEditor Textarea
+----------------------------------
+
+When you implement an edit feature for your CMS, you will need to get the article data from database, then preset the value
+into the CKEditor textarea. Fisrt you need to pass the value into template:
+
+.. code-block:: python
+
+    @app.route('/edit')
+    def edit_post():
+        article_body = get_the_article_body_from_somewhere()
+        return render_template('edit.html', article_body=article_body)
+
+Then pass it to CKEditor with ``value`` parameter:
+
+.. code-block:: jinja
+
+   <form method="post">
+       {{ ckeditor.create(value=article_body) }}
+       <input type="submit">
+   </form>
+
+If you are using Flask-WTF/WTForms, it's even more simple, just pass the value to the form field:
+
+.. code-block:: python
+
+    @app.route('/edit')
+    def edit_post():
+        form = EditForm()
+        form.body = get_the_article_body_from_somewhere()
+        return render_template('edit.html', form=form)

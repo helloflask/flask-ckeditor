@@ -50,7 +50,10 @@ We welcome all kinds of contributions. You can run test like this:
 Authors
 -------
 
-Maintainer: `Grey Li <http://greyli.com>`_
+Maintainer:
+
+- `Grey Li <https://github.com/greyli>`_
+- `Remy Zandwijk <https://github.com/rpmzandwijk>`_
 
 See also the list of
 `contributors <https://github.com/greyli/flask-ckeditor/contributors>`_
