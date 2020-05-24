@@ -154,7 +154,7 @@ Preset Value in CKEditor Textarea
 ----------------------------------
 
 When you implement an edit feature for your CMS, you will need to get the article data from database, then preset the value
-into the CKEditor textarea. Fisrt you need to pass the value into template:
+into the CKEditor textarea. First you need to pass the value into template:
 
 .. code-block:: python
 
