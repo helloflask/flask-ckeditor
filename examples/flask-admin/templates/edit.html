@@ -3,5 +3,10 @@
 {% block tail %}
     {{ super() }}
     {{ ckeditor.load() }}
+    {# 
+    if you have set the configuration variables more than CKEDITOR_SERVE_LOCAL and CKEDITOR_PKG_TYPE, 
+    or you need to config the CKEditor textarea, use the line below to register the configuration.
+    The name value should be the name of the CKEditor form field, it's default to "text" in Flask-Admin.
+    #}
+    {{ ckeditor.config(name='text') }}
 {% endblock %}
-
