@@ -15,11 +15,25 @@ you have to call ``ckeditor.config()`` in the template to make them register wit
        {{ ckeditor.config() }}
    </body>
 
-.. note::
-    When using Flask-WTF/WTForms, you have to pass the field name as
-    ``name`` in ``ckeditor.config()``, for example ``ckeditor.config(name='description')``. 
-    If you create the CKEditor through ``ckeditor.create()``, the default value (``ckeditor``) 
-    will be used.
+When using Flask-WTF/WTForms, you have to pass the field name as ``name`` in ``ckeditor.config()``, for example:
+ 
+ .. code-block:: jinja
+
+   <body>
+       ...  <!-- {{ ckeditor.load() }} or <script src="/path/to/ckeditor.js"> -->
+       {{ ckeditor.config(name='description') }}
+   </body>
+
+When using Flask-Admin, the default form field name is ``text``, so normally you will use this:
+
+ .. code-block:: jinja
+
+   <body>
+       ...  <!-- {{ ckeditor.load() }} or <script src="/path/to/ckeditor.js"> -->
+       {{ ckeditor.config(name='text') }}
+   </body>
+
+If you create the CKEditor through ``ckeditor.create()``, the default value (``name='ckeditor'``) will be used.
 
 Available Configuration
 ------------------------
@@ -60,6 +74,14 @@ separate multiple key-value pairs. See the list of available
 configuration settings on `CKEditor
 documentation <https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_config.html>`_.
 
+If you are using Flask-WTF/WTForms or Flask-Admin, remember to pass the form field name with ``name``:
+
+ .. code-block:: jinja
+
+   <body>
+       ...  <!-- {{ ckeditor.load() }} or <script src="/path/to/ckeditor.js"> -->
+       {{ ckeditor.config(name='description') }}  <!-- use name='text' for Flask-Admin -->
+   </body>
 
 Configuring Multiple Text Area
 --------------------------------
