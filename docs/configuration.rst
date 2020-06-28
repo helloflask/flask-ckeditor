@@ -24,14 +24,18 @@ When using Flask-WTF/WTForms, you have to pass the field name as ``name`` in ``c
        {{ ckeditor.config(name='description') }}
    </body>
 
-When using Flask-Admin, the default form field name is ``text``, so normally you will use this:
+When using Flask-Admin, the name value will be the field name you overwritten with ``form_overrides = dict(the_field_name=CKEditorField)``.
+For example:
 
  .. code-block:: jinja
 
-   <body>
+    {% extends 'admin/model/edit.html' %}
+
+    {% block tail %}
+        {{ super() }}
        ...  <!-- {{ ckeditor.load() }} or <script src="/path/to/ckeditor.js"> -->
-       {{ ckeditor.config(name='text') }}
-   </body>
+       {{ ckeditor.config(name='the_field_name') }}
+    {% endblock %}
 
 If you create the CKEditor through ``ckeditor.create()``, the default value (``name='ckeditor'``) will be used.
 

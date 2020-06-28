@@ -3,6 +3,6 @@
 {% block tail %}
     {{ super() }}
     {{ ckeditor.load() }}
-    {# the name value must be 'text' #}
+    {# The name value should be the name of the CKEditor form field, here is `text`. #}
     {{ ckeditor.config(name='text') }}
 {% endblock %}
