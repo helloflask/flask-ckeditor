@@ -4,7 +4,7 @@ Changelog
 0.4.5
 -----
 
-Release date: -
+Release date: 2021/4/24
 
 - Fix unnecessary "ckeditor" class when using ``ckeditor.config()``.
 
