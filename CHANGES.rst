@@ -1,6 +1,13 @@
 Changelog
 =========
 
+0.4.5
+-----
+
+Release date: -
+
+- Fix unnecessary "ckeditor" class when using ``ckeditor.config()``.
+
 0.4.4.1
 -------
 
