@@ -84,10 +84,9 @@ html_theme = 'flask'
 # documentation.
 #
 html_theme_options = {
-    # 'github_user': 'greyli',
+    'github_user': 'greyli',
     'index_logo': 'flask-ckeditor.png',
-    # 'github_fork': 'greyli/flask-ckeditor',
-    # 'description': 'Create social share component in Jinja2 template based on share.js.',
+    'github_fork': 'greyli/flask-ckeditor',
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,
