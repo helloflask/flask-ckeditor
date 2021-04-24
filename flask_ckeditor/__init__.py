@@ -131,8 +131,10 @@ class _CKEditor(object):
         :param value: The preset value for textarea.
 
         .. versionadded:: 0.3
+        .. versionchanged:: 0.4.5
+            The value of ``name`` will be used as ``id`` attribute.
         """
-        return Markup('<textarea class="ckeditor" name="%s" id="%s" >%s</textarea>' % (name, name, value))
+        return Markup('<textarea class="ckeditor" name="%s" id="%s">%s</textarea>' % (name, name, value))
 
     @staticmethod
     def load_code_theme():

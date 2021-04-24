@@ -161,6 +161,12 @@ class CKEditorTestCase(unittest.TestCase):
         rv = self.ckeditor.create()
         self.assertIn('<textarea class="ckeditor"', rv)
 
+        rv = self.ckeditor.create(name='foo')
+        self.assertIn('<textarea class="ckeditor" name="foo" id="foo"', rv)
+
+        rv = self.ckeditor.create(value='bar')
+        self.assertIn('<textarea class="ckeditor" name="ckeditor" id="ckeditor">bar</textarea>', rv)
+
     def test_render_template(self):
         response = self.client.get('/')
         data = response.get_data(as_text=True)
@@ -200,3 +206,25 @@ class CKEditorTestCase(unittest.TestCase):
             response = self.client.get(url)
             response.close()
             self.assertEqual(response.status_code, 200)
+
+    def test_ckeditor_class(self):
+        response = self.client.get('/')
+        data = response.get_data(as_text=True)
+        self.assertIn('document.getElementById("ckeditor").classList.remove("ckeditor")', data)
+        self.assertIn('id="ckeditor"', data)
+
+        response = self.client.get('/field')
+        data = response.get_data(as_text=True)
+        self.assertIn('document.getElementById("body").classList.remove("ckeditor")', data)
+        self.assertIn('id="body"', data)
+
+        @self.app.route('/create-without-config')
+        def create_without_config():
+            return render_template_string('''
+                    {{ ckeditor.create() }}
+                    {{ ckeditor.load() }}''')
+
+        response = self.client.get('/create-without-config')
+        data = response.get_data(as_text=True)
+        self.assertIn('class="ckeditor', data)
+        self.assertNotIn('document.getElementById("ckeditor").classList.remove("ckeditor")', data)
