@@ -105,6 +105,7 @@ class _CKEditor(object):
 
         return Markup('''
 <script type="text/javascript">
+    document.getElementById("%s").classList.remove("ckeditor");
     CKEDITOR.replace( "%s", {
         language: "%s",
         height: %s,
@@ -118,7 +119,7 @@ class _CKEditor(object):
         %s
     });
 </script>''' % (
-            name, language, height, width, code_theme, file_uploader, file_uploader, file_browser,
+            name, name, language, height, width, code_theme, file_uploader, file_uploader, file_browser,
             ','.join(extra_plugins), csrf_header, custom_config))
 
     @staticmethod
@@ -131,7 +132,7 @@ class _CKEditor(object):
 
         .. versionadded:: 0.3
         """
-        return Markup('<textarea class="ckeditor" name="%s">%s</textarea>' % (name, value))
+        return Markup('<textarea class="ckeditor" name="%s" id="%s" >%s</textarea>' % (name, name, value))
 
     @staticmethod
     def load_code_theme():
