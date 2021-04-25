@@ -59,7 +59,14 @@ to True to use built-in resources. You can use ``custom_url`` to load your custo
    {{ ckeditor.load(custom_url=url_for('static', filename='ckeditor/ckeditor.js')) }}
 
 
-CKEditor provides three types of preset (i.e. ``basic``, ``standard`` and ``full``), this method defaults to load ``standard``.
+CKEditor provides five types of preset (see `comparison table <https://ckeditor.com/cke4/presets-all>`_ for the differences):
+
+- ``basic``
+- ``standard`` （default value）
+- ``full``
+- ``standard-all`` (only available from CDN)
+- ``full-all`` (only available from CDN)
+
 You can use `pkg_type` parameter or ``CKEDITOR_PKG_TYPE`` configuration variable to set the package type. For example:
 
 .. code-block:: jinja

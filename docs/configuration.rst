@@ -48,7 +48,7 @@ The configuration options available are listed below:
             Name                    Default Value                                                                                  Info
 =============================== ======================= =========================================================================================================================================================================
 CKEDITOR_SERVE_LOCAL             ``False``               Flag used to enable serving resources from local when use ``ckeditor.load()``, default is to retrieve from CDN.
-CKEDITOR_PKG_TYPE                ``'standard'``          The package type of CKEditor, one of ``basic``, ``standard`` or ``full``.
+CKEDITOR_PKG_TYPE                ``'standard'``          The package type of CKEditor, one of ``basic``, ``standard``, ``full``, ``standard-all`` and ``full-all``. The last two options only available from CDN.
 CKEDITOR_LANGUAGE                ``None``                The lang code string to set UI language in ISO 639 format, for example: ``zh``, ``en``, ``jp`` etc. Leave it unset to enable auto detection by user's browser setting.
 CKEDITOR_HEIGHT                  CKEditor default        The height of CKEditor textarea, in pixel.
 CKEDITOR_WIDTH                   CKEditor default        The width of CKEditor textarea, in pixel.
