@@ -25,21 +25,32 @@ class _CKEditor(object):
         :param custom_url: The custom resource url to use, build your CKEditor
             on `CKEditor builder <https://ckeditor.com/cke4/builder>`_.
         :param pkg_type: The type of CKEditor package, one of ``basic``,
-            ``standard`` and ``full``. Default to ``standard``. It's a
-            mirror argument to overwrite ``CKEDITOR_PKG_TYPE``.
+            ``standard`` and ``full``. If you serve the package from CDN, you can
+            also pass ``standard-all`` and ``full-all``. Default to ``standard``.
+            It's a mirror argument to overwrite ``CKEDITOR_PKG_TYPE``.
         :param serve_local: Mirror argument to overwrite ``CKEDITOR_SERVE_LOCAL``.
         :param version: The version of CKEditor.
         """
         pkg_type = pkg_type or current_app.config['CKEDITOR_PKG_TYPE']
+        serve_local = serve_local or current_app.config['CKEDITOR_SERVE_LOCAL']
+        local_preset_list = ['basic', 'standard', 'full']
+        cdn_preset_list = local_preset_list + ['standard-all', 'full-all']
 
-        if pkg_type not in ['basic', 'standard', 'full']:
+        if serve_local and pkg_type not in local_preset_list:
             warnings.warn('The provided pkg_type string was invalid, '
                           'it should be one of basic/standard/full.')
             pkg_type = 'standard'
+        if not serve_local and pkg_type not in cdn_preset_list:
+            warnings.warn('The provided pkg_type string was invalid, '
+                          'it should be one of basic/standard/standard-all/full/full-all.')
+            pkg_type = 'standard'
 
-        if serve_local or current_app.config['CKEDITOR_SERVE_LOCAL']:
+        if serve_local:
             url = url_for('ckeditor.static', filename='%s/ckeditor.js' % pkg_type)
         else:
+            if current_app.config['CKEDITOR_ENABLE_CODESNIPPET'] and not pkg_type.endswith('all'):
+                warnings.warn('The CodeSnippet plugin only included in standard-all/full-all pakcage.')
+                pkg_type = 'standard-all'
             url = 'https://cdn.ckeditor.com/%s/%s/ckeditor.js' % (version, pkg_type)
 
         if custom_url:

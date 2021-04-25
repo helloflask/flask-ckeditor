@@ -92,6 +92,14 @@ class CKEditorTestCase(unittest.TestCase):
         rv = self.ckeditor.load()
         self.assertIn('/ckeditor/static/full/ckeditor.js', rv)
 
+        current_app.config['CKEDITOR_PKG_TYPE'] = 'standard-all'
+        rv = self.ckeditor.load()
+        self.assertIn('/ckeditor/static/standard/ckeditor.js', rv)
+
+        current_app.config['CKEDITOR_PKG_TYPE'] = 'full-all'
+        rv = self.ckeditor.load()
+        self.assertIn('/ckeditor/static/standard/ckeditor.js', rv)
+
     def test_config(self):
         current_app.config['CKEDITOR_LANGUAGE'] = 'zh'
         current_app.config['CKEDITOR_HEIGHT'] = '300'
@@ -228,3 +236,19 @@ class CKEditorTestCase(unittest.TestCase):
         data = response.get_data(as_text=True)
         self.assertIn('class="ckeditor', data)
         self.assertNotIn('document.getElementById("ckeditor").classList.remove("ckeditor")', data)
+
+    def test_codesnippet_plugin_from_cdn(self):
+        current_app.config['CKEDITOR_ENABLE_CODESNIPPET'] = True
+        current_app.config['CKEDITOR_SERVE_LOCAL'] = False
+        current_app.config['CKEDITOR_PKG_TYPE'] = 'basic'
+        rv = self.ckeditor.load()
+        self.assertIn('standard-all', rv)
+        current_app.config['CKEDITOR_PKG_TYPE'] = 'standard'
+        rv = self.ckeditor.load()
+        self.assertIn('standard-all', rv)
+        current_app.config['CKEDITOR_PKG_TYPE'] = 'full'
+        rv = self.ckeditor.load()
+        self.assertIn('standard-all', rv)
+        current_app.config['CKEDITOR_PKG_TYPE'] = 'full-all'
+        rv = self.ckeditor.load()
+        self.assertIn('full-all', rv)
