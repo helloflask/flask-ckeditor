@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.5.0
+-----
+
+Release date: -
+
+
 0.4.5
 -----
 
@@ -11,7 +17,7 @@ Release date: 2021/4/24
 0.4.4.1
 -------
 
-Release date 2020/4/28
+Release date: 2020/4/28
 
 - Fix project description.
 
