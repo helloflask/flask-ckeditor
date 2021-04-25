@@ -1,10 +1,10 @@
 Changelog
 =========
 
-0.5.0
+0.4.6
 -----
 
-Release date: -
+Release date: 2021/4/25
 
 - Support to pass ``standard-all`` and ``full-all`` as CKEditor package type.
 
