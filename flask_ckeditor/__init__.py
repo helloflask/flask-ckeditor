@@ -15,13 +15,87 @@ from flask_ckeditor.fields import CKEditorField  # noqa
 from flask_ckeditor.utils import get_url, random_filename  # noqa
 
 
-class _CKEditor(object):
+class _CKEditor5(object):
+    """The class implement functions for Jinja2 template."""
+
+    def __init__(self):
+        self.editor_dict = {'classic':'ClassicEditor',
+                        'inline':'InlineEditor', 
+                        'balloon':'BalloonEditor',
+                        'balloon-block':'BalloonEditor',
+                        'decoupled-document':'DecoupledEditor'}
+
+    def check_editor_type(self, editor_type):
+        editor_type = editor_type or current_app.config['CKEDITOR_EDITOR_TYPE']
+        if editor_type not in self.editor_dict.keys():
+            warnings.warn('The provided editor_type string was invalid, '
+                          'it should be one of classic/inline/balloon/balloon-block/decoupled-document.')
+            editor_type = 'classic'
+        return editor_type
+
+    def extra_plugin(self, file_uploader=None):
+        plugin = []
+
+        if file_uploader is not None:
+            plugin.append('''ckfinder:{uploadUrl: "%s"}''' % (file_uploader))
+
+        return ',\n\t\t\t'.join(plugin)
+       
+
+    def load(self, custom_url=None, editor_type=None, serve_local=None, version='28.0.0'):
+        """Load CKEditor resource from CDN or local."""
+
+        self.editor_type = self.check_editor_type(editor_type)
+        url = 'https://cdn.ckeditor.com/ckeditor5/%s/%s/ckeditor.js' % (version, self.editor_type)
+
+        if custom_url:
+            url = custom_url
+
+        return Markup('<script src="%s"></script>' % url)
+
+    def config(self, name='ckeditor', custom_config='', **kwargs):
+        """Config CKEditor."""
+
+
+        file_uploader = kwargs.get('file_uploader', current_app.config['CKEDITOR_FILE_UPLOADER'])
+
+        if file_uploader != '':
+            file_uploader = get_url(file_uploader)
+
+        plugin = self.extra_plugin(file_uploader)
+
+        print(plugin)
+        return Markup('''
+                        <script type="text/javascript">                                                     
+        %s                                                                                  
+        .create(document.querySelector( "%s" ), { 
+            %s 
+        })                                 
+        .then( ckeditor => {                                                                
+                window.ckeditor = ckeditor;                                                 
+                const toolbarContainer = document.querySelector( '#ckeditor-toolbox' );
+                toolbarContainer.appendChild( ckeditor.ui.view.toolbar.element );
+        })
+        .catch( error => {
+                console.error( error );
+        });
+        document.querySelector( '#submit' ).addEventListener( 'click', () => {
+                document.getElementById( "%s" ).value = window.ckeditor.getData();
+        });
+                        </script> ''' % (self.editor_dict[self.editor_type], '#'+name+'_', plugin, name))
+
+    @staticmethod
+    def create(name='ckeditor', value=''):
+        """Create a ckeditor textarea directly."""
+        return Markup('<textarea hidden name="%s" id="%s"></textarea><div id="ckeditor_toolbox"></div><div name="%s" id="%s">%s</div>' % (name, name, name+'_', name+'_', value))
+
+
+class _CKEditor4(object):
     """The class implement functions for Jinja2 template."""
 
     @staticmethod
     def load(custom_url=None, pkg_type=None, serve_local=None, version='4.14.0'):
         """Load CKEditor resource from CDN or local.
-
         :param custom_url: The custom resource url to use, build your CKEditor
             on `CKEditor builder <https://ckeditor.com/cke4/builder>`_.
         :param pkg_type: The type of CKEditor package, one of ``basic``,
@@ -44,6 +118,10 @@ class _CKEditor(object):
             warnings.warn('The provided pkg_type string was invalid, '
                           'it should be one of basic/standard/standard-all/full/full-all.')
             pkg_type = 'standard'
+        if pkg_type == 'basic' and current_app.config['CKEDITOR_FILE_UPLOADER']:
+            warnings.warn('The basic pkg_type does not support file_uploader plugins, '
+                          'using standard instead.')
+            pkg_type = 'standard'
 
         if serve_local:
             url = url_for('ckeditor.static', filename='%s/ckeditor.js' % pkg_type)
@@ -60,7 +138,6 @@ class _CKEditor(object):
     @staticmethod  # noqa
     def config(name='ckeditor', custom_config='', **kwargs):
         """Config CKEditor.
-
         :param name: The target input field's name. If you use Flask-WTF/WTForms, it need to set
             to field's name. Default to ``'ckeditor'``.
         :param custom_config: The addition config, for example ``uiColor: '#9AB8F3'``.
@@ -69,7 +146,6 @@ class _CKEditor(object):
             configuration settings on
             `CKEditor documentation <https://docs.ckeditor.com/ckeditor4/docs/#!/api/CKEDITOR.config>`_.
         :param kwargs: Mirror arguments to overwritten configuration variables, see docs for more details.
-
         .. versionadded:: 0.3
         """
         extra_plugins = kwargs.get('extra_plugins', current_app.config['CKEDITOR_EXTRA_PLUGINS'])
@@ -115,32 +191,28 @@ class _CKEditor(object):
             csrf_header = ''
 
         return Markup('''
-<script type="text/javascript">
-    document.getElementById("%s").classList.remove("ckeditor");
-    CKEDITOR.replace( "%s", {
-        language: "%s",
-        height: %s,
-        width: %s,
-        codeSnippet_theme: "%s",
-        imageUploadUrl: "%s",
-        filebrowserUploadUrl: "%s",
-        filebrowserBrowseUrl: "%s",
-        extraPlugins: "%s",
-        %s // CSRF token header for XHR request
-        %s
-    });
-</script>''' % (
-            name, name, language, height, width, code_theme, file_uploader, file_uploader, file_browser,
-            ','.join(extra_plugins), csrf_header, custom_config))
+                        <script type="text/javascript">
+        CKEDITOR.replace( "%s", {
+                language: "%s",
+                height: %s,
+                width: %s,
+                codeSnippet_theme: "%s",
+                imageUploadUrl: "%s",
+                filebrowserUploadUrl: "%s",
+                filebrowserBrowseUrl: "%s",
+                extraPlugins: "%s",
+                %s // CSRF token header for XHR request
+                %s
+        });
+                        </script>''' % (name, language, height, width, code_theme, 
+                            file_uploader, file_uploader, file_browser, ','.join(extra_plugins), csrf_header, custom_config))
 
     @staticmethod
     def create(name='ckeditor', value=''):
         """Create a ckeditor textarea directly.
-
         :param name: The name attribute of CKEditor textarea, set it when you need to create
             more than one textarea in one page. Default to ``ckeditor``.
         :param value: The preset value for textarea.
-
         .. versionadded:: 0.3
         .. versionchanged:: 0.4.5
             The value of ``name`` will be used as ``id`` attribute.
@@ -150,7 +222,6 @@ class _CKEditor(object):
     @staticmethod
     def load_code_theme():
         """Highlight the code snippets.
-
         .. versionadded:: 0.3
         """
         theme = current_app.config['CKEDITOR_CODE_THEME']
@@ -162,48 +233,66 @@ class _CKEditor(object):
         return Markup('''<link href="%s" rel="stylesheet">\n<script src="%s"></script>\n
             <script>hljs.initHighlightingOnLoad();</script>''' % (css_url, js_url))
 
-
 class CKEditor(object):
-    def __init__(self, app=None):
+    def __init__(self, app=None, version=4):
         if app is not None:
-            self.init_app(app)
+            version = version if version == 4 or version == 5 else 4
+            self.init_app(app, version)
 
-    def init_app(self, app):
+    def init_app(self, app, version):
         blueprint = Blueprint('ckeditor', __name__,
                               static_folder='static', static_url_path='/ckeditor' + app.static_url_path)
         app.register_blueprint(blueprint)
 
         if not hasattr(app, 'extensions'):
             app.extensions = {}
-        app.extensions['ckeditor'] = _CKEditor()
-        app.context_processor(self.context_processor)
+        
+        if version == 4:
+            app.extensions['ckeditor'] = _CKEditor4()
 
-        app.config.setdefault('CKEDITOR_SERVE_LOCAL', False)
-        app.config.setdefault('CKEDITOR_PKG_TYPE', 'standard')
+            app.context_processor(self.context_processor)
 
-        app.config.setdefault('CKEDITOR_LANGUAGE', '')
-        app.config.setdefault('CKEDITOR_HEIGHT', 0)
-        app.config.setdefault('CKEDITOR_WIDTH', 0)
-        app.config.setdefault('CKEDITOR_CODE_THEME', 'monokai_sublime')
+            app.config.setdefault('CKEDITOR_SERVE_LOCAL', False)
+            app.config.setdefault('CKEDITOR_PKG_TYPE', 'standard')
 
-        app.config.setdefault('CKEDITOR_FILE_UPLOADER', '')
-        app.config.setdefault('CKEDITOR_FILE_BROWSER', '')
+            app.config.setdefault('CKEDITOR_LANGUAGE', '')
+            app.config.setdefault('CKEDITOR_HEIGHT', 0)
+            app.config.setdefault('CKEDITOR_WIDTH', 0)
+            app.config.setdefault('CKEDITOR_CODE_THEME', 'monokai_sublime')
 
-        # Default error message for upload fail
-        # .. versionadded:: 0.4.0
-        app.config.setdefault('CKEDITOR_UPLOAD_ERROR_MESSAGE', 'Upload failed.')
+            app.config.setdefault('CKEDITOR_FILE_UPLOADER', '')
+            app.config.setdefault('CKEDITOR_FILE_BROWSER', '')
 
-        # Enable Code Snippet plugin
-        # .. versionadded:: 0.4.0
-        app.config.setdefault('CKEDITOR_ENABLE_CODESNIPPET', False)
+            # Default error message for upload fail
+            # .. versionadded:: 0.4.0
+            app.config.setdefault('CKEDITOR_UPLOAD_ERROR_MESSAGE', 'Upload failed.')
 
-        # Register extra CKEditor plugins
-        # .. versionadded:: 0.3.4
-        app.config.setdefault('CKEDITOR_EXTRA_PLUGINS', [])
+            # Enable Code Snippet plugin
+            # .. versionadded:: 0.4.0
+            app.config.setdefault('CKEDITOR_ENABLE_CODESNIPPET', False)
 
-        # Add CSRF protect support for image uplaoding
-        # .. versionadded:: 0.4.3
-        app.config.setdefault('CKEDITOR_ENABLE_CSRF', False)
+            # Register extra CKEditor plugins
+            # .. versionadded:: 0.3.4
+            app.config.setdefault('CKEDITOR_EXTRA_PLUGINS', [])
+
+            # Add CSRF protect support for image uplaoding
+            # .. versionadded:: 0.4.3
+            app.config.setdefault('CKEDITOR_ENABLE_CSRF', False)
+
+        else:
+            app.extensions['ckeditor'] = _CKEditor5()
+
+            app.context_processor(self.context_processor)
+
+            app.config.setdefault('CKEDITOR_EDITOR_TYPE', 'classic')
+
+            app.config.setdefault('CKEDITOR_FILE_UPLOADER', '')
+
+            # Default error message for upload fail
+            # .. versionadded:: 0.4.0
+            app.config.setdefault('CKEDITOR_UPLOAD_ERROR_MESSAGE', 'Upload failed.')
+
+
 
     @staticmethod
     def context_processor():

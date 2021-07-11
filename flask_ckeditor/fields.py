@@ -8,16 +8,22 @@
     :copyright: (c) 2020 by Grey Li.
     :license: MIT, see LICENSE for more details.
 """
+from flask import Markup, escape
 from wtforms import TextAreaField
-from wtforms.widgets import TextArea
+from wtforms.widgets import html_params
 
+class CKEditor(object):
 
-class CKEditor(TextArea):
     def __call__(self, field, **kwargs):
-        c = kwargs.pop('class', '') or kwargs.pop('class_', '')
-        kwargs['class'] = u'%s %s' % ('ckeditor', c)
-        return super(CKEditor, self).__call__(field, **kwargs)
-
+        ckeditor=field.name+'_'
+        kwargs.setdefault('id', field.id)
+        if 'required' not in kwargs and 'required' in getattr(field, 'flags', []):
+            kwargs['required'] = True
+        return Markup('<textarea hidden class="ckeditor" %s></textarea><div %s></div><div %s>%s</div>'
+                % (html_params(name=field.name, **kwargs),
+                    html_params(id='ckeditor-toolbox'),
+                    html_params(name=ckeditor, id=ckeditor),
+                    escape(field._value())))
 
 class CKEditorField(TextAreaField):
     widget = CKEditor()
