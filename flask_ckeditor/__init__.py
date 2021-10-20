@@ -253,7 +253,7 @@ class CKEditor(object):
         return wrapper
 
 
-def upload_success(url, filename=''):
+def upload_success(url, filename='', message=None):
     """Return a upload success response, for CKEditor >= 4.5.
     For example::
 
@@ -277,10 +277,17 @@ def upload_success(url, filename=''):
 
     :param url: the URL of uploaded image.
     :param filename: the filename of uploaded image, optional.
+    :param message: the warning message displayed to the user, optional. 
+
+    .. veresionchanged:: 0.4.7
+       Add new parameter ``message``.
 
     .. versionadded:: 0.4.0
     """
-    return jsonify(uploaded=1, url=url, filename=filename)
+    data = {'uploaded': 1, 'url': url, 'filename': filename}
+    if message is not None:
+        data['error'] = {'message': message}
+    return jsonify(data)
 
 
 def upload_fail(message=None):

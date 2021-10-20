@@ -61,7 +61,7 @@ def upload():
         return upload_fail(message='Image only!')
     f.save(os.path.join(app.config['UPLOADED_PATH'], f.filename))
     url = url_for('uploaded_files', filename=f.filename)
-    return upload_success(url=url)
+    return upload_success(url, filename=f.filename)
 
 
 if __name__ == '__main__':

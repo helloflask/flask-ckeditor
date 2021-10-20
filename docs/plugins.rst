@@ -12,11 +12,12 @@ Browser <https://ckeditor.com/addon/filebrowser>`__ plugin. With this plugin,
 you can upload and insert images with the image widget. You need to set
 ``CKEDITOR_FILE_UPLOADER`` to the URL or endpoint which handles uploading
 files, and the upload view must return ``upload_success()`` call with
-the url of the uploaded image. Usually, you also need to validate the uploaded
-image, then you can use ``upload_fail()`` to return an error message
-with the ``message`` argument. If ``message`` was ``None``, the value in 
-the configuration variable ``CKEDITOR_UPLOAD_ERROR_MESSAGE`` will be used, 
-defaults to ``Upload failed.``. Here is the full example:
+the url of the uploaded image, the optional filename, and a optional warning
+messsage displayed to the user. Usually, you also need to validate the uploaded
+image, if the validation fails, then you can use ``upload_fail()`` to return
+an error message with the ``message`` argument. If ``message`` was ``None``,
+the value in  the configuration variable ``CKEDITOR_UPLOAD_ERROR_MESSAGE``
+will be used, defaults to ``Upload failed.``. Here is the full example:
 
 .. code-block:: python
 
@@ -38,7 +39,7 @@ defaults to ``Upload failed.``. Here is the full example:
            return upload_fail(message='Image only!')
        f.save(os.path.join('/the/uploaded/directory', f.filename))
        url = url_for('uploaded_files', filename=f.filename)
-       return upload_success(url=url)  # return upload_success call
+       return upload_success(url, filename=f.filename)  # return upload_success call
 
 .. note:: The key passed to ``request.files.get()`` must be ``'upload'``,
 it's defined by CKEditor and it's not the name of the view function.
