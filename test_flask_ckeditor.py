@@ -7,13 +7,13 @@
     :copyright: (c) 2020 by Grey Li.
     :license: MIT, see LICENSE for more details.
 """
+import json
 import unittest
 
 from flask import Flask, render_template_string, current_app
 from flask_wtf import FlaskForm, CSRFProtect
 
-from flask_ckeditor import CKEditorField
-from flask_ckeditor import _CKEditor, CKEditor
+from flask_ckeditor import CKEditorField, _CKEditor, CKEditor, upload_success, upload_fail
 
 
 class CKEditorTestCase(unittest.TestCase):
@@ -252,3 +252,37 @@ class CKEditorTestCase(unittest.TestCase):
         current_app.config['CKEDITOR_PKG_TYPE'] = 'full-all'
         rv = self.ckeditor.load()
         self.assertIn('full-all', rv)
+
+    def test_upload_success(self):
+        rv = upload_success(url='test_url', filename='test_filename')
+        self.assertEqual(
+            json.loads(rv.data),
+            {'uploaded': 1, 'url': 'test_url', 'filename': 'test_filename'}
+        )
+
+        rv = upload_success(url='test_url', filename='test_filename', message='warning')
+        self.assertEqual(
+            json.loads(rv.data),
+            {'uploaded': 1, 'url': 'test_url', 'filename': 'test_filename', 'error': {'message': 'warning'}}
+        )
+
+    def test_upload_fail(self):
+        rv = upload_fail(message='error')
+        self.assertEqual(
+            json.loads(rv.data),
+            {'uploaded': 0, 'error': {'message': 'error'}}
+        )
+
+        default_error_message = current_app.config['CKEDITOR_UPLOAD_ERROR_MESSAGE']
+        rv = upload_fail()
+        self.assertEqual(
+            json.loads(rv.data),
+            {'uploaded': 0, 'error': {'message': default_error_message}}
+        )
+
+        current_app.config['CKEDITOR_UPLOAD_ERROR_MESSAGE'] = 'new error message'
+        rv = upload_fail()
+        self.assertEqual(
+            json.loads(rv.data),
+            {'uploaded': 0, 'error': {'message': 'new error message'}}
+        )
