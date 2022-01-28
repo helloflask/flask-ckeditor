@@ -15,7 +15,7 @@ from flask_ckeditor.fields import CKEditorField  # noqa
 from flask_ckeditor.utils import get_url, random_filename  # noqa
 
 
-class _CKEditor(object):
+class _CKEditor4(object):
     """The class implement functions for Jinja2 template."""
 
     @staticmethod
@@ -163,7 +163,82 @@ class _CKEditor(object):
             <script>hljs.initHighlightingOnLoad();</script>''' % (css_url, js_url))
 
 
-class CKEditor(object):
+class _CKEditor5(object):
+    """The class implement functions for Jinja2 template."""
+
+    def __init__(self):
+        self.editor_dict = {'classic':'ClassicEditor',
+                        'inline':'InlineEditor', 
+                        'balloon':'BalloonEditor',
+                        'balloon-block':'BalloonEditor',
+                        'decoupled-document':'DecoupledEditor'}
+
+    def check_editor_type(self, editor_type):
+        editor_type = editor_type or current_app.config['CKEDITOR_EDITOR_TYPE']
+        if editor_type not in self.editor_dict.keys():
+            warnings.warn('The provided editor_type string was invalid, '
+                          'it should be one of classic/inline/balloon/balloon-block/decoupled-document.')
+            editor_type = 'classic'
+        return editor_type
+
+    def extra_plugin(self, file_uploader=None):
+        plugin = []
+
+        if file_uploader is not None:
+            plugin.append('''ckfinder:{uploadUrl: "%s"}''' % (file_uploader))
+
+        return ',\n\t\t\t'.join(plugin)
+       
+
+    def load(self, custom_url=None, editor_type=None, serve_local=None, version='28.0.0'):
+        """Load CKEditor resource from CDN or local."""
+
+        self.editor_type = self.check_editor_type(editor_type)
+        url = 'https://cdn.ckeditor.com/ckeditor5/%s/%s/ckeditor.js' % (version, self.editor_type)
+
+        if custom_url:
+            url = custom_url
+
+        return Markup('<script src="%s"></script>' % url)
+
+    def config(self, name='ckeditor', custom_config='', **kwargs):
+        """Config CKEditor."""
+
+
+        file_uploader = kwargs.get('file_uploader', current_app.config['CKEDITOR_FILE_UPLOADER'])
+
+        if file_uploader != '':
+            file_uploader = get_url(file_uploader)
+
+        plugin = self.extra_plugin(file_uploader)
+
+        return Markup('''
+                        <script type="text/javascript">                                                     
+        %s                                                                                  
+        .create(document.querySelector( "%s" ), { 
+            %s 
+        })                                 
+        .then( ckeditor => {                                                                
+                window.ckeditor = ckeditor;                                                 
+                const toolbarContainer = document.querySelector( '#ckeditor-toolbox' );
+                toolbarContainer.appendChild( ckeditor.ui.view.toolbar.element );
+        })
+        .catch( error => {
+                console.error( error );
+        });
+        document.querySelector( '#submit' ).addEventListener( 'click', () => {
+                document.getElementById( "%s" ).value = window.ckeditor.getData();
+        });
+                        </script> ''' % (self.editor_dict[self.editor_type], '#'+name+'_', plugin, name))
+
+    @staticmethod
+    def create(name='ckeditor', value=''):
+        """Create a ckeditor textarea directly."""
+        return Markup('<textarea hidden name="%s" id="%s"></textarea><div id="ckeditor_toolbox"></div><div name="%s" id="%s">%s</div>' % (name, name, name+'_', name+'_', value))
+
+
+
+class CKEditor4(object):
     def __init__(self, app=None):
         if app is not None:
             self.init_app(app)
@@ -175,7 +250,7 @@ class CKEditor(object):
 
         if not hasattr(app, 'extensions'):
             app.extensions = {}
-        app.extensions['ckeditor'] = _CKEditor()
+        app.extensions['ckeditor'] = _CKEditor4()
         app.context_processor(self.context_processor)
 
         app.config.setdefault('CKEDITOR_SERVE_LOCAL', False)
@@ -251,6 +326,32 @@ class CKEditor(object):
         window.parent.CKEDITOR.tools.callFunction(%s, "%s", "%s");</script>''' % (func_num, url, message))
 
         return wrapper
+
+
+class CKEditor5(CKEditor4):
+    def __init__(self, app=None):
+        super(CKEditor5, self).__init__(app)
+
+    def init_app(self, app):
+        blueprint = Blueprint('ckeditor', __name__,
+                              static_folder='static', static_url_path='/ckeditor' + app.static_url_path)
+        app.register_blueprint(blueprint)
+
+        if not hasattr(app, 'extensions'):
+            app.extensions = {}
+        
+        app.extensions['ckeditor'] = _CKEditor5()
+
+        app.context_processor(self.context_processor)
+
+        app.config.setdefault('CKEDITOR_EDITOR_TYPE', 'classic')
+
+        app.config.setdefault('CKEDITOR_FILE_UPLOADER', '')
+
+        # Default error message for upload fail
+        # .. versionadded:: 0.4.0
+        app.config.setdefault('CKEDITOR_UPLOAD_ERROR_MESSAGE', 'Upload failed.')
+
 
 
 def upload_success(url, filename='', message=None):
