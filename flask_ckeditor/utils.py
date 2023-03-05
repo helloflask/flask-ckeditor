@@ -1,12 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-    flask_ckeditor.utils
-    ~~~~~~~~~~~~~~~~~~~~
-
-    :author: Grey Li <withlihui@gmail.com>
-    :copyright: (c) 2020 by Grey Li.
-    :license: MIT, see LICENSE for more details.
-"""
 import os
 import uuid
 

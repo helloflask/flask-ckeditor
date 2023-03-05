@@ -1,6 +1,16 @@
 Changelog
 =========
 
+
+1.0.0
+-----
+
+Rlease date: -
+
+- Drop Python 2 and 3.6 support.
+- Remove the deprecated ``codesnippet`` argument in ``ckeditor.config()``.
+
+
 0.4.6
 -----
 

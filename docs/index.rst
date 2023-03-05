@@ -56,7 +56,7 @@ Maintainer:
 - `Remy Zandwijk <https://github.com/rpmzandwijk>`_
 
 See also the list of
-`contributors <https://github.com/greyli/flask-ckeditor/contributors>`_
+`contributors <https://github.com/helloflask/flask-ckeditor/contributors>`_
 who participated in this project.
 
 License

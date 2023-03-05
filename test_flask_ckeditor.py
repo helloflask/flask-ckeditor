@@ -150,7 +150,7 @@ class CKEditorTestCase(unittest.TestCase):
         self.assertIn('imageUploadUrl: "/1",', rv)
         self.assertIn('filebrowserUploadUrl: "/1",', rv)
         self.assertIn('filebrowserBrowseUrl: "/2",', rv)
-        self.assertIn('extraPlugins: "1,2,filebrowser,codesnippet",', rv)
+        self.assertIn('extraPlugins: "1,2,filebrowser",', rv)
 
     def test_ckeditor_field(self):
         response = self.client.get('/field')
@@ -194,7 +194,7 @@ class CKEditorTestCase(unittest.TestCase):
         plugins = {'filebrowser', 'lineutils', 'widgetselection',
                    'codesnippet', 'filetools', 'popup', 'widget'}
         for plugin in plugins:
-            url = '/ckeditor/static/basic/plugins/%s/plugin.js' % plugin
+            url = f'/ckeditor/static/basic/plugins/{plugin}/plugin.js'
             response = self.client.get(url)
             response.close()
             self.assertEqual(response.status_code, 200)
@@ -202,7 +202,7 @@ class CKEditorTestCase(unittest.TestCase):
         # standard package plugins
         plugins = {'codesnippet', 'filetools', 'popup', 'widget'}
         for plugin in plugins:
-            url = '/ckeditor/static/standard/plugins/%s/plugin.js' % plugin
+            url = f'/ckeditor/static/standard/plugins/{plugin}/plugin.js'
             response = self.client.get(url)
             response.close()
             self.assertEqual(response.status_code, 200)
@@ -210,12 +210,18 @@ class CKEditorTestCase(unittest.TestCase):
         # full package plugins
         plugins = {'codesnippet', 'filetools', 'popup', 'widget'}
         for plugin in plugins:
-            url = '/ckeditor/static/full/plugins/%s/plugin.js' % plugin
+            url = f'/ckeditor/static/full/plugins/{plugin}/plugin.js'
             response = self.client.get(url)
             response.close()
             self.assertEqual(response.status_code, 200)
 
     def test_ckeditor_class(self):
+        @self.app.route('/create-without-config')
+        def create_without_config():
+            return render_template_string('''
+                    {{ ckeditor.create() }}
+                    {{ ckeditor.load() }}''')
+
         response = self.client.get('/')
         data = response.get_data(as_text=True)
         self.assertIn('document.getElementById("ckeditor").classList.remove("ckeditor")', data)
@@ -225,12 +231,6 @@ class CKEditorTestCase(unittest.TestCase):
         data = response.get_data(as_text=True)
         self.assertIn('document.getElementById("body").classList.remove("ckeditor")', data)
         self.assertIn('id="body"', data)
-
-        @self.app.route('/create-without-config')
-        def create_without_config():
-            return render_template_string('''
-                    {{ ckeditor.create() }}
-                    {{ ckeditor.load() }}''')
 
         response = self.client.get('/create-without-config')
         data = response.get_data(as_text=True)
@@ -286,3 +286,7 @@ class CKEditorTestCase(unittest.TestCase):
             json.loads(rv.data),
             {'uploaded': 0, 'error': {'message': 'new error message'}}
         )
+
+
+if __name__ == '__main__':
+    unittest.main()

@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-    :author: Grey Li <withlihui@gmail.com>
-    :copyright: (c) 2020 by Grey Li.
-    :license: MIT, see LICENSE for more details.
-"""
 from flask import Flask, render_template, request
 
 from flask_ckeditor import CKEditor

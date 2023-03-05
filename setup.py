@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Flask-CKEditor
 --------------
@@ -19,7 +18,7 @@ from setuptools import setup
 setup(
     name='Flask-CKEditor',
     version='0.4.6',
-    url='http://github.com/greyli/flask-ckeditor',
+    url='http://github.com/helloflask/flask-ckeditor',
     license='MIT',
     author='Grey Li',
     author_email='withlihui@gmail.com',
@@ -40,13 +39,12 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
         'Topic :: Software Development :: Libraries :: Python Modules'
     ]

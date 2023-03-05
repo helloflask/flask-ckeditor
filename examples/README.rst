@@ -1,14 +1,18 @@
 Try Examples
 =============
 
-Open a terminal, type the commands below one by one::
+Clon the repo and install dependencies:
 
-    $ git clone https://github.com/greyli/flask-ckeditor
+    $ git clone https://github.com/helloflask/flask-ckeditor
     $ cd flask-ckeditor/examples
     $ pip install -r requirements.txt
-    $ python basic/app.py
 
-Then go to http://127.0.0.1:5000 with your favourite browser.
+Change into the example folder, then run the app:
+
+    $ cd basic
+    $ python app.py
+
+Now go to http://127.0.0.1:5000 with your favourite browser.
 
 Aside from the basic example, there are five additional examples:
 
