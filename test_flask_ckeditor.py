@@ -216,6 +216,12 @@ class CKEditorTestCase(unittest.TestCase):
             self.assertEqual(response.status_code, 200)
 
     def test_ckeditor_class(self):
+        @self.app.route('/create-without-config')
+        def create_without_config():
+            return render_template_string('''
+                    {{ ckeditor.create() }}
+                    {{ ckeditor.load() }}''')
+
         response = self.client.get('/')
         data = response.get_data(as_text=True)
         self.assertIn('document.getElementById("ckeditor").classList.remove("ckeditor")', data)
@@ -225,12 +231,6 @@ class CKEditorTestCase(unittest.TestCase):
         data = response.get_data(as_text=True)
         self.assertIn('document.getElementById("body").classList.remove("ckeditor")', data)
         self.assertIn('id="body"', data)
-
-        @self.app.route('/create-without-config')
-        def create_without_config():
-            return render_template_string('''
-                    {{ ckeditor.create() }}
-                    {{ ckeditor.load() }}''')
 
         response = self.client.get('/create-without-config')
         data = response.get_data(as_text=True)

@@ -1,6 +1,15 @@
 Changelog
 =========
 
+
+1.0.0
+-----
+
+Rlease date: -
+
+- Drop Python 2 and 3.6 support.
+
+
 0.4.6
 -----
 

@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-    :author: Grey Li <withlihui@gmail.com>
-    :copyright: (c) 2020 by Grey Li.
-    :license: MIT, see LICENSE for more details.
-"""
 import os
 
 from flask import Flask, render_template, request, url_for, send_from_directory
@@ -62,7 +56,6 @@ def upload():
     f.save(os.path.join(app.config['UPLOADED_PATH'], f.filename))
     url = url_for('uploaded_files', filename=f.filename)
     return upload_success(url, filename=f.filename)
-
 
 if __name__ == '__main__':
     app.run(debug=True)

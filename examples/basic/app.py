@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-    :author: Grey Li <withlihui@gmail.com>
-    :copyright: (c) 2020 by Grey Li.
-    :license: MIT, see LICENSE for more details.
-"""
 from flask import Flask, render_template
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
@@ -35,7 +29,6 @@ def index():
         # You may need to store the data in database here
         return render_template('post.html', title=title, body=body)
     return render_template('index.html', form=form)
-
 
 if __name__ == '__main__':
     app.run(debug=True)
