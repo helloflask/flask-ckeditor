@@ -37,16 +37,16 @@ class _CKEditor(object):
             pkg_type = 'standard'
 
         if serve_local:
-            url = url_for('ckeditor.static', filename='%s/ckeditor.js' % pkg_type)
+            url = url_for('ckeditor.static', filename=f'{pkg_type}/ckeditor.js')
         else:
             if current_app.config['CKEDITOR_ENABLE_CODESNIPPET'] and not pkg_type.endswith('all'):
                 warnings.warn('The CodeSnippet plugin only included in standard-all/full-all pakcage.')
                 pkg_type = 'standard-all'
-            url = 'https://cdn.ckeditor.com/%s/%s/ckeditor.js' % (version, pkg_type)
+            url = f'https://cdn.ckeditor.com/{version}/{pkg_type}/ckeditor.js'
 
         if custom_url:
             url = custom_url
-        return Markup('<script src="%s"></script>' % url)
+        return Markup(f'<script src="{url}"></script>')
 
     @staticmethod  # noqa
     def config(name='ckeditor', custom_config='', **kwargs):
@@ -63,38 +63,24 @@ class _CKEditor(object):
 
         .. versionadded:: 0.3
         """
-        extra_plugins = kwargs.get('extra_plugins', current_app.config['CKEDITOR_EXTRA_PLUGINS'])
+        def _get_config(name, url=False):
+            value = kwargs.get(name, current_app.config[f'CKEDITOR_{name.upper()}'])
+            if url and value:
+                return get_url(value)
+            return value
 
-        file_uploader = kwargs.get('file_uploader', current_app.config['CKEDITOR_FILE_UPLOADER'])
-        file_browser = kwargs.get('file_browser', current_app.config['CKEDITOR_FILE_BROWSER'])
-
-        if file_uploader:
-            file_uploader = get_url(file_uploader)
-        if file_browser:
-            file_browser = get_url(file_browser)
+        extra_plugins = _get_config('extra_plugins')
+        file_uploader = _get_config('file_uploader', url=True)
+        file_browser = _get_config('file_browser', url=True)
 
         if file_uploader or file_browser and 'filebrowser' not in extra_plugins:
             extra_plugins.append('filebrowser')
 
-        language = kwargs.get('language', current_app.config['CKEDITOR_LANGUAGE'])
-        height = kwargs.get('height', current_app.config['CKEDITOR_HEIGHT'])
-        width = kwargs.get('width', current_app.config['CKEDITOR_WIDTH'])
-
-        code_theme = kwargs.get('code_theme', current_app.config['CKEDITOR_CODE_THEME'])
-
-        wrong_key_arg = kwargs.get('codesnippet', None)
-        if wrong_key_arg:
-            warnings.warn('Argument codesnippet was renamed to enable_codesnippet and will be removed in future.')
-
-        enable_codesnippet = kwargs.get('enable_codesnippet', wrong_key_arg) or \
-            current_app.config['CKEDITOR_ENABLE_CODESNIPPET']
-
-        if enable_codesnippet and 'codesnippet' not in extra_plugins:
+        if _get_config('enable_codesnippet') and 'codesnippet' not in extra_plugins:
             extra_plugins.append('codesnippet')
 
-        enable_csrf = kwargs.get('enable_csrf', current_app.config['CKEDITOR_ENABLE_CSRF'])
-
-        if enable_csrf:
+        csrf_header = ''
+        if _get_config('enable_csrf'):
             if 'csrf' not in current_app.extensions:
                 raise RuntimeError("CSRFProtect is not initialized. It's required to enable CSRF protect, \
                     see docs for more details.")
@@ -102,17 +88,15 @@ class _CKEditor(object):
                 fileTools_requestHeaders: {
                     'X-CSRFToken': '{{ csrf_token() }}',
                 },''')
-        else:
-            csrf_header = ''
 
         return Markup(f'''
 <script type="text/javascript">
     document.getElementById("{name}").classList.remove("ckeditor");
     CKEDITOR.replace( "{name}", {{
-        language: "{language}",
-        height: {height},
-        width: {width},
-        codeSnippet_theme: "{code_theme}",
+        language: "{_get_config('language')}",
+        height: {_get_config('height')},
+        width: {_get_config('width')},
+        codeSnippet_theme: "{_get_config('code_theme')}",
         imageUploadUrl: "{file_uploader}",
         filebrowserUploadUrl: "{file_uploader}",
         filebrowserBrowseUrl: "{file_browser}",
@@ -144,11 +128,15 @@ class _CKEditor(object):
         """
         theme = current_app.config['CKEDITOR_CODE_THEME']
         pkg_type = current_app.config['CKEDITOR_PKG_TYPE']
-        js_url = url_for('ckeditor.static',
-                         filename='{pkg_type}/plugins/codesnippet/lib/highlight/highlight.pack.js')
-        css_url = url_for('ckeditor.static',
-                          filename='{pkg_type}/plugins/codesnippet/lib/highlight/styles/{theme}.css')
-        return Markup('''<link href="{css_url}" rel="stylesheet">\n<script src="{js_url}"></script>\n
+        js_url = url_for(
+            'ckeditor.static',
+            filename=f'{pkg_type}/plugins/codesnippet/lib/highlight/highlight.pack.js'
+        )
+        css_url = url_for(
+            'ckeditor.static',
+            filename=f'{pkg_type}/plugins/codesnippet/lib/highlight/styles/{theme}.css'
+        )
+        return Markup(f'''<link href="{css_url}" rel="stylesheet">\n<script src="{js_url}"></script>\n
             <script>hljs.initHighlightingOnLoad();</script>''')
 
 
@@ -270,7 +258,7 @@ def upload_success(url, filename='', message=None):
 
     :param url: the URL of uploaded image.
     :param filename: the filename of uploaded image, optional.
-    :param message: the warning message displayed to the user, optional. 
+    :param message: the warning message displayed to the user, optional.
 
     .. veresionchanged:: 0.4.7
        Add new parameter ``message``.
