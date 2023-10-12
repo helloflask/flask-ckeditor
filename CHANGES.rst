@@ -11,6 +11,14 @@ Rlease date: -
 - Remove the deprecated ``codesnippet`` argument in ``ckeditor.config()``.
 
 
+0.4.7
+-----
+
+Release date: -
+
+- Fix the compatiable issue with Flask 3.0
+
+
 0.4.6
 -----
 

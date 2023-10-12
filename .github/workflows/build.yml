@@ -41,5 +41,6 @@ jobs:
       - uses: actions/setup-python@v2
       - run: python -m pip install --upgrade pip wheel
       - run: pip install tox codecov
-      - run: tox -e covarage
+      - run: tox
+      - run: tox -e coverage
       - run: codecov

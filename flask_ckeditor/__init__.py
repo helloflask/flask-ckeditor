@@ -1,6 +1,7 @@
 import warnings
 from functools import wraps
-from flask import current_app, Markup, Blueprint, url_for, request, jsonify, render_template_string
+from flask import current_app, Blueprint, url_for, request, jsonify, render_template_string
+from markupsafe import Markup
 
 from flask_ckeditor.fields import CKEditorField  # noqa
 from flask_ckeditor.utils import get_url, random_filename  # noqa
