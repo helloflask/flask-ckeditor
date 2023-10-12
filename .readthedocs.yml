@@ -1,0 +1,9 @@
+version: 2
+python:
+  install:
+    - requirements: docs_requirements.txt
+    - method: pip
+      path: .
+sphinx:
+  builder: dirhtml
+  fail_on_warning: true
