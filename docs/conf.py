@@ -111,7 +111,6 @@ html_sidebars = {
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'Flask-CKEditordoc'
-html_favicon = '_static/bootstrap-flask-favicon.png'
 html_logo = '_static/flask-ckeditor-small.png'
 
 # -- Options for LaTeX output ------------------------------------------------
