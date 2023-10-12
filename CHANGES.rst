@@ -2,21 +2,16 @@ Changelog
 =========
 
 
-1.0.0
+0.5.0
 -----
 
-Rlease date: -
+Release date: 2023/10/12
 
 - Drop Python 2 and 3.6 support.
+- Migrate from Travis CI to GitHub Actions.
 - Remove the deprecated ``codesnippet`` argument in ``ckeditor.config()``.
-
-
-0.4.7
------
-
-Release date: -
-
-- Fix the compatiable issue with Flask 3.0
+- Fix the compatibility issue with Flask 3.0 version.
+- Add message parameter to ``upload_success`` callback to support custom warning message.
 
 
 0.4.6
