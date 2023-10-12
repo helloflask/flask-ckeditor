@@ -1,6 +1,17 @@
 Changelog
 =========
 
+1.0.0
+-----
+
+Release date: -
+
+
+0.5.1
+-----
+
+Release date: -
+
 
 0.5.0
 -----
