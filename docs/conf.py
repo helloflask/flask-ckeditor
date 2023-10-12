@@ -84,7 +84,7 @@ html_theme = 'flask'
 # documentation.
 #
 html_theme_options = {
-    'github_user': 'greyli',
+    'github_user': 'helloflask',
     'index_logo': 'flask-ckeditor.png',
     'github_fork': 'helloflask/flask-ckeditor',
 }
@@ -111,7 +111,8 @@ html_sidebars = {
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'Flask-CKEditordoc'
-
+html_favicon = '_static/bootstrap-flask-favicon.png'
+html_logo = '_static/flask-ckeditor-small.png'
 
 # -- Options for LaTeX output ------------------------------------------------
 
