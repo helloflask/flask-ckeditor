@@ -3,9 +3,10 @@ Try Examples
 
 Clon the repo and install dependencies:
 
-    $ git clone https://github.com/helloflask/flask-ckeditor
-    $ cd flask-ckeditor/examples
-    $ pip install -r requirements.txt
+    $ git clone https://github.com/helloflask/flask-ckeditor.git
+    $ cd flask-ckeditor
+    $ pip install -r requirements/examples.txt
+    $ cd examples
 
 Change into the example folder, then run the app:
 

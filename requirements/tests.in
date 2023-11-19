@@ -1,0 +1,7 @@
+pytest
+pytest-cov
+flask
+flask-wtf
+flask-admin
+flask-sqlalchemy
+tablib

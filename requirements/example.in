@@ -1,0 +1,6 @@
+flask
+flask-wtf
+flask-ckeditor
+flask-admin
+flask-sqlalchemy
+tablib
