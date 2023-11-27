@@ -3,7 +3,10 @@ from functools import wraps
 from flask import current_app, Blueprint, url_for, request, jsonify, render_template_string
 from markupsafe import Markup
 
-from flask_ckeditor.fields import CKEditorField  # noqa
+try:
+    from flask_ckeditor.fields import CKEditorField  # noqa
+except ImportError:
+    warnings.warn('Flask-WTF or WTForms is not installed, CKEditorField will not be available.')
 from flask_ckeditor.utils import get_url, random_filename  # noqa
 
 
