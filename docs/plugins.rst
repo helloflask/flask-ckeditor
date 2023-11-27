@@ -41,8 +41,7 @@ will be used, defaults to ``Upload failed.``. Here is the full example:
        url = url_for('uploaded_files', filename=f.filename)
        return upload_success(url, filename=f.filename)  # return upload_success call
 
-.. note:: The key passed to ``request.files.get()`` must be ``'upload'``,
-it's defined by CKEditor and it's not the name of the view function.
+.. note:: The key passed to ``request.files.get()`` must be ``'upload'``, it's defined by CKEditor and it's not the name of the view function.
 
 In the template, you have to call ``ckeditor.config()`` to make the configuration work:
 
@@ -89,8 +88,7 @@ If the CKEditor version you use is below 4.5, you will need to use ``@ckeditor.u
 
 You can use the configuration variable ``CKEDITOR_UPLOAD_ERROR_MESSAGE`` to customize the error message when the upload failed, it defaults to ``Upload failed.``
 
-.. note:: The key passed to ``request.files.get()`` must be ``'upload'``,
-it's defined by CKEditor and it's not the name of the view function.
+.. note:: The key passed to ``request.files.get()`` must be ``'upload'``, it's defined by CKEditor and it's not the name of the view function.
 
 In the template, you have to call ``ckeditor.config()`` to make the configuration work:
 
