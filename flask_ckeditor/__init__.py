@@ -264,7 +264,7 @@ def upload_success(url, filename='', message=None):
     :param filename: the filename of uploaded image, optional.
     :param message: the warning message displayed to the user, optional.
 
-    .. veresionchanged:: 0.4.7
+    .. versionchanged:: 0.4.7
        Add new parameter ``message``.
 
     .. versionadded:: 0.4.0
