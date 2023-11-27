@@ -10,7 +10,9 @@ Release date: -
 0.5.1
 -----
 
-Release date: -
+Release date: 2023/11/27
+
+- Make WTForms an optional dependency.
 
 
 0.5.0
