@@ -17,7 +17,7 @@ from setuptools import setup
 
 setup(
     name='Flask-CKEditor',
-    version='0.5.1',
+    version='1.0.0-dev',
     url='http://github.com/helloflask/flask-ckeditor',
     license='MIT',
     author='Grey Li',
