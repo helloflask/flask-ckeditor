@@ -6,6 +6,13 @@ Changelog
 
 Release date: -
 
+0.5.2
+-----
+
+Release date: 2023/12/09
+
+- add ``cleanify`` function to ``flask_ckeditor.utils``
+
 
 0.5.1
 -----
