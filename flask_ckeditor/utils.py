@@ -25,7 +25,7 @@ def random_filename(old_filename):
 def cleanify(text, *, allow_tags=None):
     """clean the input from client, this function rely on bleach,
 
-    
+
     Args:
         text (str): input
         allow_tags (Iterable[str], optional): if you don't want to use default `allow_tags`
@@ -37,5 +37,3 @@ def cleanify(text, *, allow_tags=None):
                             'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul',
                             'h1', 'h2', 'h3', 'h4', 'h5', 'p'}
     return bleach.linkify(bleach.clean(text, tags=default_allowed_tags))
-    
-    

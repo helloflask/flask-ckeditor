@@ -287,25 +287,25 @@ class CKEditorTestCase(unittest.TestCase):
             json.loads(rv.data),
             {'uploaded': 0, 'error': {'message': 'new error message'}}
         )
-    
+
     def test_cleanify_input_js(self):
         input = 'an <script>evil()</script> example'
         clean_ouput = cleanify(input)
-        self.assertEqual(clean_ouput, 
-                        u'an &lt;script&gt;evil()&lt;/script&gt; example')
-    
+        self.assertEqual(clean_ouput,
+                         u'an &lt;script&gt;evil()&lt;/script&gt; example')
+
     def test_cleanify_input_url(self):
         input = 'abc http://example.com def'
         clean_output = cleanify(input)
-        self.assertEqual(clean_output, 
-                        u'abc <a href="http://example.com" rel="nofollow">http://example.com</a> def')
-    
+        self.assertEqual(clean_output,
+                         u'abc <a href="http://example.com" rel="nofollow">http://example.com</a> def')
+
     def test_cleanify_by_allow_tags(self):
         input = '<b> hello <a> this is a url </a> !</b> <h1> this is h1 </h1>'
         clean_out = cleanify(input, allow_tags=['b'])
         self.assertEqual(clean_out,
-                        '<b> hello &lt;a&gt; this is a url &lt;/a&gt; !</b> &lt;h1&gt; this is h1 &lt;/h1&gt;')
-    
+                         '<b> hello &lt;a&gt; this is a url &lt;/a&gt; !</b> &lt;h1&gt; this is h1 &lt;/h1&gt;')
+
     def test_cleanify_by_default_allow_tags(self):
         self.maxDiff = None
         input = """<a>xxxxx</a>
@@ -328,8 +328,8 @@ class CKEditorTestCase(unittest.TestCase):
                 <p>xxxxxxxx</p>
         """
         clean_out = cleanify(input)
-        self.assertEqual(clean_out,input)
-    
+        self.assertEqual(clean_out, input)
+
 
 if __name__ == '__main__':
     unittest.main()
