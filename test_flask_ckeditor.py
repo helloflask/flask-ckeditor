@@ -330,6 +330,32 @@ class CKEditorTestCase(unittest.TestCase):
         clean_out = cleanify(input)
         self.assertEqual(clean_out, input)
 
+    def test_import_cleanify_without_install_bleach(self):
+        import sys
+        import builtins
+        origin_import = builtins.__import__
+        origin_modules = sys.modules.copy()
+
+        def import_hook(name, *args, **kwargs):
+            if name == 'bleach':
+                raise ImportError('test case module')
+            else:
+                return origin_import(name, *args, **kwargs)
+
+        if 'flask_ckeditor.utils' in sys.modules:
+            del sys.modules['flask_ckeditor.utils']
+        builtins.__import__ = import_hook
+
+        with self.assertWarns(UserWarning) as w:
+            from flask_ckeditor.utils import cleanify  # noqa: F401
+
+        self.assertEqual(str(w.warning),
+                         'The "bleach" library is not installed, `cleanify` function will not be available.')
+
+        # recover default
+        builtins.__import__ = origin_import
+        sys.modules = origin_modules
+
 
 if __name__ == '__main__':
     unittest.main()
