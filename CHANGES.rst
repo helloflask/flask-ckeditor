@@ -9,9 +9,9 @@ Release date: -
 0.5.2
 -----
 
-Release date: 2023/12/09
+Release date: N/A
 
-- add ``cleanify`` function to ``flask_ckeditor.utils``
+- Add ``cleanify`` function to ``flask_ckeditor.utils`` for HTML sanity.
 
 
 0.5.1
