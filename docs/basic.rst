@@ -62,7 +62,7 @@ to True to use built-in resources. You can use ``custom_url`` to load your custo
 CKEditor provides five types of preset (see `comparison table <https://ckeditor.com/cke4/presets-all>`_ for the differences):
 
 - ``basic``
-- ``standard`` （default value）
+- ``standard`` (default value)
 - ``full``
 - ``standard-all`` (only available from CDN)
 - ``full-all`` (only available from CDN)
@@ -100,7 +100,7 @@ It's quite simple, just call ``ckeditor.create()`` in the template:
        <input type="submit">
    </form>
 
-You can use ``value`` parameter to pass preset value (i.e. ``ckeditor.create(value='blah...blah...')``.
+You can use ``value`` parameter to pass preset value (i.e. ``ckeditor.create(value='blah...blah...')``).
 
 Get the Data
 ------------
@@ -116,6 +116,31 @@ from ``request.form`` by passing ``ckeditor`` as key:
     def new_post():
         if request.method == 'POST':
             data = request.form.get('ckeditor')  # <--
+
+        return render_template('index.html')
+
+Clean the Data
+--------------
+
+It's recommended to sanitize the HTML input from user before saving it to the database.
+
+The Flask-CKEditor provides a helper function `cleanify`. To use it, install the extra dependencies:
+
+.. code-block:: bash
+
+   $ pip install flask-ckeditor[all]
+
+Then call it for your form data (you could use ``allowed_tags`` to pass a list of custom allowed HTML tags):
+
+.. code-block:: python
+
+    from flask import request, render_template
+    from flask_ckeditor.utils import cleanify
+
+    @app.route('/write')
+    def new_post():
+        if request.method == 'POST':
+            data = cleanify(request.form.get('ckeditor'))  # <--
 
         return render_template('index.html')
 

@@ -9,11 +9,14 @@
 """
 import json
 import unittest
+import sys
+import builtins
 
 from flask import Flask, render_template_string, current_app
 from flask_wtf import FlaskForm, CSRFProtect
 
 from flask_ckeditor import CKEditorField, _CKEditor, CKEditor, upload_success, upload_fail
+from flask_ckeditor.utils import cleanify
 
 
 class CKEditorTestCase(unittest.TestCase):
@@ -286,6 +289,66 @@ class CKEditorTestCase(unittest.TestCase):
             json.loads(rv.data),
             {'uploaded': 0, 'error': {'message': 'new error message'}}
         )
+
+    def test_cleanify_input_js(self):
+        input = 'an <script>evil()</script> example'
+        clean_ouput = cleanify(input)
+        self.assertEqual(clean_ouput,
+                         u'an &lt;script&gt;evil()&lt;/script&gt; example')
+
+    def test_cleanify_by_allow_tags(self):
+        input = '<b> hello <a> this is a url </a> !</b> <h1> this is h1 </h1>'
+        clean_out = cleanify(input, allow_tags=['b'])
+        self.assertEqual(clean_out,
+                         '<b> hello &lt;a&gt; this is a url &lt;/a&gt; !</b> &lt;h1&gt; this is h1 &lt;/h1&gt;')
+
+    def test_cleanify_by_default_allow_tags(self):
+        self.maxDiff = None
+        input = """<a>xxxxx</a>
+                <abbr>xxxxx</abbr>
+                <b>xxxxxxx</b>
+                <blockquote>xxxxxxx</blockquote>
+                <code>print(hello)</code>
+                <em>xxxxx</em>
+                <i>xxxxxx</i>
+                <li>xxxxxx</li>
+                <ol>xxxxxx</ol>
+                <pre>xxxxxx</pre>
+                <strong>xxxxxx</strong>
+                <ul>xxxxxx</ul>
+                <h1>xxxxxxx</h1>
+                <h2>xxxxxxx</h2>
+                <h3>xxxxxxx</h3>
+                <h4>xxxxxxx</h4>
+                <h5>xxxxxxx</h5>
+                <p>xxxxxxxx</p>
+        """
+        clean_out = cleanify(input)
+        self.assertEqual(clean_out, input)
+
+    def test_import_cleanify_without_install_bleach(self):
+        origin_import = builtins.__import__
+        origin_modules = sys.modules.copy()
+
+        def import_hook(name, *args, **kwargs):
+            if name == 'bleach':
+                raise ImportError('test case module')
+            else:
+                return origin_import(name, *args, **kwargs)
+
+        if 'flask_ckeditor.utils' in sys.modules:
+            del sys.modules['flask_ckeditor.utils']
+        builtins.__import__ = import_hook
+
+        with self.assertWarns(UserWarning) as w:
+            from flask_ckeditor.utils import cleanify  # noqa: F401
+
+        self.assertEqual(str(w.warning),
+                         'The "bleach" library is not installed, `cleanify` function will not be available.')
+
+        # recover default
+        builtins.__import__ = origin_import
+        sys.modules = origin_modules
 
 
 if __name__ == '__main__':

@@ -6,6 +6,13 @@ Changelog
 
 Release date: -
 
+0.5.2
+-----
+
+Release date: N/A
+
+- Add ``cleanify`` function to ``flask_ckeditor.utils`` for HTML sanitization.
+
 
 0.5.1
 -----
