@@ -11,7 +11,7 @@ Release date: -
 
 Release date: N/A
 
-- Add ``cleanify`` function to ``flask_ckeditor.utils`` for HTML sanity.
+- Add ``cleanify`` function to ``flask_ckeditor.utils`` for HTML sanitization.
 
 
 0.5.1

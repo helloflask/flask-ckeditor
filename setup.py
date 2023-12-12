@@ -33,6 +33,9 @@ setup(
     install_requires=[
         'Flask'
     ],
+    extras_require={
+        'all': ['flask-wtf', 'bleach']
+    },
     classifiers=[
         'Environment :: Web Environment',
         'Intended Audience :: Developers',

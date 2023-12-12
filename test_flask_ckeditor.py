@@ -9,6 +9,8 @@
 """
 import json
 import unittest
+import sys
+import builtins
 
 from flask import Flask, render_template_string, current_app
 from flask_wtf import FlaskForm, CSRFProtect
@@ -294,12 +296,6 @@ class CKEditorTestCase(unittest.TestCase):
         self.assertEqual(clean_ouput,
                          u'an &lt;script&gt;evil()&lt;/script&gt; example')
 
-    def test_cleanify_input_url(self):
-        input = 'abc http://example.com def'
-        clean_output = cleanify(input)
-        self.assertEqual(clean_output,
-                         u'abc <a href="http://example.com" rel="nofollow">http://example.com</a> def')
-
     def test_cleanify_by_allow_tags(self):
         input = '<b> hello <a> this is a url </a> !</b> <h1> this is h1 </h1>'
         clean_out = cleanify(input, allow_tags=['b'])
@@ -331,8 +327,6 @@ class CKEditorTestCase(unittest.TestCase):
         self.assertEqual(clean_out, input)
 
     def test_import_cleanify_without_install_bleach(self):
-        import sys
-        import builtins
         origin_import = builtins.__import__
         origin_modules = sys.modules.copy()
 

@@ -31,5 +31,5 @@ def cleanify(text, *, allow_tags=None):
     """
     default_allowed_tags = {'a', 'abbr', 'b', 'blockquote', 'code',
                             'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul',
-                            'h1', 'h2', 'h3', 'h4', 'h5', 'p'}
-    return bleach.linkify(bleach.clean(text, tags=allow_tags or default_allowed_tags))
+                            'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p'}
+    return bleach.clean(text, tags=allow_tags or default_allowed_tags)

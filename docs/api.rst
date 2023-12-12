@@ -30,3 +30,4 @@ Utils
 
 .. autofunction:: get_url
 .. autofunction:: random_filename
+.. autofunction:: cleanify
