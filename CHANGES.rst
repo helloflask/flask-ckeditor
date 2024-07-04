@@ -4,18 +4,16 @@ Changelog
 1.0.0
 -----
 
-Release date: -
+Release date: 2024/7/5
 
-- Disable the version check for old CKEditor versions.
+Since CKEditor 4 is no longer maintained, this release is the last major release of Flask-CKEditor.
 
-
-0.5.2
------
-
-Release date: N/A
+There will be no new features added to this package, only bug fixes will be provided.
 
 - Add ``cleanify`` function to ``flask_ckeditor.utils`` for HTML sanitization.
-
+- Disable the version check for old CKEditor versions.
+- Update the default CDN library version to 4.22.1.
+- Drop Python 3.7 support and add 3.12 support.
 
 0.5.1
 -----
