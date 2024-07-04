@@ -14,7 +14,7 @@ class _CKEditor(object):
     """The class implement functions for Jinja2 template."""
 
     @staticmethod
-    def load(custom_url=None, pkg_type=None, serve_local=None, version='4.14.0'):
+    def load(custom_url=None, pkg_type=None, serve_local=None, version='4.22.1'):
         """Load CKEditor resource from CDN or local.
 
         :param custom_url: The custom resource url to use, build your CKEditor
