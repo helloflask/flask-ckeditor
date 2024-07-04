@@ -6,6 +6,9 @@ Changelog
 
 Release date: -
 
+- Disable the version check for old CKEditor versions.
+
+
 0.5.2
 -----
 
