@@ -105,6 +105,7 @@ class _CKEditor(object):
         filebrowserUploadUrl: "{file_uploader}",
         filebrowserBrowseUrl: "{file_browser}",
         extraPlugins: "{','.join(extra_plugins)}",
+        versionCheck: false,
         {csrf_header} // CSRF token header for XHR request
         {custom_config}
     }});

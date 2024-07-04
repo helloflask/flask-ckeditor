@@ -8,19 +8,15 @@
 
 CKEditor integration for Flask, including image upload, code syntax highlighting, and more.
 
+> [!IMPORTANT]\
+> This project is unmaintained due to the CKEditor 4's end of life, and we will not support CKEditor 5 (GPL licensed).
+> Please consider using paid CKEditor 4 LTS version, CKEditor 5, or other alternatives. Thanks!
 
 ## Links
 
 * [Documentation](https://flask-ckeditor.readthedocs.io/en/latest/)
 * [PyPI](https://pypi.org/project/Flask-CKEditor/)
 * [Examples](https://github.com/helloflask/flask-ckeditor/tree/master/examples)
-
-
-## Donate
-
-If you find Flask-CKEditor useful, please consider
-[donating today](https://opencollective.com/flask-ckeditor/donate). Your donation keeps
-Flask-CKEditor maintained and updated with CKEditor.
 
 
 ## License
